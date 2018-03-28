@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdcarouselMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_CAROUSEL"(
+			"SRC",	
+			"SORTING",	
+			"CLASSIFY_ID",	
+			"LOCATION",	
+			"REMARKS",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"ID"
+		) values (
+				    #{SRC},	  
+				    #{SORTING},	  
+				    #{CLASSIFY_ID},	  
+				    #{LOCATION},	  
+				    #{REMARKS},	  
+				    #{SEALED},	  
+						 #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				    #{CREATION_PEOPLE_ID},	  
+						 #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				    #{UPDATE_PEOPLE_ID},	  
+				    #{SPREAD1},	  
+				    #{SPREAD2},	  
+				    #{SPREAD3},	  
+				    #{SPREAD4},	  
+				    #{SPREAD5},	  
+			#{ID}
+		)
+	</insert>
+	
+	<!-- 新增-->
+	<insert id="batchSave"  parameterType="java.util.List" useGeneratedKeys="false">
+		insert into "OLO_PD_CAROUSEL"(
+			"SRC",	
+			"SORTING",	
+			"LOCATION",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",
+			"ID"
+		) <foreach collection="list" item="item" index="index" separator="union all">
+            ( SELECT  #{item.SRC},	  
+				    #{item.SORTING},	  
+				    #{item.LOCATION},	  
+				    #{item.SEALED},	  
+						 #{item.CREATE_TIME,jdbcType=TIMESTAMP},	
+				    #{item.CREATION_PEOPLE_ID},	  
+				    #{item.SPREAD1},	  
+				    #{item.SPREAD2},
+				    #{item.SPREAD3},	  
+			#{item.ID}  FROM DUAL)
+        </foreach>
+	</insert>
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_CAROUSEL"
+		where 
+			"ID" = #{ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_CAROUSEL"
+			set 
+			<if test="SRC != null">
+				   	"SRC" = #{SRC},	
+				
+			</if>
+			<if test="SORTING != null">
+				   	"SORTING" = #{SORTING},	
+				
+			</if>
+			<if test="CLASSIFY_ID != null">
+				   	"CLASSIFY_ID" = #{CLASSIFY_ID},	
+				
+			</if>
+			<if test="LOCATION != null">
+				   	"LOCATION" = #{LOCATION},	
+				
+			</if>
+			<if test="REMARKS != null">
+				   	"REMARKS" = #{REMARKS},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="CREATION_PEOPLE_ID != null">
+				   	"CREATION_PEOPLE_ID" = #{CREATION_PEOPLE_ID},	
+				
+			</if>
+			<if test="UPDATE_TIME != null">
+					"UPDATE_TIME" = #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">
+				   	"UPDATE_PEOPLE_ID" = #{UPDATE_PEOPLE_ID},	
+				
+			</if>
+			<if test="SPREAD1 != null">
+				   	"SPREAD1" = #{SPREAD1},	
+				
+			</if>
+			<if test="SPREAD2 != null">
+				   	"SPREAD2" = #{SPREAD2},	
+				
+			</if>
+			<if test="SPREAD3 != null">
+				   	"SPREAD3" = #{SPREAD3},	
+				
+			</if>
+			<if test="SPREAD4 != null">
+				   	"SPREAD4" = #{SPREAD4},	
+				
+			</if>
+			<if test="SPREAD5 != null">
+				   	"SPREAD5" = #{SPREAD5},	
+				
+			</if>
+			"ID" =  #{ID}
+			where 
+				"ID" = #{ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"SRC",	
+			"SORTING",	
+			"CLASSIFY_ID",	
+			"LOCATION",	
+			"REMARKS",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"ID"
+		from 
+			"OLO_PD_CAROUSEL"
+		where 
+			"ID" = #{ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."SRC",	
+				a."SORTING",	
+				a."CLASSIFY_ID",	
+				a."LOCATION",	
+				a."REMARKS",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."ID"
+		from 
+				"OLO_PD_CAROUSEL" a
+				
+		where  1=1
+			
+				<if test="pd.key!=null and pd.key!=''">
+				and (a.SPREAD1 like  CONCAT(CONCAT('%',#{pd.key}),'%')
+					or a.SPREAD2 like  CONCAT(CONCAT('%',#{pd.key}),'%')
+					or a.SPREAD3 like  CONCAT(CONCAT('%',#{pd.key}),'%')
+				)
+				</if>
+		
+				<if test="pd.classify!=null">
+				and 
+				SPREAD2 IN (
+				
+						SELECT GOODS_ID from (SELECT   GOODS_ID,wm_concat(T_ID) T_ID    from OLO_PD_MENU_PRODUCT   GROUP BY GOODS_ID)  opmp
+					WHERE
+						opmp.T_ID 	 like  replace(CONCAT(CONCAT('%', '<foreach item="item" index="index" collection="pd.classify" open="" separator="," close="">${item}</foreach>'),'%'),' ','')
+					)
+			</if>
+			<if test="pd.SEALED!=null and pd.SEALED!=''">
+				and a.SEALED =  #{pd.SEALED}
+			</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."SRC",	
+				a."SORTING",	
+				a."CLASSIFY_ID",	
+				a."LOCATION",	
+				a."REMARKS",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."ID"
+		from 
+				"OLO_PD_CAROUSEL" a
+						
+		where  1=1
+			
+				<if test="key!=null and key!=''">
+				and (a.SPREAD1 like  CONCAT(CONCAT('%',#{key}),'%')
+					or a.SPREAD2 like  CONCAT(CONCAT('%',#{key}),'%')
+					or a.SPREAD3 like  CONCAT(CONCAT('%',#{key}),'%')
+				)
+				</if>
+		
+				<if test="classify!=null">
+				and 
+				SPREAD2 IN (
+				
+						SELECT GOODS_ID from (SELECT   GOODS_ID,wm_concat(T_ID) T_ID    from OLO_PD_MENU_PRODUCT   GROUP BY GOODS_ID)  opmp
+					WHERE
+						opmp.T_ID 	 like  replace(CONCAT(CONCAT('%', '<foreach item="item" index="index" collection="classify" open="" separator="," close="">${item}</foreach>'),'%'),' ','')
+					)
+			</if>
+			<if test="SEALED!=null and SEALED!=''">
+				and a.SEALED =  #{SEALED}
+			</if>
+	</select>
+	<!-- 列表(根据分类查询) -->
+	<select id="findBymenuId" parameterType="pd" resultType="pd">
+		select
+				a."SRC",	
+				a."SORTING",	
+				a."CLASSIFY_ID",	
+				a."LOCATION",	
+				a."REMARKS",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."ID",
+				opar."O_ID1",
+				opar."O_ID2",
+				opar."TYPE"
+		from 
+				"OLO_PD_CAROUSEL" a
+		LEFT JOIN OLO_PD_AB_RELATION OPAR ON OPAR.O_ID1 = a."ID"
+						
+		where  1=1
+			
+			<if test="key!=null and key!=''">
+				and (a.SPREAD1 like  CONCAT(CONCAT('%',#{key}),'%')
+					or a.SPREAD2 like  CONCAT(CONCAT('%',#{key}),'%')
+					or a.SPREAD3 like  CONCAT(CONCAT('%',#{key}),'%')
+				)
+			</if>
+			<if test="O_ID1!=null and O_ID1!=''">
+				and OPAR.O_ID1 in 
+				<foreach item="item" index="index" collection="O_ID1" open="(" separator="," close=")">
+				  #{item}
+       			 </foreach>
+			</if>
+			<if test="O_ID2!=null and O_ID2!=''">
+				and OPAR.O_ID2 in 
+				<foreach item="item" index="index" collection="O_ID2" open="(" separator="," close=")">
+				  #{item}
+       			 </foreach>
+			</if>
+			<if test="TYPE!=null and TYPE!=''">
+				and OPAR.TYPE =  #{TYPE}
+			</if>
+			and a.SEALED = 0
+			
+			ORDER BY  SORTING
+	</select>
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_CAROUSEL"
+		where 
+			"ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

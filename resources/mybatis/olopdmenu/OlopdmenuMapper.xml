@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdmenuMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_MENU"(
+			"PARENT_ID",	
+			"PATH",	
+			"TYPE",	
+			"SEALED",	
+			"NAME",	
+			"ENGLISHNAME",	
+			"SRC",	
+			"REMARKS",	
+			"ID"
+		) values (
+				    #{PARENT_ID},	  
+				    #{PATH},	  
+				    #{TYPE},	  
+				    #{SEALED},	  
+				    #{NAME},	  
+				    #{ENGLISHNAME},	  
+				    #{SRC},	  
+				    #{REMARKS},	  
+			#{ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_MENU"
+		where 
+			"ID" = #{ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_MENU"
+			set 
+			<if test="PARENT_ID != null">
+				   	"PARENT_ID" = #{PARENT_ID},	
+				
+			</if>
+			<if test="PATH != null">
+				   	"PATH" = #{PATH},	
+				
+			</if>
+			<if test="TYPE != null">
+				   	"TYPE" = #{TYPE},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			<if test="NAME != null">
+				   	"NAME" = #{NAME},	
+				
+			</if>
+			<if test="ENGLISHNAME != null">
+				   	"ENGLISHNAME" = #{ENGLISHNAME},	
+				
+			</if>
+			<if test="SRC != null">
+				   	"SRC" = #{SRC},	
+				
+			</if>
+			<if test="REMARKS != null">
+				   	"REMARKS" = #{REMARKS},	
+				
+			</if>
+			"ID" = "ID"
+			where 
+				"ID" = #{ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"PARENT_ID",	
+			"PATH",	
+			"TYPE",	
+			"SEALED",	
+			"NAME",	
+			"ENGLISHNAME",	
+			"SRC",	
+			"REMARKS",	
+			"ID"
+		from 
+			"OLO_PD_MENU"
+		where 
+			"ID" = #{ID}
+	</select>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="queryMenua" parameterType="pd" resultType="pd">
+		select * from ecology.uf_pd_menu_a  where  1 =1 
+			<if test="ID != null and ID != ''">
+				and "ID" = #{ID}
+			</if>
+			<if test="M_NAME != null  and M_NAME != ''">
+				and	"M_NAME" = #{M_NAME}
+			</if>
+			<if test="M_TYPE != null  and M_TYPE != ''">
+				and	"M_TYPE" = #{M_TYPE}
+			</if>
+			<if test="CID != null and CID != ''">
+				and "CID" = #{CID}
+			</if>
+			 ORDER BY M_ORDER
+	</select>
+	<!-- 通过ID获取数据 -->
+	<select id="queryMenub" parameterType="pd" resultType="pd">
+		select * from ecology.uf_pd_menu_b where  1 =1 
+			<if test="ID != null and ID != ''">
+				and "ID" = #{ID}
+			</if>
+			<if test="M_NAME != null  and M_NAME != ''">
+				and	"M_NAME" = #{M_NAME}
+			</if>
+			<if test="M_FID != null and M_FID != ''  ">
+				and	"M_FID" = #{M_FID}
+			</if>
+			<if test="M_TYPE != null  and M_TYPE != ''">
+				and	"M_TYPE" = #{M_TYPE}
+			</if>
+			<if test="CID != null and CID != ''">
+				and "CID" = #{CID}
+			</if>
+			 ORDER BY M_ORDER
+	</select>
+	<!-- 通过ID获取数据 -->
+	<select id="queryMenuc" parameterType="pd" resultType="pd">
+		select * from ecology.uf_pd_menu_c  where 1=1 
+			<if test="ID != null and ID != ''">
+				and "ID" = #{ID}
+			</if>
+			<if test="M_NAME != null  and M_NAME != ''">
+				and	"M_NAME" = #{M_NAME}
+			</if>
+			<if test="M_FID != null and M_FID != ''  ">
+				and	"M_FID" = #{M_FID}
+			</if>
+			<if test="M_TYPE != null  and M_TYPE != ''">
+				and	"M_TYPE" = #{M_TYPE}
+			</if>
+			<if test="CID != null and CID != ''">
+				and "CID" = #{CID}
+			</if>
+			 ORDER BY M_ORDER
+	</select>
+	<!-- 通过ID获取数据 -->
+	<select id="queryMenud" parameterType="pd" resultType="pd">
+		select * from ecology.uf_pd_menu_d  where 1=1
+		
+			<if test="ID != null and ID != ''">
+				and "ID" = #{ID}
+			</if>
+			<if test="CID != null and CID != ''">
+				and "CID" = #{CID}
+			</if>
+			<if test="M_NAME != null  and M_NAME != ''">
+				and	"M_NAME" = #{M_NAME}
+			</if>
+			<if test="M_FID != null and M_FID != ''  ">
+				and	"M_FID" = #{M_FID}
+			</if>
+			<if test="M_TYPE != null  and M_TYPE != ''">
+				and	"M_TYPE" = #{M_TYPE}
+			</if>
+			 ORDER BY M_ORDER
+	</select>
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."PARENT_ID",	
+				a."PATH",	
+				a."TYPE",	
+				a."SEALED",	
+				a."NAME",	
+				a."ENGLISHNAME",	
+				a."SRC",	
+				a."REMARKS",	
+				a."ID"
+		from 
+				"OLO_PD_MENU" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."PARENT_ID",	
+				a."PATH",	
+				a."TYPE",	
+				a."SEALED",	
+				a."NAME",	
+				a."ENGLISHNAME",	
+				a."SRC",	
+				a."REMARKS",	
+				a."ID"
+		from 
+				"OLO_PD_MENU" a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_MENU"
+		where 
+			"ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

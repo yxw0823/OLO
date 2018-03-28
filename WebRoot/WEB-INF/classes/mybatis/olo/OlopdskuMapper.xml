@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdskuMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_SKU"(
+			<if test="GOODS_ID != null and GOODS_ID != ''">
+				"GOODS_ID",
+			</if>
+			<if test="A_ID != null and A_ID != ''">
+				"A_ID",
+			</if>
+			<if test="SPECIFICATIONS != null and SPECIFICATIONS != ''">
+				"SPECIFICATIONS",
+			</if>
+			<if test="PRICE != null and PRICE != ''">
+				"PRICE",
+			</if>
+			<if test="BARCODE != null and BARCODE != ''">
+				"BARCODE",
+			</if>
+			<if test="PRODUCT_CODE != null and PRODUCT_CODE != ''">
+				"PRODUCT_CODE",
+			</if>
+			<if test="STATE != null and STATE != ''">
+				"STATE",
+			</if>
+			<if test="STORE != null and STORE != ''">
+				"STORE",
+			</if>
+			<if test="SEALED != null and SEALED != ''">
+				"SEALED",
+			</if>
+			<if test="CREATE_TIME != null and CREATE_TIME != ''">
+				"CREATE_TIME",
+			</if>
+			<if test="CREATION_PEOPLE_ID != null and CREATION_PEOPLE_ID != ''">
+				"CREATION_PEOPLE_ID",
+			</if>
+			<if test="UPDATE_TIME != null and UPDATE_TIME != ''">
+				"UPDATE_TIME",
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null and UPDATE_PEOPLE_ID != ''">
+				"UPDATE_PEOPLE_ID",
+			</if>
+			<if test="SPREAD1 != null and SPREAD1 != ''">
+				"SPREAD1",
+			</if>
+			<if test="SPREAD2 != null and SPREAD2 != ''">
+				"SPREAD2",
+			</if>
+			<if test="SPREAD3 != null and SPREAD3 != ''">
+				"SPREAD3",
+			</if>
+			<if test="SPREAD4 != null and SPREAD4 != ''">
+				"SPREAD4",
+			</if>
+			<if test="SPREAD5 != null and SPREAD5 != ''">
+				"SPREAD5",
+			</if>
+			
+			"SKU_ID"
+		) values (
+		<if test="GOODS_ID != null and GOODS_ID != ''">
+				 #{GOODS_ID},
+			</if>
+			<if test="A_ID != null and A_ID != ''">
+				 #{A_ID},
+			</if>
+			<if test="SPECIFICATIONS != null and SPECIFICATIONS != ''">
+				#{SPECIFICATIONS},
+			</if>
+			<if test="PRICE != null and PRICE != ''">
+				#{PRICE},
+			</if>
+			<if test="BARCODE != null and BARCODE != ''">
+			   #{BARCODE},
+			</if>
+			<if test="PRODUCT_CODE != null and PRODUCT_CODE != ''">
+				#{PRODUCT_CODE},
+			</if>
+			<if test="STATE != null and STATE != ''">
+				#{STATE},	
+			</if>
+			<if test="STORE != null and STORE != ''">
+				#{STORE},
+			</if>
+			<if test="SEALED != null and SEALED != ''">
+				#{SEALED},
+			</if>
+			<if test="CREATE_TIME != null and CREATE_TIME != ''">
+				#{CREATE_TIME ,jdbcType=TIMESTAMP},
+			</if>
+			<if test="CREATION_PEOPLE_ID != null and CREATION_PEOPLE_ID != ''">
+				#{CREATION_PEOPLE_ID},
+			</if>
+			<if test="UPDATE_TIME != null and UPDATE_TIME != ''">
+				#{UPDATE_TIME ,jdbcType=TIMESTAMP},
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null and UPDATE_PEOPLE_ID != ''">
+				#{UPDATE_PEOPLE_ID},
+			</if>
+			<if test="SPREAD1 != null and SPREAD1 != ''">
+				#{SPREAD1},
+			</if>
+			<if test="SPREAD2 != null and SPREAD2 != ''">
+				#{SPREAD2},
+			</if>
+			<if test="SPREAD3 != null and SPREAD3 != ''">
+				#{SPREAD3},
+			</if>
+			<if test="SPREAD4 != null and SPREAD4 != ''">
+				#{SPREAD4},
+			</if>
+			<if test="SPREAD5 != null and SPREAD5 != ''">
+				#{SPREAD5},
+			</if>
+			#{SKU_ID}
+		)
+	</insert>
+	<!-- 新增-->
+	<insert id="batchSave"   parameterType="java.util.List"
+		useGeneratedKeys="false">
+		insert into "OLO_PD_SKU"(
+				"GOODS_ID",
+				"SPECIFICATIONS",
+				"PRICE",
+				"PRODUCT_CODE",
+				"STORE",
+				"SEALED",
+				"CREATE_TIME",
+				"CREATION_PEOPLE_ID",
+				"SPREAD1",
+				"SPREAD2",	
+				"SKU_ID"
+		) <foreach collection="list" item="item" index="index"
+			separator="union all">
+			( SELECT #{item.GOODS_ID},
+			#{item.SPECIFICATIONS},
+			#{item.PRICE},
+			#{item.PRODUCT_CODE},
+			#{item.STORE},
+			#{item.SEALED},
+			#{item.CREATE_TIME,jdbcType=TIMESTAMP},
+			#{item.CREATION_PEOPLE_ID},
+			#{item.SPREAD1,jdbcType=VARCHAR},
+			#{item.SPREAD2,jdbcType=VARCHAR},
+			#{item.SKU_ID}
+		 	 FROM DUAL)
+		</foreach> 
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_SKU"
+		where 
+			"SKU_ID" = #{SKU_ID}
+	</delete>
+	<!-- 删除-->
+	<delete id="deleteGoodsId" parameterType="pd">
+		delete from "OLO_PD_SKU"
+		where 
+			"GOODS_ID" = #{GOODS_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_SKU"
+			set 
+			<if test="GOODS_ID != null">
+				   	"GOODS_ID" = #{GOODS_ID},	
+				
+			</if>
+			<if test="A_ID != null">
+				   	"A_ID" = #{A_ID},	
+				
+			</if>
+			<if test="SPECIFICATIONS != null">
+				   	"SPECIFICATIONS" = #{SPECIFICATIONS},	
+				
+			</if>
+			<if test="PRICE != null">
+				   	"PRICE" = #{PRICE},	
+				
+			</if>
+			<if test="BARCODE != null">
+				   	"BARCODE" = #{BARCODE},	
+				
+			</if>
+			<if test="PRODUCT_CODE != null">
+				   	"PRODUCT_CODE" = #{PRODUCT_CODE},	
+				
+			</if>
+			<if test="STATE != null">
+				   	"STATE" = #{STATE},	
+				
+			</if>
+			<if test="STORE != null">
+				   	"STORE" = #{STORE},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="CREATION_PEOPLE_ID != null">
+				   	"CREATION_PEOPLE_ID" = #{CREATION_PEOPLE_ID},	
+				
+			</if>
+			<if test="UPDATE_TIME != null">
+					"UPDATE_TIME" = #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">
+				   	"UPDATE_PEOPLE_ID" = #{UPDATE_PEOPLE_ID},	
+				
+			</if>
+			<if test="SPREAD1 != null">
+				   	"SPREAD1" = #{SPREAD1},	
+				
+			</if>
+			<if test="SPREAD2 != null">
+				   	"SPREAD2" = #{SPREAD2},	
+				
+			</if>
+			<if test="SPREAD3 != null">
+				   	"SPREAD3" = #{SPREAD3},	
+				
+			</if>
+			<if test="SPREAD4 != null">
+				   	"SPREAD4" = #{SPREAD4},	
+				
+			</if>
+			<if test="SPREAD5 != null">
+				   	"SPREAD5" = #{SPREAD5},	
+				
+			</if>
+			"SKU_ID" = #{SKU_ID}
+			where 
+				"SKU_ID" = #{SKU_ID}
+	</update>
+	
+	
+	<!-- 通过SKU_ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"GOODS_ID",	
+			"A_ID",	
+			"SPECIFICATIONS",	
+			"PRICE",	
+			"BARCODE",	
+			"PRODUCT_CODE",	
+			"STATE",	
+			"STORE",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"SKU_ID"
+		from 
+			"OLO_PD_SKU"
+		where 
+			"SKU_ID" = #{SKU_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."GOODS_ID",	
+				a."A_ID",	
+				a."SPECIFICATIONS",	
+				a."PRICE",	
+				a."BARCODE",	
+				a."PRODUCT_CODE",	
+				a."STATE",	
+				a."STORE",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."SKU_ID"
+		from 
+				"OLO_PD_SKU" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."GOODS_ID",	
+				a."A_ID",	
+				a."SPECIFICATIONS",	
+				a."PRICE",	
+				a."BARCODE",	
+				a."PRODUCT_CODE",	
+				a."STATE",	
+				a."STORE",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."SKU_ID"
+		from 
+				"OLO_PD_SKU" a
+				
+		where  
+				1=1
+			<if test="GOODS_ID != null">
+				and   	"GOODS_ID" = #{GOODS_ID}
+			</if>
+			<if test="SPECIFICATIONS != null">
+				and   	"SPECIFICATIONS" = #{SPECIFICATIONS},	
+			</if>
+			<if test="SEALED != null">
+				and   	"SEALED" = #{SEALED}	
+				
+			</if>
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_SKU"
+		where 
+			"SKU_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

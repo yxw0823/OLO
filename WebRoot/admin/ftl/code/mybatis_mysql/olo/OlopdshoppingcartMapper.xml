@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdshoppingcartMapper">
+	
+	
+	<!-- 新增-->
+	<insert CART_ID="save" parameterType="pd">
+		insert into OLO_PD_SHOPPING_CART(
+			USER_ID,	
+			SKU_ID,	
+			CODE,	
+			TITLE,	
+			NUMBER,	
+			PRICE,	
+			CREATE_TIME,	
+			CREATION_PEOPLE_ID,	
+			UPDATE_TIME,	
+			UPDATE_PEOPLE_ID,	
+			SPREAD1,	
+			SPREAD2,	
+			SPREAD3,	
+			SPREAD4,	
+			SPREAD5,	
+			CART_ID
+		) values (
+			#{USER_ID},	
+			#{SKU_ID},	
+			#{CODE},	
+			#{TITLE},	
+			#{NUMBER},	
+			#{PRICE},	
+			#{CREATE_TIME},	
+			#{CREATION_PEOPLE_ID},	
+			#{UPDATE_TIME},	
+			#{UPDATE_PEOPLE_ID},	
+			#{SPREAD1},	
+			#{SPREAD2},	
+			#{SPREAD3},	
+			#{SPREAD4},	
+			#{SPREAD5},	
+			#{CART_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete CART_ID="delete" parameterType="pd">
+		delete from OLO_PD_SHOPPING_CART
+		where 
+			CART_ID = #{CART_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update CART_ID="edit" parameterType="pd">
+		update  OLO_PD_SHOPPING_CART
+			set 
+				USER_ID = #{USER_ID},
+				SKU_ID = #{SKU_ID},
+				CODE = #{CODE},
+				TITLE = #{TITLE},
+				NUMBER = #{NUMBER},
+				PRICE = #{PRICE},
+				CREATE_TIME = #{CREATE_TIME},
+				CREATION_PEOPLE_ID = #{CREATION_PEOPLE_ID},
+				UPDATE_TIME = #{UPDATE_TIME},
+				UPDATE_PEOPLE_ID = #{UPDATE_PEOPLE_ID},
+				SPREAD1 = #{SPREAD1},
+				SPREAD2 = #{SPREAD2},
+				SPREAD3 = #{SPREAD3},
+				SPREAD4 = #{SPREAD4},
+				SPREAD5 = #{SPREAD5},
+			CART_ID = CART_ID
+			where 
+				CART_ID = #{CART_ID}
+	</update>
+	
+	
+	<!-- 通过CART_ID获取数据 -->
+	<select CART_ID="findByCART_ID" parameterType="pd" resultType="pd">
+		select 
+			USER_ID,	
+			SKU_ID,	
+			CODE,	
+			TITLE,	
+			NUMBER,	
+			PRICE,	
+			CREATE_TIME,	
+			CREATION_PEOPLE_ID,	
+			UPDATE_TIME,	
+			UPDATE_PEOPLE_ID,	
+			SPREAD1,	
+			SPREAD2,	
+			SPREAD3,	
+			SPREAD4,	
+			SPREAD5,	
+			CART_ID
+		from 
+			OLO_PD_SHOPPING_CART
+		where 
+			CART_ID = #{CART_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select CART_ID="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.USER_ID,	
+				a.SKU_ID,	
+				a.CODE,	
+				a.TITLE,	
+				a.NUMBER,	
+				a.PRICE,	
+				a.CREATE_TIME,	
+				a.CREATION_PEOPLE_ID,	
+				a.UPDATE_TIME,	
+				a.UPDATE_PEOPLE_ID,	
+				a.SPREAD1,	
+				a.SPREAD2,	
+				a.SPREAD3,	
+				a.SPREAD4,	
+				a.SPREAD5,	
+				a.CART_ID
+		from 
+				OLO_PD_SHOPPING_CART a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select CART_ID="listAll" parameterType="pd" resultType="pd">
+		select
+				a.USER_ID,	
+				a.SKU_ID,	
+				a.CODE,	
+				a.TITLE,	
+				a.NUMBER,	
+				a.PRICE,	
+				a.CREATE_TIME,	
+				a.CREATION_PEOPLE_ID,	
+				a.UPDATE_TIME,	
+				a.UPDATE_PEOPLE_ID,	
+				a.SPREAD1,	
+				a.SPREAD2,	
+				a.SPREAD3,	
+				a.SPREAD4,	
+				a.SPREAD5,	
+				a.CART_ID
+		from 
+				OLO_PD_SHOPPING_CART a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete CART_ID="deleteAll" parameterType="String">
+		delete from OLO_PD_SHOPPING_CART
+		where 
+			CART_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

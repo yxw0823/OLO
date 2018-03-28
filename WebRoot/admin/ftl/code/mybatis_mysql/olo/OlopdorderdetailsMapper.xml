@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdorderdetailsMapper">
+	
+	
+	<!-- 新增-->
+	<insert ID="save" parameterType="pd">
+		insert into OLO_PD_ORDER_DETAILS(
+			ORDER_ID,	
+			USER_ID,	
+			SKU_ID,	
+			CODE,	
+			TITLE,	
+			NUMBER,	
+			PRICE,	
+			CREATE_TIME,	
+			CREATION_PEOPLE_ID,	
+			UPDATE_TIME,	
+			UPDATE_PEOPLE_ID,	
+			SPREAD1,	
+			SPREAD2,	
+			SPREAD3,	
+			SPREAD4,	
+			SPREAD5,	
+			ID
+		) values (
+			#{ORDER_ID},	
+			#{USER_ID},	
+			#{SKU_ID},	
+			#{CODE},	
+			#{TITLE},	
+			#{NUMBER},	
+			#{PRICE},	
+			#{CREATE_TIME},	
+			#{CREATION_PEOPLE_ID},	
+			#{UPDATE_TIME},	
+			#{UPDATE_PEOPLE_ID},	
+			#{SPREAD1},	
+			#{SPREAD2},	
+			#{SPREAD3},	
+			#{SPREAD4},	
+			#{SPREAD5},	
+			#{ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete ID="delete" parameterType="pd">
+		delete from OLO_PD_ORDER_DETAILS
+		where 
+			ID = #{ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update ID="edit" parameterType="pd">
+		update  OLO_PD_ORDER_DETAILS
+			set 
+				ORDER_ID = #{ORDER_ID},
+				USER_ID = #{USER_ID},
+				SKU_ID = #{SKU_ID},
+				CODE = #{CODE},
+				TITLE = #{TITLE},
+				NUMBER = #{NUMBER},
+				PRICE = #{PRICE},
+				CREATE_TIME = #{CREATE_TIME},
+				CREATION_PEOPLE_ID = #{CREATION_PEOPLE_ID},
+				UPDATE_TIME = #{UPDATE_TIME},
+				UPDATE_PEOPLE_ID = #{UPDATE_PEOPLE_ID},
+				SPREAD1 = #{SPREAD1},
+				SPREAD2 = #{SPREAD2},
+				SPREAD3 = #{SPREAD3},
+				SPREAD4 = #{SPREAD4},
+				SPREAD5 = #{SPREAD5},
+			ID = ID
+			where 
+				ID = #{ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select ID="findByID" parameterType="pd" resultType="pd">
+		select 
+			ORDER_ID,	
+			USER_ID,	
+			SKU_ID,	
+			CODE,	
+			TITLE,	
+			NUMBER,	
+			PRICE,	
+			CREATE_TIME,	
+			CREATION_PEOPLE_ID,	
+			UPDATE_TIME,	
+			UPDATE_PEOPLE_ID,	
+			SPREAD1,	
+			SPREAD2,	
+			SPREAD3,	
+			SPREAD4,	
+			SPREAD5,	
+			ID
+		from 
+			OLO_PD_ORDER_DETAILS
+		where 
+			ID = #{ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select ID="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.ORDER_ID,	
+				a.USER_ID,	
+				a.SKU_ID,	
+				a.CODE,	
+				a.TITLE,	
+				a.NUMBER,	
+				a.PRICE,	
+				a.CREATE_TIME,	
+				a.CREATION_PEOPLE_ID,	
+				a.UPDATE_TIME,	
+				a.UPDATE_PEOPLE_ID,	
+				a.SPREAD1,	
+				a.SPREAD2,	
+				a.SPREAD3,	
+				a.SPREAD4,	
+				a.SPREAD5,	
+				a.ID
+		from 
+				OLO_PD_ORDER_DETAILS a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select ID="listAll" parameterType="pd" resultType="pd">
+		select
+				a.ORDER_ID,	
+				a.USER_ID,	
+				a.SKU_ID,	
+				a.CODE,	
+				a.TITLE,	
+				a.NUMBER,	
+				a.PRICE,	
+				a.CREATE_TIME,	
+				a.CREATION_PEOPLE_ID,	
+				a.UPDATE_TIME,	
+				a.UPDATE_PEOPLE_ID,	
+				a.SPREAD1,	
+				a.SPREAD2,	
+				a.SPREAD3,	
+				a.SPREAD4,	
+				a.SPREAD5,	
+				a.ID
+		from 
+				OLO_PD_ORDER_DETAILS a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete ID="deleteAll" parameterType="String">
+		delete from OLO_PD_ORDER_DETAILS
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

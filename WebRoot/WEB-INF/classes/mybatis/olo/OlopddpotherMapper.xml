@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopddpotherMapper">
+	
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_DP_OTHER"(
+			<if test="NAME != null and NAME != ''">	
+			"NAME",	
+			</if>
+			<if test="LABEL != null and LABEL != ''">	
+			"LABEL",	
+			</if>
+			<if test="CODE != null and CODE != ''">	
+			"CODE",	
+			</if>
+			<if test="DIMENSION != null and DIMENSION != ''">	
+			"DIMENSION",	
+			</if>
+			<if test="PRICE != null and PRICE != ''">	
+			"PRICE",	
+			</if>
+			<if test="REMARKS != null and REMARKS != ''">	
+			"REMARKS",
+			</if>
+			<if test="COMPANY != null and COMPANY != ''">	
+			"COMPANY" ,	
+			</if>
+			<if test="SEALED != null and SEALED != ''">	
+			"SEALED",	
+			</if>
+			<if test="IMAGE_URL != null and IMAGE_URL != ''">	
+			"IMAGE_URL",	
+			</if>
+			<if test="IMAGE_BUG_URL != null and IMAGE_BUG_URL != ''">	
+			"IMAGE_BUG_URL",	
+			</if>
+			<if test="ISDETAILS != null and ISDETAILS != ''">	
+			"ISDETAILS",	
+			</if>
+			<if test="EFFECTIVE_TIME != null and EFFECTIVE_TIME != ''">	
+			"EFFECTIVE_TIME",	
+			</if>
+			<if test="CREATE_TIME != null and CREATE_TIME != ''">	
+			"CREATE_TIME",	
+			</if>
+			<if test="CREATION_PEOPLE_ID != null and CREATION_PEOPLE_ID != ''">	
+			"CREATION_PEOPLE_ID",	
+			</if>
+			<if test="UPDATE_TIME != null and UPDATE_TIME != ''">	
+			"UPDATE_TIME",	
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null and UPDATE_PEOPLE_ID != ''">	
+			"UPDATE_PEOPLE_ID",	
+			</if>
+			<if test="SPREAD1 != null and SPREAD1 != ''">	
+			"SPREAD1",	
+			</if>
+			<if test="SPREAD2 != null and SPREAD2 != ''">	
+			"SPREAD2",	
+			</if>
+			<if test="SPREAD3 != null and SPREAD3 != ''">	
+			"SPREAD3",	
+			</if>
+			<if test="SPREAD4 != null and SPREAD4 != ''">	
+			"SPREAD4",	
+			</if>
+			<if test="SPREAD5 != null and SPREAD5 != ''">	
+			"SPREAD5",	
+			</if>
+			<if test="SORTING != null and SORTING != ''">	
+			"SORTING",	
+			</if>
+			
+			"ID"
+		) values (
+			<if test="NAME != null and NAME != ''">	
+				    #{NAME},	  
+				    </if>
+			<if test="LABEL != null and LABEL != ''">	
+				    #{LABEL},	  
+				    </if>
+			<if test="CODE != null and CODE != ''">	
+				    #{CODE},	  
+				    </if>
+			<if test="DIMENSION != null and DIMENSION != ''">	
+				    #{DIMENSION},	  
+				    </if>
+			<if test="PRICE != null and PRICE != ''">	
+				    #{PRICE},	  
+				    </if>
+			<if test="REMARKS != null and REMARKS != ''">	
+				    #{REMARKS},	
+				    </if>
+			<if test="COMPANY != null and COMPANY != ''">	
+				    #{COMPANY} ,	 
+				    </if>
+			<if test="SEALED != null and SEALED != ''">	
+				    #{SEALED},	  
+				    </if>
+			<if test="IMAGE_URL != null and IMAGE_URL != ''">	
+				    #{IMAGE_URL},	  
+				    </if>
+			<if test="IMAGE_BUG_URL != null and IMAGE_BUG_URL != ''">	
+				    #{IMAGE_BUG_URL},	  
+				    </if>
+			<if test="ISDETAILS != null and ISDETAILS != ''">	
+				    #{ISDETAILS},	  
+				    </if>
+			<if test="EFFECTIVE_TIME != null and EFFECTIVE_TIME != ''">	
+						 #{EFFECTIVE_TIME,jdbcType=TIMESTAMP},	
+						 </if>
+			<if test="CREATE_TIME != null and CREATE_TIME != ''">	
+						 #{CREATE_TIME,jdbcType=TIMESTAMP},	
+						 </if>
+			<if test="CREATION_PEOPLE_ID != null and CREATION_PEOPLE_ID != ''">	
+				    #{CREATION_PEOPLE_ID},	  
+				    </if>
+			<if test="UPDATE_TIME != null and UPDATE_TIME != ''">	
+						 #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+						 </if>
+			<if test="UPDATE_PEOPLE_ID != null and UPDATE_PEOPLE_ID != ''">	
+				    #{UPDATE_PEOPLE_ID},	  
+				    </if>
+			<if test="SPREAD1 != null and SPREAD1 != ''">	
+				    #{SPREAD1},	  
+				    </if>
+			<if test="SPREAD2 != null and SPREAD2 != ''">	
+				    #{SPREAD2},	  
+				    </if>
+			<if test="SPREAD3 != null and SPREAD3 != ''">	
+				    #{SPREAD3},	  
+				    </if>
+			<if test="SPREAD4 != null and SPREAD4 != ''">	
+				    #{SPREAD4},	  
+				    </if>
+			<if test="SPREAD5 != null and SPREAD5 != ''">	
+				    #{SPREAD5},	  
+				    </if>
+			<if test="SORTING != null and SORTING != ''">	
+				    #{SORTING},	  
+				    </if>
+			#{ID}
+		)
+	</insert>
+	<!-- 新增-->
+	<insert id="insertByBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into "OLO_PD_DP_OTHER"(
+			"NAME",
+			"LABEL",	
+			"CODE",	
+			"DIMENSION",	
+			"PRICE",	
+			"REMARKS",
+			"COMPANY" ,	
+			"SEALED",	
+			"ISDETAILS",	
+			"EFFECTIVE_TIME",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"SPREAD1",	
+			"SORTING",	
+			"ID"
+		)   <foreach collection="list" item="item" index="index" separator="union all">
+            ( SELECT 
+				    #{item.NAME},
+				    #{item.LABEL},
+				    #{item.CODE},	  
+				    #{item.DIMENSION},	  
+				    #{item.PRICE},	  
+				    #{item.REMARKS},	
+				    #{item.COMPANY} ,	 
+				    #{item.SEALED},	  
+				    #{item.ISDETAILS},	  
+						 #{item.EFFECTIVE_TIME,jdbcType=TIMESTAMP},	
+						 #{item.CREATE_TIME,jdbcType=TIMESTAMP},	
+				    #{item.CREATION_PEOPLE_ID},	  
+				    #{item.SPREAD1},	  
+				    #{item.SORTING},	  
+			#{item.ID} FROM DUAL)
+        </foreach>
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_DP_OTHER"
+		where 
+			"ID" = #{ID}
+	</delete>
+	<!-- 修改 -->
+	<update id="updateBatch"  parameterType="java.util.List" >
+	    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+	        update OLO_PD_DP_OTHER t
+	        set
+	        t.IMAGE_URL= #{item.IMAGE_URL,jdbcType=VARCHAR} ,
+	        t.IMAGE_BUG_URL= #{item.IMAGE_BUG_URL,jdbcType=VARCHAR} 
+	        where t.ID = #{item.ID,jdbcType=NUMERIC}
+	    </foreach>
+	</update>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_DP_OTHER"
+			set 
+			<if test="NAME != null">
+				   	"NAME" = #{NAME},	
+				
+			</if>
+			<if test="LABEL != null">
+				   	"LABEL" = #{LABEL},	
+				
+			</if>
+			<if test="CODE != null">
+				   	"CODE" = #{CODE},	
+				
+			</if>
+			<if test="DIMENSION != null">
+				   	"DIMENSION" = #{DIMENSION},	
+				
+			</if>
+			<if test="PRICE != null">
+				   	"PRICE" = #{PRICE},	
+				
+			</if>
+			<if test="IMAGE_URL != null">
+				   	"IMAGE_URL" = #{IMAGE_URL},	
+				
+			</if>
+			<if test="IMAGE_BUG_URL != null">
+				   	"IMAGE_BUG_URL" = #{IMAGE_BUG_URL},	
+				
+			</if>
+			<if test="REMARKS != null">
+				   	"REMARKS" = #{REMARKS},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			<if test="EFFECTIVE_TIME != null">
+					"EFFECTIVE_TIME" = #{EFFECTIVE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="ISDETAILS != null">
+				   	"ISDETAILS" = #{ISDETAILS},	
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="CREATION_PEOPLE_ID != null">
+				   	"CREATION_PEOPLE_ID" = #{CREATION_PEOPLE_ID},	
+				
+			</if>
+			<if test="UPDATE_TIME != null">
+					"UPDATE_TIME" = #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">
+				   	"UPDATE_PEOPLE_ID" = #{UPDATE_PEOPLE_ID},	
+				
+			</if>
+			<if test="SPREAD1 != null">
+				   	"SPREAD1" = #{SPREAD1},	
+				
+			</if>
+			<if test="SPREAD2 != null">
+				   	"SPREAD2" = #{SPREAD2},	
+				
+			</if>
+			<if test="SPREAD3 != null">
+				   	"SPREAD3" = #{SPREAD3},	
+				
+			</if>
+			<if test="SPREAD4 != null">
+				   	"SPREAD4" = #{SPREAD4},	
+				
+			</if>
+			<if test="SPREAD5 != null">
+				   	"SPREAD5" = #{SPREAD5},	
+				
+			</if>
+			  	
+			<if test="COMPANY != null">
+				  "COMPANY" = #{COMPANY},
+			</if>	
+			<if test="SORTING != null">
+				   	"SORTING" = #{SORTING},	
+				
+			</if>
+			"ID" =  #{ID}
+			where 
+				"ID" = #{ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"NAME",
+			"LABEL",	
+			"CODE",	
+			"DIMENSION",	
+			"PRICE",	
+			"IMAGE_URL",	
+			"IMAGE_BUG_URL",	
+			"REMARKS",
+			"COMPANY",	
+			"SEALED",	
+			"EFFECTIVE_TIME",	
+			"ISDETAILS",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"SORTING",	
+			"ID"
+		from 
+			"OLO_PD_DP_OTHER"
+		where 
+			
+			1=1
+			<if test="ID != null and ID !=''">
+				and  "ID" = #{ID} 
+			</if>
+			<if test="SPREAD1 != null and SPREAD1 !=''">
+				and  "SPREAD1" like  CONCAT(CONCAT('%',#{SPREAD1}),'%') 
+			</if>	
+			<if test="CODE != null and CODE !=''">
+				and	CODE in  
+				<foreach collection="CODE" item="item" index="index" open="(" separator="," close=")">  
+				    #{item}  
+				</foreach>  
+			</if>
+			<!-- 分类ID集合  -->
+			<if test="classify!=null and classify!=''">
+					and  "ID" in (
+					SELECT O_ID1 from OLO_PD_MENU_DP opmd where opmd.O_ID2 in
+						<foreach collection="classify" item="item" index="index" open="(" separator="," close=")">  
+			   			 #{item}  
+						</foreach>  
+				)
+			</if>	
+			<if test="EFFECTIVE_TIME !=null and EFFECTIVE_TIME !=''">
+				and a.EFFECTIVE_TIME &lt;  trunc(sysdate, 'mi')
+			</if>
+	</select>
+	<!-- 通过ID获取数据 -->
+	<select id="findByIds" parameterType="java.util.List" resultType="pd">
+		select 
+			"NAME",
+			"LABEL",	
+			"CODE",	
+			"DIMENSION",	
+			"PRICE",	
+			"IMAGE_URL",	
+			"IMAGE_BUG_URL",	
+			"REMARKS",
+			"COMPANY",	
+			"SEALED",	
+			"EFFECTIVE_TIME",	
+			"ISDETAILS",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"SORTING",	
+			"ID"
+		from 
+			"OLO_PD_DP_OTHER"
+		where 
+			
+			1=1
+			<if test="list != null and list !=''">
+				and  "ID" in 
+						<foreach collection="list" item="item" index="index" open="(" separator="," close=")">  
+			   			 #{item.ID}  
+						</foreach>  
+			</if>
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."NAME",
+				a."LABEL",	
+				a."CODE",	
+				a."DIMENSION",	
+				a."PRICE",	
+				a."IMAGE_URL",	
+				a."IMAGE_BUG_URL",	
+				a."REMARKS",
+				a."COMPANY",	
+				a."SEALED",	
+				a."EFFECTIVE_TIME",	
+				a."ISDETAILS",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."SORTING",	
+				a."ID"
+		from 
+				"OLO_PD_DP_OTHER" a
+				where  1=1
+			
+				<if test="pd.key!=null and pd.key!=''">
+				and (a.CODE like  CONCAT(CONCAT('%',#{pd.key}),'%')
+					or a.NAME like  CONCAT(CONCAT('%',#{pd.key}),'%')
+					or a.SPREAD1 like  CONCAT(CONCAT('%',#{pd.key}),'%')
+				)
+				</if>
+				<!-- 分类ID集合  -->
+				<if test="pd.classify!=null and pd.classify!=''">
+						and  "ID" in (
+						SELECT O_ID1 from OLO_PD_MENU_DP opmd where opmd.O_ID2 in
+							<foreach collection="pd.classify" item="item" index="index" open="(" separator="," close=")">  
+				   			 #{item}  
+							</foreach>  
+					)
+				</if>
+			<if test="pd.SEALED!=null and pd.SEALED!=''">
+				and a.SEALED =  #{pd.SEALED}
+			</if>
+			<if test="pd.EFFECTIVE_TIME !=null and pd.EFFECTIVE_TIME !=''">
+				and a.EFFECTIVE_TIME &lt; trunc(sysdate, 'mi')
+			</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."NAME",
+				a."LABEL",	
+				a."CODE",	
+				a."DIMENSION",	
+				a."PRICE",	
+				a."IMAGE_URL",	
+				a."IMAGE_BUG_URL",	
+				a."REMARKS",
+				a."COMPANY",	
+				a."SEALED",	
+				a."EFFECTIVE_TIME",	
+				a."ISDETAILS",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."SORTING",	
+				a."ID"
+		from 
+				"OLO_PD_DP_OTHER" a
+				where  1=1
+			
+				<if test="key!=null and key!=''">
+					and (a.CODE like  CONCAT(CONCAT('%',#{key}),'%')
+						or a.NAME like  CONCAT(CONCAT('%',#{key}),'%')
+						or a.SPREAD1 like  CONCAT(CONCAT('%',#{key}),'%')
+					)
+				</if>
+				<!-- 分类ID集合  -->
+				<if test="classify!=null and classify!=''">
+						and  "ID" in (
+						SELECT O_ID1 from OLO_PD_MENU_DP opmd where opmd.O_ID2 in
+							<foreach collection="classify" item="item" index="index" open="(" separator="," close=")">  
+				   			 #{item}  
+							</foreach>  
+					)
+				</if>
+				<!-- <if test="pd.classify!=null">
+				and 
+				SPREAD2 IN (
+				
+						SELECT GOODS_ID from (SELECT   GOODS_ID,wm_concat(T_ID) T_ID    from OLO_PD_MENU_PRODUCT   GROUP BY GOODS_ID)  opmp
+					WHERE
+						opmp.T_ID 	 like  replace(CONCAT(CONCAT('%', '<foreach item="item" index="index" collection="pd.classify" open="" separator="," close="">${item}</foreach>'),'%'),' ','')
+					)
+			</if> -->
+			
+			<if test="SEALED!=null and SEALED!=''">
+				and a.SEALED =  #{SEALED}
+			</if>
+			<if test="EFFECTIVE_TIME !=null and EFFECTIVE_TIME !=''">
+				and a.EFFECTIVE_TIME &lt;  trunc(sysdate, 'mi')
+			</if>
+			
+			<if test="sort !=null and sort !=''">
+				ORDER BY  ${sort}
+			</if>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_DP_OTHER"
+		where 
+			"ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

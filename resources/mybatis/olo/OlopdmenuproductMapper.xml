@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdmenuproductMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_MENU_PRODUCT"(
+			"SKU_ID",	
+			"GOODS_ID",	
+			"T_ID",	
+			"INSERT_TIME",	
+			"ID"
+		) values (
+				    #{SKU_ID},	  
+				    #{GOODS_ID},	  
+				    #{T_ID},	  
+						 #{INSERT_TIME,jdbcType=TIMESTAMP},	
+			#{ID}
+		)
+	</insert>
+	<!-- 批量插入 -->
+	 <insert id="insertByBatch" parameterType="java.util.List" useGeneratedKeys="false">
+	 	 insert into "OLO_PD_MENU_PRODUCT"(
+			"SKU_ID",	
+			"GOODS_ID",	
+			"T_ID",	
+			"INSERT_TIME",	
+			"ID"
+		) 
+        <foreach collection="list" item="item" index="index" separator="union all">
+            ( SELECT   #{item.SKU_ID},	  
+				    #{item.GOODS_ID},	  
+				    #{item.T_ID},	  
+					#{item.INSERT_TIME,jdbcType=TIMESTAMP},	
+			#{item.ID}  FROM DUAL)
+        </foreach>
+	 
+	 </insert>
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_MENU_PRODUCT"
+		where 
+			"ID" = #{ID}
+	</delete>
+		<!-- 删除-->
+	<delete id="deleteGoodsId" parameterType="pd">
+		delete from "OLO_PD_MENU_PRODUCT"
+		where 
+			"GOODS_ID" = #{GOODS_ID}
+	</delete>
+	<!-- 删除-->
+	<delete id="deleteGoosId" parameterType="pd">
+		delete from "OLO_PD_MENU_PRODUCT"
+		where 
+			"GOODS_ID" = #{GOODS_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_MENU_PRODUCT"
+			set 
+			<if test="SKU_ID != null">
+				   	"SKU_ID" = #{SKU_ID},	
+				
+			</if>
+			<if test="GOODS_ID != null">
+				   	"GOODS_ID" = #{GOODS_ID},	
+				
+			</if>
+			<if test="T_ID != null">
+				   	"T_ID" = #{T_ID},	
+				
+			</if>
+			<if test="INSERT_TIME != null">
+					"INSERT_TIME" = #{INSERT_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			"ID" = #{ID}
+			where 
+				"ID" = #{ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"SKU_ID",	
+			"GOODS_ID",	
+			"T_ID",	
+			"INSERT_TIME",	
+			"ID"
+		from 
+			"OLO_PD_MENU_PRODUCT"
+		where 
+			"ID" = #{ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."SKU_ID",	
+				a."GOODS_ID",	
+				a."T_ID",	
+				a."INSERT_TIME",	
+				a."ID"
+		from 
+				"OLO_PD_MENU_PRODUCT" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."SKU_ID",	
+				a."GOODS_ID",	
+				a."T_ID",	
+				a."INSERT_TIME",	
+				a."ID"
+		from 
+				"OLO_PD_MENU_PRODUCT" a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_MENU_PRODUCT"
+		where 
+			"ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteGoodsIdAll" parameterType="String">
+		delete from "OLO_PD_MENU_PRODUCT"
+		where 
+			"GOODS_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteListGoodsIdAll" parameterType="java.util.List">
+		delete from "OLO_PD_MENU_PRODUCT"
+		where 
+			"GOODS_ID" in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                 #{item.GOODS_ID}
+		</foreach>
+	</delete>
+</mapper>

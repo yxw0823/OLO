@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdabvalMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_AB_VAL"(
+			"A_NAME",	
+			"A_CONTENT",	
+			"INSERT_TIME",	
+			"SEALED",	
+			"A_ID"
+		) values (
+				    #{A_NAME},	  
+				    #{A_CONTENT},	  
+						 #{INSERT_TIME,jdbcType=TIMESTAMP},	
+				    #{SEALED},	  
+			#{A_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_AB_VAL"
+		where 
+			"A_ID" = #{A_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_AB_VAL"
+			set 
+			<if test="A_NAME != null">
+				   	"A_NAME" = #{A_NAME},	
+				
+			</if>
+			<if test="A_CONTENT != null">
+				   	"A_CONTENT" = #{A_CONTENT},	
+				
+			</if>
+			<if test="INSERT_TIME != null">
+					"INSERT_TIME" = #{INSERT_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			"A_ID" = "A_ID"
+			where 
+				"A_ID" = #{A_ID}
+	</update>
+	
+	
+	<!-- 通过A_ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"A_NAME",	
+			"A_CONTENT",	
+			"INSERT_TIME",	
+			"SEALED",	
+			"A_ID"
+		from 
+			"OLO_PD_AB_VAL"
+		where 
+		1=1
+		<if test="A_ID != null and A_ID !=''">
+			AND   	"A_ID"  = #{A_ID}  
+		</if>
+		<if test="A_NAME != null and A_NAME !=''">
+			AND   	"A_NAME"  = #{A_NAME}  
+		</if>
+	</select>
+		<!-- 通过A_ID获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			"A_NAME",	
+			"A_CONTENT",	
+			"INSERT_TIME",	
+			"SEALED",	
+			"A_ID"
+		from 
+			"OLO_PD_AB_VAL"
+		where 
+		1=1
+		<if test="A_NAME != null and A_NAME !=''">
+			AND   	"A_NAME"  = #{A_NAME}  
+		</if>
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."A_NAME",	
+				a."A_CONTENT",	
+				a."INSERT_TIME",	
+				a."SEALED",	
+				a."A_ID"
+		from 
+				"OLO_PD_AB_VAL" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."A_NAME",	
+				a."A_CONTENT",	
+				a."INSERT_TIME",	
+				a."SEALED",	
+				a."A_ID"
+		from 
+				"OLO_PD_AB_VAL" a
+		WHERE  1=1
+		<if test="A_NAME != null and A_NAME !=''">
+			AND   	"A_NAME"  LIKE '%'||#{A_NAME}||'%'  
+		</if>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_AB_VAL"
+		where 
+			"A_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

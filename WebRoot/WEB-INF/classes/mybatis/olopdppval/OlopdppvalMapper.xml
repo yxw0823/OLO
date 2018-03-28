@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdppvalMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_PP_VAL"(
+			"PROPERTY_NAME",	
+			"PROPERTY_CONTENT",	
+			"INSERT_TIME",	
+			"SEALED",	
+			"PROPERTY_ID"
+		) values (
+				    #{PROPERTY_NAME},	  
+				    #{PROPERTY_CONTENT},	  
+						 #{INSERT_TIME,jdbcType=TIMESTAMP},	
+				    #{SEALED},	  
+			#{PROPERTY_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_PP_VAL"
+		where 
+			"PROPERTY_ID" = #{PROPERTY_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_PP_VAL"
+			set 
+			<if test="PROPERTY_NAME != null">
+				   	"PROPERTY_NAME" = #{PROPERTY_NAME},	
+				
+			</if>
+			<if test="PROPERTY_CONTENT != null">
+				   	"PROPERTY_CONTENT" = #{PROPERTY_CONTENT},	
+				
+			</if>
+			<if test="INSERT_TIME != null">
+					"INSERT_TIME" = #{INSERT_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			"PROPERTY_ID" = "PROPERTY_ID"
+			where 
+				"PROPERTY_ID" = #{PROPERTY_ID}
+	</update>
+	
+	
+	<!-- 通过PROPERTY_ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"PROPERTY_NAME",	
+			"PROPERTY_CONTENT",	
+			"INSERT_TIME",	
+			"SEALED",	
+			"PROPERTY_ID"
+		from 
+			"OLO_PD_PP_VAL"
+		where 
+			"PROPERTY_ID" = #{PROPERTY_ID}
+	</select>
+	
+		<!-- 通过PROPERTY_ID获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			"PROPERTY_NAME",	
+			"PROPERTY_CONTENT",	
+			"INSERT_TIME",	
+			"SEALED",	
+			"PROPERTY_ID"
+		from 
+			"OLO_PD_PP_VAL"
+		where 
+			"PROPERTY_NAME" = #{PROPERTY_NAME}
+	</select>
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."PROPERTY_NAME",	
+				a."PROPERTY_CONTENT",	
+				a."INSERT_TIME",	
+				a."SEALED",	
+				a."PROPERTY_ID"
+		from 
+				"OLO_PD_PP_VAL" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."PROPERTY_NAME",	
+				a."PROPERTY_CONTENT",	
+				a."INSERT_TIME",	
+				a."SEALED",	
+				a."PROPERTY_ID"
+		from 
+				"OLO_PD_PP_VAL" a
+	</select>
+	<!-- 列表(全部) -->
+	<select id="listAllByAID" parameterType="pd" resultType="pd">
+		select
+				a."PROPERTY_NAME",	
+				a."PROPERTY_CONTENT",	
+				a."INSERT_TIME",	
+				a."SEALED",	
+				a."PROPERTY_ID"
+		from 
+				"OLO_PD_PP_VAL" a
+		where		a.PROPERTY_ID in  (SELECT  O_ID2 from OLO_PD_AB_PP_RELATION where O_ID1=#{O_ID1})
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_PP_VAL"
+		where 
+			"PROPERTY_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

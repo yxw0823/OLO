@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdabskuMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_AB_SKU"(
+			"A_ID",	
+			"A_NAME",
+			"PROPERTY_ID",
+			"PROPERTY_VALUE",		
+			"CREATE_TIME",	
+			"SORTING",	
+			"SEALED",	
+			"SKU_ID"
+		) values (
+				    #{A_ID},	 
+				   	#{A_NAME}, 
+				    #{PROPERTY_ID},	  
+				    #{PROPERTY_VALUE},		
+					#{CREATE_TIME,jdbcType=TIMESTAMP},	
+				    #{SORTING},	  
+				    #{SEALED},	  
+					#{SKU_ID}
+		)
+	</insert>
+	<!-- 新增-->
+	<insert id="batchSave"  parameterType="java.util.List"
+		useGeneratedKeys="false">
+		insert into "OLO_PD_AB_SKU"(
+			"A_ID",	
+			"A_NAME",
+			"PROPERTY_ID",
+			"PROPERTY_VALUE",		
+			"CREATE_TIME",	
+			"SORTING",	
+			"SEALED",	
+			"SKU_ID"
+		)<foreach collection="list" item="item" index="index"
+			separator="union all">
+			( SELECT #{item.A_ID},
+			#{item.A_NAME},
+			#{item.PROPERTY_ID},
+			#{item.PROPERTY_VALUE},
+			#{item.CREATE_TIME,jdbcType=TIMESTAMP},
+			#{item.SORTING},
+			#{item.SEALED},	 
+			#{item.SKU_ID}
+		 	 FROM DUAL)
+		</foreach> 
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_AB_SKU"
+		where 
+			"SKU_ID" = #{SKU_ID}
+	</delete>
+	
+	
+	
+	<!-- 删除-->
+	<delete id="deleteGoodsId" parameterType="pd">
+		DELETE  from OLO_PD_AB_SKU where SKU_ID 
+		IN 
+		(SELECT SKU_ID FROM OLO_PD_SKU WHERE GOODS_ID=#{GOODS_ID})
+	
+	</delete>
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_AB_SKU"
+			set 
+			<if test="A_ID != null">
+				   	"A_ID" = #{A_ID},	
+				
+			</if>
+			<if test="A_NAME != null">
+				   	"A_NAME" = #{A_NAME},	
+			</if>
+			<if test="PROPERTY_ID != null">
+				   	"PROPERTY_ID" = #{PROPERTY_ID},	
+				
+			</if>
+			<if test="PROPERTY_VALUE != null">
+				   	"PROPERTY_VALUE" = #{PROPERTY_VALUE},	
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="SORTING != null">
+				   	"SORTING" = #{SORTING},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			"SKU_ID" = #{SKU_ID}
+			where 
+				"SKU_ID" = #{SKU_ID}
+	</update>
+	
+	
+	<!-- 通过SKU_ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"A_ID",	
+			"A_NAME",	
+			"PROPERTY_ID",
+			"PROPERTY_VALUE",	
+			"CREATE_TIME",	
+			"SORTING",	
+			"SEALED",	
+			"SKU_ID"
+		from 
+			"OLO_PD_AB_SKU"
+		where 
+			"SKU_ID" = #{SKU_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."A_ID",	
+				a."A_NAME",	
+				a."PROPERTY_ID",
+				a."PROPERTY_VALUE",		
+				a."CREATE_TIME",	
+				a."SORTING",	
+				a."SEALED",	
+				a."SKU_ID"
+		from 
+				"OLO_PD_AB_SKU" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."A_ID",
+				a."A_NAME",		
+				a."PROPERTY_ID",
+				a."PROPERTY_VALUE",			
+				a."CREATE_TIME",	
+				a."SORTING",	
+				a."SEALED",	
+				a."SKU_ID"
+		from 
+				"OLO_PD_AB_SKU" a
+	</select>
+	<!-- 列表(全部) -->
+	<select id="findByGOODSID" parameterType="pd" resultType="pd">
+		select
+				a."A_ID",
+				a."A_NAME",		
+				a."PROPERTY_ID",
+				a."PROPERTY_VALUE",			
+				a."CREATE_TIME",	
+				a."SORTING",	
+				a."SEALED",	
+				a."SKU_ID"
+		from 
+				"OLO_PD_AB_SKU" a
+				 where a.SKU_ID in  (SELECT SKU_ID from OLO_PD_SKU  where GOODS_ID =#{GOODS_ID})
+	</select>
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_AB_SKU"
+		where 
+			"SKU_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

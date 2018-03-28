@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdorderMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_ORDER"(
+			"STATE",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"USER_ID",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"PRICE",
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"ORDER_ID"
+		) values (
+					    	#{STATE,jdbcType=VARCHAR},
+						    		#{SEALED,jdbcType=DOUBLE},
+						 #{CREATE_TIME,jdbcType=TIMESTAMP},	
+					    	#{USER_ID,jdbcType=VARCHAR},
+					    	#{CREATION_PEOPLE_ID,jdbcType=VARCHAR},
+						 #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+					    	#{UPDATE_PEOPLE_ID,jdbcType=VARCHAR},
+					    	#{PRICE},
+					    	#{SPREAD1,jdbcType=VARCHAR},
+					    	#{SPREAD2,jdbcType=VARCHAR},
+					    	#{SPREAD3,jdbcType=VARCHAR},
+					    	#{SPREAD4,jdbcType=VARCHAR},
+					    	#{SPREAD5,jdbcType=VARCHAR},
+			#{ORDER_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_ORDER"
+		where 
+			"ORDER_ID" = #{ORDER_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_ORDER"
+			set 
+			<if test="STATE != null">
+				   
+				   	
+					    		"STATE" = #{STATE,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SEALED != null">
+				   
+				   	
+						    		"SEALED" = #{SEALED,jdbcType=DOUBLE} ,
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="USER_ID != null">
+				   
+				   	
+					    		"USER_ID" = #{USER_ID,jdbcType=VARCHAR},
+				
+			</if>
+				   
+				   	
+			"PRICE" = #{PRICE},
+				
+			<if test="CREATION_PEOPLE_ID != null">
+				   
+				   	
+					    		"CREATION_PEOPLE_ID" = #{CREATION_PEOPLE_ID,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="UPDATE_TIME != null">
+					"UPDATE_TIME" = #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">
+				   
+				   	
+					    		"UPDATE_PEOPLE_ID" = #{UPDATE_PEOPLE_ID,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD1 != null">
+				   
+				   	
+					    		"SPREAD1" = #{SPREAD1,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD2 != null">
+				   
+				   	
+					    		"SPREAD2" = #{SPREAD2,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD3 != null">
+				   
+				   	
+					    		"SPREAD3" = #{SPREAD3,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD4 != null">
+				   
+				   	
+					    		"SPREAD4" = #{SPREAD4,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD5 != null">
+				   
+				   	
+					    		"SPREAD5" = #{SPREAD5,jdbcType=VARCHAR},
+				
+			</if>
+			"ORDER_ID" = #{ORDER_ID}
+			where 
+				"ORDER_ID" = #{ORDER_ID}
+	</update>
+	
+	
+	<!-- 通过ORDER_ID获取数据 -->
+	<select id="countOrder" parameterType="pd" resultType="pd">
+		SELECT
+		*
+		FROM
+		(
+			SELECT
+				STATUS,
+				nums
+			FROM
+				(
+					
+					SELECT vosfc.STATUS,	COUNT (0) nums  from OLO_PD_ORDER opo LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = OPO.ORDER_ID
+					GROUP BY
+					vosfc.STATUS
+				)
+		) PIVOT (sum(nums) FOR STATUS IN(已生产','被退回','其它','已发货','店面内部待审批'))
+	</select>
+	
+	<!-- 通过ORDER_ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+			vosfc.STATUS, 
+			"STATE",	
+			"SEALED",	
+			"USER_ID",	
+			"PRICE",	
+			to_char(	A.CREATE_TIME,'yyyy-mm-dd hh24:mi:ss') CREATE_TIME ,	
+			a."CREATION_PEOPLE_ID",	
+			to_char(	A.UPDATE_TIME,'yyyy-mm-dd hh24:mi:ss') UPDATE_TIME ,
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"ORDER_ID"
+		from 
+			"OLO_PD_ORDER" opo
+			 LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = OPO.ORDER_ID
+		where 
+			"ORDER_ID" = #{ORDER_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				vosfc.STATUS,
+				a."STATE",	
+				a."SEALED",	
+				a."USER_ID",
+				a."PRICE",		
+				to_char(	A.CREATE_TIME,'yyyy-mm-dd hh24:mi:ss') CREATE_TIME ,	
+				a."CREATION_PEOPLE_ID",	
+				to_char(	A.UPDATE_TIME,'yyyy-mm-dd hh24:mi:ss') UPDATE_TIME ,
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."ORDER_ID"
+		from 
+				"OLO_PD_ORDER" a
+				 
+			 LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = a.ORDER_ID
+				where 1 =1 
+				<if test="pd.ORDER_ID !=null">
+					 AND a.ORDER_ID = #{pd.ORDER_ID}
+				</if>
+				<if test="pd.USER_ID !=null">
+					 AND a.USER_ID = #{pd.USER_ID}
+				</if>
+				<if test="pd.STATE !=null">
+					 AND a.STATE = #{pd.STATE}
+				</if>
+				<if test="pd.STATUS !=null">
+					 AND VOSFC.STATUS = #{pd.STATUS}
+				</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				vosfc.STATUS,
+				a."STATE",	
+				a."SEALED",	
+				a."USER_ID",
+				a."PRICE",		
+				to_char(	A.CREATE_TIME,'yyyy-mm-dd hh24:mi:ss') CREATE_TIME ,	
+				a."CREATION_PEOPLE_ID",	
+				to_char(	A.UPDATE_TIME,'yyyy-mm-dd hh24:mi:ss') UPDATE_TIME ,
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."ORDER_ID"
+		from 
+				"OLO_PD_ORDER" a
+			 	LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = a.ORDER_ID
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_ORDER"
+		where 
+			"ORDER_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

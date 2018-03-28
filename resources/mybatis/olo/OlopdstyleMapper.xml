@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdstyleMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_STYLE"(
+		<if test="NAME != null">
+			"NAME",	
+			</if>
+			<if test="ENAME != null">
+			"ENAME",
+			</if>
+			<if test="REMARKS != null">	
+			"REMARKS",
+			</if>
+			<if test="SEALED != null">		
+			"SEALED",	
+			</if>
+			<if test="CREATE_TIME != null">	
+			"CREATE_TIME",	
+			</if>
+			<if test="REMARKS != null">	
+			"CREATION_PEOPLE_ID",	
+			</if>
+			<if test="UPDATE_TIME != null">	
+			"UPDATE_TIME",	
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">	
+			"UPDATE_PEOPLE_ID",	
+			</if>
+			<if test="SPREAD1 != null">	
+			"SPREAD1",	
+			</if>
+			<if test="SPREAD2 != null">	
+			"SPREAD2",	
+			</if>
+			<if test="SPREAD3 != null">	
+			"SPREAD3",	
+			</if>
+			<if test="SPREAD4 != null">	
+			"SPREAD4",	
+			</if>
+			<if test="SPREAD5 != null">	
+			"SPREAD5",	
+			</if>
+			"ID"
+		) values (
+			<if test="NAME != null">	
+				    #{NAME},	
+				    </if>
+			<if test="ENAME != null">	  
+				    #{ENAME},	  
+				    </if>
+			<if test="REMARKS != null">	
+				    #{REMARKS},	  
+				    </if>
+			<if test="SEALED != null">	
+				    #{SEALED},	  
+				    </if>
+			<if test="CREATE_TIME != null">	
+						 #{CREATE_TIME,jdbcType=TIMESTAMP},	
+						 </if>
+			<if test="CREATION_PEOPLE_ID != null">	
+				    #{CREATION_PEOPLE_ID},
+				    </if>
+			<if test="UPDATE_TIME != null">		  
+						 #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+						 </if>
+			<if test="UPDATE_PEOPLE_ID != null">	
+				    #{UPDATE_PEOPLE_ID},
+				    </if>
+			<if test="SPREAD1 != null">		  
+				    #{SPREAD1},	  
+				    </if>
+			<if test="SPREAD2 != null">	
+				    #{SPREAD2},	  
+				    </if>
+			<if test="SPREAD3 != null">	
+				    #{SPREAD3},	  
+				    </if>
+			<if test="SPREAD4 != null">	
+				    #{SPREAD4},	  
+				    </if>
+			<if test="SPREAD5 != null">	
+				    #{SPREAD5},	  
+				    </if>
+			#{ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_STYLE"
+		where 
+			"ID" = #{ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_STYLE"
+			set 
+			<if test="NAME != null">
+				   	"NAME" = #{NAME},	
+				
+			</if>
+			<if test="ENAME != null">
+				   	"ENAME" = #{ENAME},	
+				
+			</if>
+			<if test="REMARKS != null">
+				   	"REMARKS" = #{REMARKS},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="CREATION_PEOPLE_ID != null">
+				   	"CREATION_PEOPLE_ID" = #{CREATION_PEOPLE_ID},	
+				
+			</if>
+			<if test="UPDATE_TIME != null">
+					"UPDATE_TIME" = #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">
+				   	"UPDATE_PEOPLE_ID" = #{UPDATE_PEOPLE_ID},	
+				
+			</if>
+			<if test="SPREAD1 != null">
+				   	"SPREAD1" = #{SPREAD1},	
+				
+			</if>
+			<if test="SPREAD2 != null">
+				   	"SPREAD2" = #{SPREAD2},	
+				
+			</if>
+			<if test="SPREAD3 != null">
+				   	"SPREAD3" = #{SPREAD3},	
+				
+			</if>
+			<if test="SPREAD4 != null">
+				   	"SPREAD4" = #{SPREAD4},	
+				
+			</if>
+			<if test="SPREAD5 != null">
+				   	"SPREAD5" = #{SPREAD5},	
+				
+			</if>
+			"ID" = #{ID}
+			where 
+				"ID" = #{ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"NAME",	
+			"ENAME",	
+			"REMARKS",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"ID"
+		from 
+			"OLO_PD_STYLE"
+		where 
+			"ID" = #{ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."NAME",	
+				a."ENAME",	
+				a."REMARKS",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."ID"
+		from 
+				"OLO_PD_STYLE" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."NAME",	
+				a."ENAME",	
+				a."REMARKS",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."ID"
+		from 
+				"OLO_PD_STYLE" a
+		where
+		1=1  
+		<if test="ids !=null">
+		  and 	"ID" in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+		</if>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_STYLE"
+		where 
+			"ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

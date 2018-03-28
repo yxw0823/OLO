@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdshoppingcartMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_SHOPPING_CART"(
+			"USER_ID",	
+			"SKU_ID",	
+			"CODE",	
+			"TITLE",	
+			"NUMBER",	
+			"PRICE",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"CART_ID"
+		) values (
+					    	#{USER_ID,jdbcType=VARCHAR},
+					    	#{SKU_ID,jdbcType=VARCHAR},
+					    	#{CODE,jdbcType=VARCHAR},
+					    	#{TITLE,jdbcType=VARCHAR},
+						    		#{NUMBER,jdbcType=DOUBLE},
+						    		#{PRICE,jdbcType=DOUBLE},
+						 #{CREATE_TIME,jdbcType=TIMESTAMP},	
+					    	#{CREATION_PEOPLE_ID,jdbcType=VARCHAR},
+						 #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+					    	#{UPDATE_PEOPLE_ID,jdbcType=VARCHAR},
+					    	#{SPREAD1,jdbcType=VARCHAR},
+					    	#{SPREAD2,jdbcType=VARCHAR},
+					    	#{SPREAD3,jdbcType=VARCHAR},
+					    	#{SPREAD4,jdbcType=VARCHAR},
+					    	#{SPREAD5,jdbcType=VARCHAR},
+			#{CART_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_SHOPPING_CART"
+		where 
+			"CART_ID" = #{CART_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_SHOPPING_CART"
+			set 
+			<if test="USER_ID != null">
+				   
+				   	
+					    		"USER_ID" = #{USER_ID,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SKU_ID != null">
+				   
+				   	
+					    		"SKU_ID" = #{SKU_ID,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="CODE != null">
+				   
+				   	
+					    		"CODE" = #{CODE,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="TITLE != null">
+				   
+				   	
+					    		"TITLE" = #{TITLE,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="NUMBER != null">
+				   
+				   	
+						    		"NUMBER" = #{NUMBER,jdbcType=DOUBLE} ,
+				
+			</if>
+			<if test="PRICE != null">
+				   
+				   	
+						    		"PRICE" = #{PRICE,jdbcType=DOUBLE} ,
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="CREATION_PEOPLE_ID != null">
+				   
+				   	
+					    		"CREATION_PEOPLE_ID" = #{CREATION_PEOPLE_ID,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="UPDATE_TIME != null">
+					"UPDATE_TIME" = #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">
+				   
+				   	
+					    		"UPDATE_PEOPLE_ID" = #{UPDATE_PEOPLE_ID,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD1 != null">
+				   
+				   	
+					    		"SPREAD1" = #{SPREAD1,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD2 != null">
+				   
+				   	
+					    		"SPREAD2" = #{SPREAD2,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD3 != null">
+				   
+				   	
+					    		"SPREAD3" = #{SPREAD3,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD4 != null">
+				   
+				   	
+					    		"SPREAD4" = #{SPREAD4,jdbcType=VARCHAR},
+				
+			</if>
+			<if test="SPREAD5 != null">
+				   
+				   	
+					    		"SPREAD5" = #{SPREAD5,jdbcType=VARCHAR},
+				
+			</if>
+			"CART_ID" = #{CART_ID}
+			where 
+				"CART_ID" = #{CART_ID}
+	</update>
+	
+	
+	<!-- 通过CART_ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"USER_ID",	
+			"SKU_ID",	
+			"CODE",	
+			"TITLE",	
+			"NUMBER",	
+			"PRICE",	
+			to_char(CREATE_TIME,'yyyy-mm-dd hh24:mi:ss') CREATE_TIME ,	
+			"CREATION_PEOPLE_ID",	
+			to_char(UPDATE_TIME,'yyyy-mm-dd hh24:mi:ss') UPDATE_TIME ,
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"CART_ID"
+		from 
+			"OLO_PD_SHOPPING_CART"
+		where 
+			"CART_ID" = #{CART_ID}
+	</select>
+	
+		<!-- 通过CART_ID获取数据 -->
+	<select id="findCart" parameterType="pd" resultType="pd">
+		select 
+			"USER_ID",	
+			"SKU_ID",	
+			"CODE",	
+			"TITLE",	
+			"NUMBER",	
+			"PRICE",	
+			to_char(CREATE_TIME,'yyyy-mm-dd hh24:mi:ss') CREATE_TIME ,	
+			"CREATION_PEOPLE_ID",	
+			to_char(UPDATE_TIME,'yyyy-mm-dd hh24:mi:ss') UPDATE_TIME ,
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"CART_ID"
+		from 
+			"OLO_PD_SHOPPING_CART"
+		where 
+		  1=1
+			<if test="USER_ID !=null">
+					 AND  USER_ID = #{USER_ID}
+				</if>
+				<if test="CODE !=null">
+					 AND CODE = #{CODE}
+				</if>
+					<if test="SKU_ID!=null">
+					 AND SKU_ID = #{SKU_ID}
+				</if>
+	</select>
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."USER_ID",	
+				a."SKU_ID",	
+				a."CODE",	
+				a."TITLE",	
+				a."NUMBER",	
+				a."PRICE",	
+				to_char(	A.CREATE_TIME,'yyyy-mm-dd hh24:mi:ss') CREATE_TIME ,	
+				a."CREATION_PEOPLE_ID",	
+				to_char(	A.UPDATE_TIME,'yyyy-mm-dd hh24:mi:ss') UPDATE_TIME ,	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."CART_ID"
+		from 
+				"OLO_PD_SHOPPING_CART" a
+		where
+				1=1
+				<if test="pd.USER_ID != null">
+					and a.USER_ID =#{pd.USER_ID}
+				</if>
+				<if test="pd.SKU_ID != null">
+					and a.SKU_ID =#{pd.SKU_ID}
+				</if>
+				<if test="pd.CODE != null">
+					and a.CODE =#{pd.CODE}
+				</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."USER_ID",	
+				a."SKU_ID",	
+				a."CODE",	
+				a."TITLE",	
+				a."NUMBER",	
+				a."PRICE",	
+				to_char(	A.CREATE_TIME,'yyyy-mm-dd hh24:mi:ss') CREATE_TIME ,	
+				a."CREATION_PEOPLE_ID",	
+				to_char(	A.UPDATE_TIME,'yyyy-mm-dd hh24:mi:ss') UPDATE_TIME ,
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."CART_ID"
+		from 
+				"OLO_PD_SHOPPING_CART" a
+				where 1=1 
+				<if test="IDS !=NULL">
+					and	"CART_ID" in
+						<foreach item="item" index="index" collection="IDS" open="(" separator="," close=")">
+				                 #{item}
+						</foreach>
+				</if>
+			
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_SHOPPING_CART"
+		where 
+			"CART_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

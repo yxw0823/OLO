@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OlopdflfileMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into "OLO_PD_FL_FILE"(
+			"FILE_PATH",	
+			"FILETYPE",	
+			"FL_ID",	
+			"ZD_ID",	
+			"SORTING",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"FILE_ID"
+		) values (
+				    #{FILE_PATH,jdbcType=VARCHAR},	  
+				    #{FILETYPE,jdbcType=VARCHAR},	  
+				    #{FL_ID,jdbcType=VARCHAR},	  
+				    #{ZD_ID,jdbcType=VARCHAR},	  
+				    #{SORTING},	  
+				    #{SEALED},	  
+						 #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				    #{CREATION_PEOPLE_ID,jdbcType=VARCHAR},	  
+						 #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				    #{UPDATE_PEOPLE_ID,jdbcType=VARCHAR},	  
+				    #{SPREAD1,jdbcType=VARCHAR},	  
+				    #{SPREAD2,jdbcType=VARCHAR},	  
+				    #{SPREAD3,jdbcType=VARCHAR},	  
+				    #{SPREAD4,jdbcType=VARCHAR},	  
+				    #{SPREAD5,jdbcType=VARCHAR},	  
+			#{FILE_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from "OLO_PD_FL_FILE"
+		where 
+			"FILE_ID" = #{FILE_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  "OLO_PD_FL_FILE"
+			set 
+			<if test="FILE_PATH != null">
+				   	"FILE_PATH" = #{FILE_PATH},	
+				
+			</if>
+			<if test="FILETYPE != null">
+				   	"FILETYPE" = #{FILETYPE},	
+				
+			</if>
+			<if test="FL_ID != null">
+				   	"FL_ID" = #{FL_ID},	
+				
+			</if>
+			<if test="ZD_ID != null">
+				   	"ZD_ID" = #{ZD_ID},	
+				
+			</if>
+			<if test="SORTING != null">
+				   	"SORTING" = #{SORTING},	
+				
+			</if>
+			<if test="SEALED != null">
+				   	"SEALED" = #{SEALED},	
+				
+			</if>
+			<if test="CREATE_TIME != null">
+					"CREATE_TIME" = #{CREATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="CREATION_PEOPLE_ID != null">
+				   	"CREATION_PEOPLE_ID" = #{CREATION_PEOPLE_ID},	
+				
+			</if>
+			<if test="UPDATE_TIME != null">
+					"UPDATE_TIME" = #{UPDATE_TIME,jdbcType=TIMESTAMP},	
+				
+			</if>
+			<if test="UPDATE_PEOPLE_ID != null">
+				   	"UPDATE_PEOPLE_ID" = #{UPDATE_PEOPLE_ID},	
+				
+			</if>
+			<if test="SPREAD1 != null">
+				   	"SPREAD1" = #{SPREAD1},	
+				
+			</if>
+			<if test="SPREAD2 != null">
+				   	"SPREAD2" = #{SPREAD2},	
+				
+			</if>
+			<if test="SPREAD3 != null">
+				   	"SPREAD3" = #{SPREAD3},	
+				
+			</if>
+			<if test="SPREAD4 != null">
+				   	"SPREAD4" = #{SPREAD4},	
+				
+			</if>
+			<if test="SPREAD5 != null">
+				   	"SPREAD5" = #{SPREAD5},	
+				
+			</if>
+			"FILE_ID" = #{FILE_ID}
+			where 
+				"FILE_ID" = #{FILE_ID}
+	</update>
+	
+	
+	<!-- 通过FILE_ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			"FILE_PATH",	
+			"FILETYPE",	
+			"FL_ID",	
+			"ZD_ID",	
+			"SORTING",	
+			"SEALED",	
+			"CREATE_TIME",	
+			"CREATION_PEOPLE_ID",	
+			"UPDATE_TIME",	
+			"UPDATE_PEOPLE_ID",	
+			"SPREAD1",	
+			"SPREAD2",	
+			"SPREAD3",	
+			"SPREAD4",	
+			"SPREAD5",	
+			"FILE_ID"
+		from 
+			"OLO_PD_FL_FILE"
+		where 
+			"FILE_ID" = #{FILE_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a."FILE_PATH",	
+				a."FILETYPE",	
+				a."FL_ID",	
+				a."ZD_ID",	
+				a."SORTING",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."FILE_ID"
+		from 
+				"OLO_PD_FL_FILE" a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a."FILE_PATH",	
+				a."FILETYPE",	
+				a."FL_ID",	
+				a."ZD_ID",	
+				a."SORTING",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."FILE_ID"
+		from 
+				"OLO_PD_FL_FILE" a
+	</select>
+	<!-- 列表(全部) -->
+	<select id="listAllByFlId"  parameterType="java.util.List"  resultType="pd">
+		select
+				a."FILE_PATH",	
+				a."FILETYPE",	
+				a."FL_ID",	
+				a."ZD_ID",	
+				a."SORTING",	
+				a."SEALED",	
+				a."CREATE_TIME",	
+				a."CREATION_PEOPLE_ID",	
+				a."UPDATE_TIME",	
+				a."UPDATE_PEOPLE_ID",	
+				a."SPREAD1",	
+				a."SPREAD2",	
+				a."SPREAD3",	
+				a."SPREAD4",	
+				a."SPREAD5",	
+				a."FILE_ID"
+		from 
+				"OLO_PD_FL_FILE" a
+				where 1=1 
+		<if test="list != null and list !=''">
+				and  "FL_ID" in 
+						<foreach collection="list" item="item" index="index" open="(" separator="," close=")">  
+			   			 #{item.classIfyId}  
+						</foreach>  
+		</if>
+	</select>
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from "OLO_PD_FL_FILE"
+		where 
+			"FILE_ID" in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>
