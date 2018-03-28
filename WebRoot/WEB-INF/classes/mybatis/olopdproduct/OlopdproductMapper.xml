@@ -257,9 +257,7 @@
 		<if test="SHORT_TITLE != null and SHORT_TITLE != ''">
 			"SHORT_TITLE" = #{SHORT_TITLE},
 		</if>
-		<if test="LABEL != null and LABEL != ''">
-			"LABEL" = #{LABEL},
-		</if>
+			"LABEL" = #{LABEL,jdbcType=VARCHAR},
 		<if test="SUB_TITLE != null and SUB_TITLE != ''">
 			"SUB_TITLE" = #{SUB_TITLE},
 		</if>

@@ -209,10 +209,7 @@
 				   	"NAME" = #{NAME},	
 				
 			</if>
-			<if test="LABEL != null">
-				   	"LABEL" = #{LABEL},	
-				
-			</if>
+				   	"LABEL" = #{LABEL,jdbcType=VARCHAR},	
 			<if test="CODE != null">
 				   	"CODE" = #{CODE},	
 				

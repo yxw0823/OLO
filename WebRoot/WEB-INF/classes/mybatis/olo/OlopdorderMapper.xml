@@ -145,7 +145,7 @@
 					GROUP BY
 					vosfc.STATUS
 				)
-		) PIVOT (sum(nums) FOR STATUS IN('我乐待审批','已生产','被退回','其它','已发货','店面内部待审批'))
+		) PIVOT (sum(nums) FOR STATUS IN(已生产','被退回','其它','已发货','店面内部待审批'))
 	</select>
 	
 	<!-- 通过ORDER_ID获取数据 -->
