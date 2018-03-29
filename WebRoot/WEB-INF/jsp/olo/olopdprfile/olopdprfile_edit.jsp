@@ -182,6 +182,10 @@
 			$("#SPREAD5").focus();
 			return false;
 		} */
+		var textFilePath = $("#textFilePath");
+		if(textFilePath !=null && textFilePath.val() !='' && textFilePath.val() !=null ){
+			$("#FILE_PATH").val(textFilePath.val());
+		}
 		$("#Form").submit();
 		$("#zhongxin").hide();
 		$("#zhongxin2").show();
@@ -192,6 +196,8 @@
 <body>
 	<form action="olopdprfile/${msg }.do" name="Form" id="Form" method="post"  enctype="multipart/form-data">
 		<input type="hidden" name="FILE_ID" id="FILE_ID" value="${pd.FILE_ID}"/>
+		<input type="hidden" name="FILE_PATH" id="FILE_PATH" value="${pd.FILE_PATH}" placeholder="这里输入图片路径" title="图片路径"/>
+				
 		<div id="zhongxin">
 		<table id="table_report" class="table table-striped table-bordered table-hover">
 			<tr>
@@ -201,8 +207,9 @@
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">文件:</td>
 				<td>
-				<input type="hidden" name="FILE_PATH" id="FILE_PATH" value="${pd.FILE_PATH}" placeholder="这里输入图片路径" title="图片路径"/>
+				<td id="FILEPATHtr">
 				<input type="file" name="file"  id="id-input-file-1">
+				</td>
 			</tr>
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">文件类型:</td>
@@ -271,7 +278,26 @@
 			$('.date-picker').datepicker();
 			
 		});
-		
+		var filetype ='${pd.FILETYPE}';
+		if(filetype ==  '3'){
+			$("#FILEPATHtr").html('<textarea rows="3" cols="5" id="textFilePath">${pd.FILE_PATH}</textarea>');
+		}
+		if(filetype ==  '1'){
+			$("#FILEPATHtr").html('<input type="text"  id="textFilePath" value="${pd.FILE_PATH}" placeholder="这里输入视频的VID" title=""/>');
+		}
+		$('#FILETYPE').on('change',function(){
+			//alert($(this).val());
+			var  value =$(this).val();
+			if(value =='3'){
+				$("#FILEPATHtr").html('<textarea rows="3" cols="5" id="textFilePath"></textarea>');
+			}if(value =='1'){
+				$("#FILEPATHtr").html('<input type="text"  id="textFilePath" value="" placeholder="这里输入视频的VID" title=""/>');
+			}else{
+				$("#FILEPATHtr").html('<input type="file" name="file"  id="id-input-file-1">');
+			}
+			
+			
+		})
 		</script>
 </body>
 </html>
