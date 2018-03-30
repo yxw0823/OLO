@@ -380,7 +380,7 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			
 			map.put("data", orderList);
 			map.put("page", page);
-			map.put("countOrder",olopdorderService.countOrder(new PageData()));
+			map.put("countOrder",olopdorderService.countOrder(pd));
 			this.responseJson(response, AppUtil.returnObject(pd, map));
 			return;
 		}
@@ -506,12 +506,15 @@ public class OrderInterface extends BaseController implements IOrderInterface
 				this.responseJson(response, AppUtil.returnObject(pd, map));
 				return;
 			}
-			if (StringUtils.isEmpty(OPPNAME))
+			/*if (StringUtils.isEmpty(OPPNAME))
 			{
 				map.put("result", result);
 				map.put("msg", "入参：商机名称-OPPNAME 必传");
 				this.responseJson(response, AppUtil.returnObject(pd, map));
 				return;
+			}*/
+			if(StringUtils.isEmpty(OPPNAME)) {
+				OPPNAME =pdOloUser.getString("LOGINID")+"商机";
 			}
 			String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 			xml += "<DOCUMENT>";

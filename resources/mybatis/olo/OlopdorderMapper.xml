@@ -142,10 +142,23 @@
 				(
 					
 					SELECT vosfc.STATUS,	COUNT (0) nums  from OLO_PD_ORDER opo LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = OPO.ORDER_ID
+					where 1=1 
+					<if test="ORDER_ID !=null">
+					 	AND opo.ORDER_ID = #{ORDER_ID}
+					</if>
+					<if test="USER_ID !=null">
+						 AND opo.USER_ID = #{USER_ID}
+					</if>
+					<if test="STATE !=null">
+						 AND opo.STATE = #{STATE}
+					</if>
+					<if test="STATUS !=null">
+						 AND VOSFC.STATUS = #{STATUS}
+					</if>
 					GROUP BY
 					vosfc.STATUS
 				)
-		) PIVOT (sum(nums) FOR STATUS IN(已生产','被退回','其它','已发货','店面内部待审批'))
+		) PIVOT (sum(nums) FOR STATUS IN('已生产','被退回','其它','已发货','店面内部待审批'))
 	</select>
 	
 	<!-- 通过ORDER_ID获取数据 -->
