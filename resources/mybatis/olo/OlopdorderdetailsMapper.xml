@@ -154,6 +154,7 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
+			opp.IMAGE_URL_LIST,
 			"ORDER_ID",	
 			"USER_ID",	
 			"SKU_ID",	
@@ -173,6 +174,7 @@
 			"ID"
 		from 
 			"OLO_PD_ORDER_DETAILS"
+			LEFT JOIN OLO_PD_PRODUCT opp on opp.CODE = a.CODE
 		where 
 			"ID" = #{ID}
 	</select>
@@ -181,6 +183,7 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
+				opp.IMAGE_URL_LIST,
 				a."ORDER_ID",	
 				a."USER_ID",	
 				a."SKU_ID",	
@@ -200,6 +203,7 @@
 				a."ID"
 		from 
 				"OLO_PD_ORDER_DETAILS" a
+				LEFT JOIN OLO_PD_PRODUCT opp on opp.CODE = a.CODE
 				where 1 =1 
 				<if test="pd.USER_ID !=null">
 					 AND a.USER_ID = #{pd.USER_ID}
@@ -215,6 +219,7 @@
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
+				opp.IMAGE_URL_LIST,
 				a."ORDER_ID",	
 				a."USER_ID",	
 				a."SKU_ID",	
@@ -234,7 +239,7 @@
 				a."ID"
 		from 
 				"OLO_PD_ORDER_DETAILS" a
-				
+				LEFT JOIN OLO_PD_PRODUCT opp on opp.CODE = a.CODE
 				where 1=1 
 				<if test="list !=null">
 				AND  a.ORDER_ID in

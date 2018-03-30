@@ -419,12 +419,12 @@ public class OrderInterface extends BaseController implements IOrderInterface
 		String result = "00";
 		try
 		{
-			/*check();
+			check();
 
 			String token = pd.getString("token");
 			Cache cache = CacheManager.getCacheInfo(token);
 			Object o = cache.getValue();
-			PageData pdOloUser = (PageData) o;*/
+			PageData pdOloUser = (PageData) o;
 			String gkmobile = pd.getString("gkmobile");
 			if (StringUtils.isEmpty(gkmobile))
 			{
@@ -436,12 +436,12 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			result = "01";
 			// TODO Auto-generated method stub
 			map.put("result", result);
-			String xml = proxy.getCustomerInfo(gkmobile,"olo-6588"/* pdOloUser.getString("LOGINID")*/);
+			String xml = proxy.getCustomerInfo(gkmobile, pdOloUser.getString("LOGINID"));
 			map.put("data", Xml2JsonUtil.xml2Json(xml).toString());
 			this.responseJson(response, AppUtil.returnObject(pd, map));
 			return;
 		}
-		/*catch (NoUserExcetion e)
+		catch (NoUserExcetion e)
 		{
 			map.put("result", result);
 			map.put("msg", "没有相关用户信息!");
@@ -453,7 +453,7 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			map.put("result", result);
 			map.put("msg", "参数签没错误");
 			this.responseJson(response, AppUtil.returnObject(pd, map));
-		}*/
+		}
 		catch (Exception e)
 		{
 			// TODO Auto-generated catch block
