@@ -206,7 +206,6 @@
 			</tr>
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">文件:</td>
-				<td>
 				<td id="FILEPATHtr">
 				<input type="file" name="file"  id="id-input-file-1">
 				</td>
@@ -290,11 +289,14 @@
 			var  value =$(this).val();
 			if(value =='3'){
 				$("#FILEPATHtr").html('<textarea rows="3" cols="5" id="textFilePath"></textarea>');
-			}if(value =='1'){
-				$("#FILEPATHtr").html('<input type="text"  id="textFilePath" value="" placeholder="这里输入视频的VID" title=""/>');
-			}else{
-				$("#FILEPATHtr").html('<input type="file" name="file"  id="id-input-file-1">');
+				return;
 			}
+			
+			if(value =='1'){
+				$("#FILEPATHtr").html('<input type="text"  id="textFilePath" value="" placeholder="这里输入视频的VID" title=""/>');
+				return;
+			}
+				$("#FILEPATHtr").html('<input type="file" name="file"  id="id-input-file-1">');
 			
 			
 		})

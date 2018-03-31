@@ -184,7 +184,7 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			pd.put("USER_ID", pdOloUser.getString("LOGINID"));
 			pd.put("CREATE_TIME", java.sql.Timestamp.valueOf(DateUtil.getTime().toString()));
 			pd.put("CREATION_PEOPLE_ID", pdOloUser.getString("LOGINID"));
-			olopdshoppingcartService.save(pd);
+			olopdshoppingcartService.save1(pd);
 			map.put("result", result);
 			map.put("data", "true");
 			map.put("pd", pd);
@@ -360,7 +360,11 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			result = "01";
 			map.put("result", result);
 			page.setPd(pd);
-			pd.put("USER_ID", pdOloUser.getString("LOGINID"));
+			if("1".equals(pdOloUser.getString("ISINVESTOR"))){
+				pd.put("DEALER", pdOloUser.getString("SUBCOMPANYID1"));
+			}else{
+				pd.put("USER_ID", pdOloUser.getString("LOGINID"));
+			}
 			// TODO Auto-generated method stub
 			List<PageData>  orderList= olopdorderService.list(page);
 		
@@ -658,6 +662,7 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			if(StringUtils.isEmpty(billcode)){
 				
 				map.put("msg", "下单失败，订单接口返回"+str);
+				map.put("data", str);
 				this.responseJson(response, AppUtil.returnObject(pd, map));
 				return;
 			}

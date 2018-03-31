@@ -143,22 +143,20 @@
 					
 					SELECT vosfc.STATUS,	COUNT (0) nums  from OLO_PD_ORDER opo LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = OPO.ORDER_ID
 					where 1=1 
-					<if test="ORDER_ID !=null">
-					 	AND opo.ORDER_ID = #{ORDER_ID}
+				
+					<if test="key !=null">
+					 	AND opo.ORDER_ID = #{key}
 					</if>
-					<if test="USER_ID !=null">
+					<if test="USER_ID !=null and DEALER == null">
 						 AND opo.USER_ID = #{USER_ID}
 					</if>
-					<if test="STATE !=null">
-						 AND opo.STATE = #{STATE}
-					</if>
-					<if test="STATUS !=null">
-						 AND VOSFC.STATUS = #{STATUS}
+					<if test="DEALER !=null">
+					 AND VOSFC.DEALER = #{DEALER}
 					</if>
 					GROUP BY
 					vosfc.STATUS
 				)
-		) PIVOT (sum(nums) FOR STATUS IN('已生产','被退回','其它','已发货','店面内部待审批'))
+		) PIVOT (sum(nums) FOR STATUS IN('已生产','我乐待审批','被退回','其它','已发货','店面内部待审批'))
 	</select>
 	
 	<!-- 通过ORDER_ID获取数据 -->
@@ -191,6 +189,7 @@
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
 				vosfc.STATUS,
+				vosfc.CUSTOMER_INFO,
 				a."STATE",	
 				a."SEALED",	
 				a."USER_ID",
@@ -210,10 +209,13 @@
 				 
 			 LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = a.ORDER_ID
 				where 1 =1 
+				<if test="pd.key !=null">
+					 AND a.ORDER_ID = #{pd.key}
+				</if>
 				<if test="pd.ORDER_ID !=null">
 					 AND a.ORDER_ID = #{pd.ORDER_ID}
 				</if>
-				<if test="pd.USER_ID !=null">
+				<if test="pd.USER_ID !=null and pd.DEALER ==null ">
 					 AND a.USER_ID = #{pd.USER_ID}
 				</if>
 				<if test="pd.STATE !=null">
@@ -222,12 +224,16 @@
 				<if test="pd.STATUS !=null">
 					 AND VOSFC.STATUS = #{pd.STATUS}
 				</if>
+				<if test="pd.DEALER !=null">
+					 AND VOSFC.DEALER = #{pd.DEALER}
+				</if>
 	</select>
 	
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
 				vosfc.STATUS,
+				vosfc.CUSTOMER_INFO,
 				a."STATE",	
 				a."SEALED",	
 				a."USER_ID",

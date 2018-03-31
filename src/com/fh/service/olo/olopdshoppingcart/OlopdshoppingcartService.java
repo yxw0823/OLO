@@ -32,7 +32,20 @@ public class OlopdshoppingcartService {
 		dao.save("OlopdshoppingcartMapper.save", pd);
 		return pd;
 	}
-	
+	/*
+	* 新增
+	*/
+	public PageData save1(PageData pd)throws Exception{
+		PageData temp =(PageData) dao.findForObject("OlopdshoppingcartMapper.findCart", pd);
+		if(!StringUtils.isEmpty(temp)){
+			pd.put("CART_ID", temp.getString("CART_ID"));
+			pd.put("NUMBER",Integer.valueOf(pd.getString("NUMBER"))+Integer.valueOf(temp.getString("NUMBER")));
+			this.edit(pd);
+			return pd;
+		}
+		dao.save("OlopdshoppingcartMapper.save", pd);
+		return pd;
+	}
 	/*
 	* 删除
 	*/
@@ -76,4 +89,3 @@ public class OlopdshoppingcartService {
 	}
 	
 }
-
