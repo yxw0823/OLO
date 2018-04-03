@@ -379,6 +379,7 @@
 														<th>价格</th>
 														<th>编码</th>
 														<th>库存</th>
+														<th>操作</th>
 													</tr>
 												</thead>
 												<tbody id="sku_tbody">
@@ -470,7 +471,7 @@
 
 	<script type="text/javascript"
 		src="plugins/myjs/bootstrap-typeahead.js"></script>
-	<script type="text/javascript" src="plugins/myjs/attribute.js?22122"></script>
+	<script type="text/javascript" src="plugins/myjs/attribute.js?22122233"></script>
 	<script type="text/javascript" src="static/js/jquery.colorbox-min.js"></script>
 	<script type="text/javascript">
 

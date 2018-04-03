@@ -335,10 +335,10 @@
 			<if test="SPECIFICATIONS != null">
 				and   	"SPECIFICATIONS" = #{SPECIFICATIONS},	
 			</if>
-			<if test="SEALED != null">
+			<!-- <if test="SEALED != null">
 				and   	"SEALED" = #{SEALED}	
 				
-			</if>
+			</if> -->
 	</select>
 
 	<!-- 批量删除 -->

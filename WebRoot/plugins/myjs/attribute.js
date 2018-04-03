@@ -11,6 +11,8 @@ var template = '<tr id="${gz}tr">'
 	template += '<input type="text" class="${gz}" c_name="PRODUCT_CODE" onblur="attribute.dataSorting(\'${gz}\')"  value="${PRODUCT_CODE}"  placeholder="这里输入编码" title="编码"/>'
 	template += '</td>'
 	template += '<td ><input type="number" class="${gz}"  c_name="STORE" onblur="attribute.dataSorting(\'${gz}\')"  value="${STORE}" maxlength="32" placeholder="这里输入库存" title="库存"/></td>'
+	template += '<td ><a style="cursor:pointer;" title="删除SKU" onclick="javascript:attribute.del(\'${gz}tr\');" class="tooltip-success" data-rel="tooltip" title="" data-placement="left"><span class="green"><i class="icon-trash"></i></span></a></td>'
+			
 	template += '</tr>';
 var Base64 = {
 
@@ -146,7 +148,7 @@ var Base64 = {
 var attribute = {
 	_attributeInitParameter :"",//已经选中属性集合
 	_isInit:false,
-	_listSku:'',
+	_listSku:null,
 	init:function(attributeInitParameter,listsku){
 		if(attributeInitParameter !=null){
 			this._attributeInitParameter = JSON.parse(attributeInitParameter);
@@ -251,6 +253,9 @@ var attribute = {
 		  // 排列组合
 		  this.plzh(json,tablInerHtmlId)
 	},
+	del:function(id){
+		$("#"+id).remove()
+	},
 	dataSorting :function(id){
 		var cjson ={};
 		 $.each($('.'+id),function(){
@@ -321,6 +326,9 @@ analysis:function (str,tablInerHtmlId){
 			obj =this._listSku[i];
 			break;
 		}
+	}
+	if(this._listSku !=null && this._listSku.length >0 && !flage){
+		return;
 	}
 	if(!flage){
 		obj.PRICE ='';
