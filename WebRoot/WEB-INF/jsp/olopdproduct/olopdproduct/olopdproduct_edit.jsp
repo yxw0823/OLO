@@ -328,6 +328,7 @@
 				<tr>
 					<td style="width: 70px; text-align: right; padding-top: 13px;">新增属性:</td>
 					<td id="XZSKU"><c:forEach items="${pd.pdabval}" var="var" varStatus="vs">
+						<div style="width:20%">
 							<input id="${var.A_ID }" name="SKUAtribute"
 								onclick="attribute.add('${var.A_ID }','widget-main','sku_tbody')"
 								class="ace-checkbox-2 SKUAtributeCheckbox"
@@ -337,6 +338,7 @@
 								<%-- <c:if test="${fn:indexOf(pd.SPREAD5,var.A_ID) != -1 }"> checked="checked"</c:if> --%>
 								value="${var.A_ID }" c_name="${var.A_NAME }" type="checkbox" />
 							<span class="lbl"> ${var.A_NAME }</span>
+						</div>
 						</c:forEach>
 						 
 						</td>
@@ -468,7 +470,7 @@
 
 	<script type="text/javascript"
 		src="plugins/myjs/bootstrap-typeahead.js"></script>
-	<script type="text/javascript" src="plugins/myjs/attribute.js"></script>
+	<script type="text/javascript" src="plugins/myjs/attribute.js?22122"></script>
 	<script type="text/javascript" src="static/js/jquery.colorbox-min.js"></script>
 	<script type="text/javascript">
 

@@ -215,7 +215,7 @@ var attribute = {
 						}
 						
 					}	
-					html+='<input  onclick="attribute.addSku(\''+tablInerHtmlId+'\')" '+checstr+' class="ace-checkbox-2  skuValClass" oid="'+id+'" o_name="'+o_name+'" value="'+listAll1[i].PROPERTY_ID+'" c_name="'+listAll1[i].PROPERTY_NAME+'"  type="checkbox" /><span class="lbl">'+listAll1[i].PROPERTY_NAME+'</span>';
+					html+='<div style="width:15%; line-height:30px; float: left;  "><input  onclick="attribute.addSku(\''+tablInerHtmlId+'\')" '+checstr+' class="ace-checkbox-2  skuValClass" oid="'+id+'" o_name="'+o_name+'" value="'+listAll1[i].PROPERTY_ID+'" c_name="'+listAll1[i].PROPERTY_NAME+'"  type="checkbox" /><span class="lbl">'+listAll1[i].PROPERTY_NAME+'</span></div>';
 				}
 
 
@@ -286,7 +286,7 @@ var attribute = {
 			temparr[p++]  =mycars
 		}
 		 var ret = this.doExchange(temparr);  
-		  console.log("共有：" + ret.length + "种组合！<br/>");
+		//  console.log("共有：" + ret.length + "种组合！<br/>");
 		  $("#"+tablInerHtmlId).html("");
 	    for (var i = 0; i < ret.length; i++) { 
 	    	
@@ -329,7 +329,7 @@ analysis:function (str,tablInerHtmlId){
 	}
 	var templateCopy = template;
 	templateCopy =templateCopy.replaceAll('\\$\\\{gzname\\}', gz);
-	templateCopy =templateCopy.replaceAll('\\$\\\{gz\\}', Base64.encode(gz).replaceAll("=","1"));
+	templateCopy =templateCopy.replaceAll('\\$\\\{gz\\}', Base64.encode(gz).replaceAll("=","1").replaceAll("\\+","1"));
 	templateCopy =templateCopy.replaceAll('\\$\\{value\\}', str);
 	templateCopy =templateCopy.replaceAll('\\$\\{PRICE\\}', obj.PRICE);
 	templateCopy =templateCopy.replaceAll('\\$\\{PRODUCT_CODE\\}', obj.PRODUCT_CODE);
