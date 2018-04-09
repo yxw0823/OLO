@@ -22,7 +22,7 @@ public class Services2020Locator extends org.apache.axis.client.Service implemen
     }
 
     // Use to get a proxy class for Services2020HttpPort
-    private java.lang.String Services2020HttpPort_address = "http://test.olokitchen.com:88//services/Services2020";
+    private java.lang.String Services2020HttpPort_address = "http://192.168.2.86//services/Services2020";
 
     public java.lang.String getServices2020HttpPortAddress() {
         return Services2020HttpPort_address;
