@@ -471,7 +471,7 @@
 
 	<script type="text/javascript"
 		src="plugins/myjs/bootstrap-typeahead.js"></script>
-	<script type="text/javascript" src="plugins/myjs/attribute.js?22122233"></script>
+	<script type="text/javascript" src="plugins/myjs/attribute.js?2212223312"></script>
 	<script type="text/javascript" src="static/js/jquery.colorbox-min.js"></script>
 	<script type="text/javascript">
 

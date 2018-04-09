@@ -300,7 +300,16 @@ var attribute = {
 	    }  
 
 },
-
+sumAscll:function(a){
+	var num =0;
+	while(a.length!=0)
+  {
+        $a=a.substr(0,1);
+        num+=$a.charCodeAt();
+        a=a.substr(1,a.length);
+  }
+  return num;
+},
 analysis:function (str,tablInerHtmlId){
 
 	
@@ -317,17 +326,16 @@ analysis:function (str,tablInerHtmlId){
 		}
 		gz += temp.c_name+"+";
 	}
-
 	var obj= {};
 	var flage =false;
 	for(var i=0;i<this._listSku.length;i++){
-		if(this._listSku[i].SPECIFICATIONS ==gz ){
+		if(this.sumAscll(this._listSku[i].SPECIFICATIONS)==this.sumAscll(gz)){
 			flage =true;
 			obj =this._listSku[i];
 			break;
 		}
 	}
-	if(this._listSku !=null && this._listSku.length >0 && !flage){
+	if(this._listSku !=null && this._listSku.length >0 && !flage&& !this._isInit){
 		return;
 	}
 	if(!flage){

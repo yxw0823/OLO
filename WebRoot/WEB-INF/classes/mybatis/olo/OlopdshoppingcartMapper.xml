@@ -208,7 +208,30 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-				opp.IMAGE_URL_LIST,
+				CASE
+				WHEN opp.IMAGE_URL_LIST IS NULL THEN
+					CASE
+					WHEN opp.IMAGE_URL IS NULL THEN
+						(
+							SELECT
+								CASE
+								WHEN IMAGE_URL_LIST IS NULL THEN
+									IMAGE_URL
+								ELSE
+									IMAGE_URL_LIST
+								END image
+							FROM
+								OLO_PD_PRODUCT oppt
+							WHERE
+								oppt.code = A .CODE
+							AND ROWNUM = 1
+						)
+					ELSE
+						opp.IMAGE_URL
+					END 
+				ELSE
+					opp.IMAGE_URL_LIST
+				END IMAGE_URL_LIST,
 				a."USER_ID",	
 				a."SKU_ID",	
 				a."CODE",	
@@ -227,7 +250,9 @@
 				a."CART_ID"
 		from 
 				"OLO_PD_SHOPPING_CART" a
-				 LEFT JOIN OLO_PD_PRODUCT opp on opp.CODE = a.CODE
+				 LEFT JOIN OLO_PD_SKU ops on  OPS.PRODUCT_CODE = a.CODE
+				 LEFT JOIN OLO_PD_PRODUCT opp on opp.goods_id = ops.goods_id
+				 --LEFT JOIN OLO_PD_PRODUCT opp on opp.CODE = a.CODE
 		where
 				1=1
 				<if test="pd.USER_ID != null">
@@ -244,7 +269,30 @@
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
-				opp.IMAGE_URL_LIST,
+				CASE
+				WHEN opp.IMAGE_URL_LIST IS NULL THEN
+					CASE
+					WHEN opp.IMAGE_URL IS NULL THEN
+						(
+							SELECT
+								CASE
+								WHEN IMAGE_URL_LIST IS NULL THEN
+									IMAGE_URL
+								ELSE
+									IMAGE_URL_LIST
+								END image
+							FROM
+								OLO_PD_PRODUCT oppt
+							WHERE
+								oppt.code = A .CODE
+							AND ROWNUM = 1
+						)
+					ELSE
+						opp.IMAGE_URL
+					END 
+				ELSE
+					opp.IMAGE_URL_LIST
+				END IMAGE_URL_LIST,
 				a."USER_ID",	
 				a."SKU_ID",	
 				a."CODE",	
@@ -263,7 +311,9 @@
 				a."CART_ID"
 		from 
 				"OLO_PD_SHOPPING_CART" a
-				LEFT JOIN OLO_PD_PRODUCT opp on opp.CODE = a.CODE
+				 LEFT JOIN OLO_PD_SKU ops on  OPS.PRODUCT_CODE = a.CODE
+				 LEFT JOIN OLO_PD_PRODUCT opp on opp.goods_id = ops.goods_id
+				 --LEFT JOIN OLO_PD_PRODUCT opp on opp.CODE = a.CODE
 				where 1=1 
 				<if test="IDS !=NULL">
 					and	"CART_ID" in
