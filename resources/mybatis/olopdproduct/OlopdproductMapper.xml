@@ -271,7 +271,7 @@
 		<if test="FLOOR_PRICE != null and FLOOR_PRICE != ''">
 			"FLOOR_PRICE" = #{FLOOR_PRICE},
 		</if>
-			"PRICE" = #{PRICE},
+			"PRICE" = #{PRICE,jdbcType=NUMERIC},
 		<if test="COLOUR != null and COLOUR != ''">
 			"COLOUR" = #{COLOUR},
 		</if>
@@ -369,6 +369,7 @@
 		"SORTING",
 		"PRICE",
 		"CATEGORY",
+		 COMPANY,
 		"REMARKS",
 		"IMAGE_URL_LIST",
 		"GOODS_ID"
