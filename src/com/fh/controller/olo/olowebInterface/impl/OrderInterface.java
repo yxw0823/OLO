@@ -600,8 +600,8 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			xdXml += "</document>";
 
 			String row = "<row>";
-			row += "<spbh>CODE</spbh>";
-			row += "<sl>SL</sl>";
+			row += "<spbh>$CODE</spbh>";
+			row += "<sl>$SL</sl>";
 			row += "<gths></gths> ";
 			row += "<mbsj></mbsj>  ";
 			row += "<mbhs></mbhs>";
@@ -642,12 +642,12 @@ public class OrderInterface extends BaseController implements IOrderInterface
 			String rows = "";
 			for (PageData temppd : list)
 			{
-				rows += row.replaceAll("CODE", temppd.getString("CODE")).replaceAll("SL", temppd.getString("NUMBER"));
+				rows += row.replaceAll("\\$CODE", temppd.getString("CODE")).replaceAll("\\$SL", temppd.getString("NUMBER"));
 			}
 			
 			// 组装好xml
 			xdXml = xdXml.replaceAll("DLTAIL2", rows);
-			System.out.println(xdXml);
+			//System.out.println(xdXml);
 			// 调用接口下单
 			//String xml="<?xml version=\"1.0\" encoding=\"GB2312\"?><document><main><zdr>8608</zdr><gksjh>18061771111</gksjh><oppid>210197</oppid><orderSrc>2</orderSrc></main><detail1 /><detail2><row><spbh>2</spbh><sl>4</sl><gths></gths>    <mbsj></mbsj>  <mbhs></mbhs>   <mbkx></mbkx>   <kd></kd>    <sd></sd>    <gd></gd>   <wzls></wzls>   <fnls></fnls>   <fnlskd></fnlskd>   <jlpz></jlpz>   <mx></mx>   <fbbx></fbbx>   <ls></ls>   <tsgy></tsgy>   <blhs1></blhs1> <dqgd></dqgd>   <ajgmzk></ajgmzk>   <bz></bz><mxdm></mxdm> <ssymwl></ssymwl>   <key></key>  <ZStyle></ZStyle>   </row><row><spbh>2</spbh> <!-- 商品编号 --><sl>4</sl><gths></gths>    <mbsj></mbsj>  <mbhs></mbhs>   <mbkx></mbkx>   <kd></kd>    <sd></sd>    <gd></gd>   <wzls></wzls>   <fnls></fnls>   <fnlskd></fnlskd>   <jlpz></jlpz>   <mx></mx>   <fbbx></fbbx>   <ls></ls>   <tsgy></tsgy>   <blhs1></blhs1> <dqgd></dqgd>   <ajgmzk></ajgmzk>   <bz></bz><mxdm></mxdm> <ssymwl></ssymwl>   <key></key>  <ZStyle></ZStyle>   </row></detail2></document>";
 	           

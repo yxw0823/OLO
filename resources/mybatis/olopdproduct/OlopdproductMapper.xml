@@ -458,6 +458,9 @@
 		select
 		"CODE",
 		"TITLE",
+		PRICE,
+		LABEL,
+		DIMENSION,
 		"SORTING",
 		"REMARKS",
 		"GOODS_ID"
