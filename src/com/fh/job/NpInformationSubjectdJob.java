@@ -40,7 +40,7 @@ public class NpInformationSubjectdJob {
        
         try {
           MultipleDataSource.setDataSourceKey("mysqlDataSource");
-          List<PageData> list =  npinformationsubjectService.listAll(new PageData());
+          List<PageData> list =  npinformationsubjectService.listMySqlAll(new PageData());
           logger.info("》》》》》》》》》》》》》》》》》》》》》》》》新闻同步    官网新闻库中存在   "+list.size()+"条新闻！");
           //查询出新闻不包含
           MultipleDataSource.setDataSourceKey("oracleDataSource");
