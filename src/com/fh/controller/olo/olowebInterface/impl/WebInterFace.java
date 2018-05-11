@@ -288,7 +288,7 @@ public class WebInterFace extends BaseController implements IwebInterface {
     }
 
     /**
-     * 获取验证码
+     * 登录
      */
     @RequestMapping(value = "/login")
     @Override
