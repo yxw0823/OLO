@@ -305,7 +305,7 @@ sumAscll:function(a){
 	while(a.length!=0)
   {
         $a=a.substr(0,1);
-        num+=$a.charCodeAt();
+        num+=$a.charCodeAt()+$a.charCodeAt()%3;
         a=a.substr(1,a.length);
   }
   return num;

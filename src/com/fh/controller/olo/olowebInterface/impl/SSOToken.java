@@ -1,6 +1,7 @@
 package com.fh.controller.olo.olowebInterface.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -20,6 +21,8 @@ import com.fh.util.Const;
 import com.fh.util.MD5Util;
 import com.fh.util.PageData;
 import com.fh.util.StringUtils;
+
+import net.sf.json.JSONNull;
 
 @Controller
 @RequestMapping(value = "/appssotoken")
@@ -86,12 +89,24 @@ public class SSOToken  extends BaseController{
 			Cache cache = CacheManager.getCacheInfo(token);
 			Object o = cache.getValue();
 			PageData pdOloUser = (PageData) o;
+			 	map.putAll(pdOloUser);
 			  map.put("LOGINID", pdOloUser.getString("LOGINID"));
               map.put("JZ", pdOloUser.getString("JZ"));
               map.put("JXSPOST", pdOloUser.getString("JXSPOST"));
               map.put("ROLE", pdOloUser.getString("ROLE"));
               map.put("SUBCOMPANYID1", pdOloUser.getString("SUBCOMPANYID1"));
               map.put("ISINVESTOR", pdOloUser.getString("ISINVESTOR"));
+              map.put("SUBCOMPANYNAME", pdOloUser.getString("SUBCOMPANYNAME"));
+              map.put("LASTNAME", pdOloUser.getString("LASTNAME"));
+              map.put("BAOMING", pdOloUser.getString("BAOMING")); 
+              Iterator<Map.Entry<String, Object>> entries = map.entrySet().iterator();  
+				while (entries.hasNext()) {  
+				    Map.Entry<String, Object> entry = entries.next();  
+				    if(map.get(entry.getKey()  ) ==null || "null" ==map.get(entry.getKey()) || map.get(entry.getKey() ) == JSONNull.getInstance()) {
+				    	map.put(entry.getKey()  , "");
+				    }
+				}  
+            //  map.remove("PASSWORD");
 			this.responseJson(response, AppUtil.returnObject(pd, map));
 			return;
 		}

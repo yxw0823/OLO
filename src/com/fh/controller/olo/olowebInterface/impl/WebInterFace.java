@@ -358,6 +358,8 @@ public class WebInterFace extends BaseController implements IwebInterface {
                             map.put("ROLE", pdOloUser.getString("ROLE"));
                             map.put("SUBCOMPANYID1", pdOloUser.getString("SUBCOMPANYID1"));
                             map.put("ISINVESTOR", pdOloUser.getString("ISINVESTOR"));
+                            map.put("SUBCOMPANYNAME", pdOloUser.getString("SUBCOMPANYNAME"));
+                            map.put("LASTNAME", pdOloUser.getString("LASTNAME"));
                             // map.put("user", CacheManager.getCacheInfo(key));
                             return AppUtil.returnObject(pd, map);
                         }
