@@ -139,9 +139,10 @@ public class OlopdskuService {
                     temppd.put("SPREAD1", JN.getJSONObject(i).getString("Base64Value"));// 组合的规格
                     String Base64OtherAttributes = JN.getJSONObject(i).getString("Base64OtherAttributes");
                     temppd.put("SPREAD2", Base64OtherAttributes);//
+                 
                     String tempOtherAttributes = new String(decoder.decodeBuffer(Base64OtherAttributes), "UTF-8");
                     JSONObject tempJson = JSONObject.fromObject(tempOtherAttributes);
-
+                    temppd.put("SPREAD3", tempJson.getString("SPREAD3"));//
                     temppd.put("PRICE", tempJson.getString("PRICE"));// 价格
                     temppd.put("PRODUCT_CODE", tempJson.getString("PRODUCT_CODE"));// 编码
                     temppd.put("STORE", tempJson.getString("STORE"));// 库存

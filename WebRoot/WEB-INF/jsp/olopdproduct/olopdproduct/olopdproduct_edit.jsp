@@ -372,13 +372,14 @@
 									<div class="widget-body">
 										<div class="widget-main no-padding">
 											<table id="table_bug_report"
-												class="table table-striped table-bordered table-hover">
+												class="table table-striped table-bordered table-hover" width="100%">
 												<thead>
 													<tr>
 														<th>规格</th>
 														<th>价格</th>
 														<th>编码</th>
 														<th>库存</th>
+														<th>排序</th>
 														<th>操作</th>
 													</tr>
 												</thead>

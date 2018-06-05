@@ -5,12 +5,17 @@ String.prototype.replaceAll = function (FindText, RepText) {
 var template = '<tr id="${gz}tr">'
 	template += '<td >${gzname} <input type="hidden" id="fjcs${gz}" class="SkuPlzhValuecs" value="${SkuPlzhValuecs}"/>  <input type="hidden" data_gzname="${gzname}" id="${gz}" class="SkuPlzhValue" value="${value}"/> </td>'
 	template += '<td>'
-	template += ' <input type="number" class="${gz}"  c_name="PRICE"  onblur="attribute.dataSorting(\'${gz}\')"  value="${PRICE}" maxlength="32" placeholder="这里输入价格" title="价格"/>'
+	template += ' <input type="number" style=" width: 100px;" class="${gz}"  c_name="PRICE"  onblur="attribute.dataSorting(\'${gz}\')"  value="${PRICE}" maxlength="32" placeholder="这里输入价格" title="价格"/>'
 	template += '</td>'
 	template += '	<td>'
-	template += '<input type="text" class="${gz}" c_name="PRODUCT_CODE" onblur="attribute.dataSorting(\'${gz}\')"  value="${PRODUCT_CODE}"  placeholder="这里输入编码" title="编码"/>'
+	template += '<input type="text" class="${gz}"  style=" width: 100px;" c_name="PRODUCT_CODE" onblur="attribute.dataSorting(\'${gz}\')"  value="${PRODUCT_CODE}"  placeholder="这里输入编码" title="编码"/>'
 	template += '</td>'
-	template += '<td ><input type="number" class="${gz}"  c_name="STORE" onblur="attribute.dataSorting(\'${gz}\')"  value="${STORE}" maxlength="32" placeholder="这里输入库存" title="库存"/></td>'
+	
+	template += '<td ><input type="number" class="${gz}"  style=" width: 100px;"  c_name="STORE" onblur="attribute.dataSorting(\'${gz}\')"  value="${STORE}" maxlength="32" placeholder="这里输入库存" title="库存"/></td>'
+	template += '	<td>'
+	template += '<input type="number" class="${gz}"  style=" width: 100px;" c_name="SPREAD3" onblur="attribute.dataSorting(\'${gz}\')"  value="${SPREAD3}"  placeholder="这里输入排序号" title="排序号"/>'
+	template += '</td>'
+	
 	template += '<td ><a style="cursor:pointer;" title="删除SKU" onclick="javascript:attribute.del(\'${gz}tr\');" class="tooltip-success" data-rel="tooltip" title="" data-placement="left"><span class="green"><i class="icon-trash"></i></span></a></td>'
 			
 	template += '</tr>';
@@ -348,6 +353,7 @@ analysis:function (str,tablInerHtmlId){
 	templateCopy =templateCopy.replaceAll('\\$\\\{gz\\}', Base64.encode(gz).replaceAll("=","1").replaceAll("\\+","1").replaceAll("/","2"));
 	templateCopy =templateCopy.replaceAll('\\$\\{value\\}', str);
 	templateCopy =templateCopy.replaceAll('\\$\\{PRICE\\}', obj.PRICE);
+	templateCopy =templateCopy.replaceAll('\\$\\{SPREAD3\\}', obj.SPREAD3 ==null ? "":obj.SPREAD3 );
 	templateCopy =templateCopy.replaceAll('\\$\\{PRODUCT_CODE\\}', obj.PRODUCT_CODE);
 	templateCopy =templateCopy.replaceAll('\\$\\{STORE\\}', obj.STORE);
 	templateCopy =templateCopy.replaceAll('\\$\\{SkuPlzhValuecs\\}', obj.SPREAD2);

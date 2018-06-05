@@ -116,6 +116,7 @@
 		from 
 				"OLO_PD_PP_VAL" a
 		where		a.PROPERTY_ID in  (SELECT  O_ID2 from OLO_PD_AB_PP_RELATION where O_ID1=#{O_ID1})
+		ORDER BY a.INSERT_TIME desc
 	</select>
 	
 	<!-- 批量删除 -->
