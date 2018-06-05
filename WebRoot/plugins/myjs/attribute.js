@@ -305,7 +305,7 @@ sumAscll:function(a){
 	while(a.length!=0)
   {
         $a=a.substr(0,1);
-        num+=$a.charCodeAt();
+        num+=$a.charCodeAt()+$a.charCodeAt()%3;
         a=a.substr(1,a.length);
   }
   return num;
@@ -345,7 +345,7 @@ analysis:function (str,tablInerHtmlId){
 	}
 	var templateCopy = template;
 	templateCopy =templateCopy.replaceAll('\\$\\\{gzname\\}', gz);
-	templateCopy =templateCopy.replaceAll('\\$\\\{gz\\}', Base64.encode(gz).replaceAll("=","1").replaceAll("\\+","1"));
+	templateCopy =templateCopy.replaceAll('\\$\\\{gz\\}', Base64.encode(gz).replaceAll("=","1").replaceAll("\\+","1").replaceAll("/","2"));
 	templateCopy =templateCopy.replaceAll('\\$\\{value\\}', str);
 	templateCopy =templateCopy.replaceAll('\\$\\{PRICE\\}', obj.PRICE);
 	templateCopy =templateCopy.replaceAll('\\$\\{PRODUCT_CODE\\}', obj.PRODUCT_CODE);

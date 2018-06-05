@@ -55,6 +55,13 @@ public class NpinformationsubjectService {
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("NpinformationsubjectMapper.listAll", pd);
 	}
+	/*
+	*列表(全部)
+	*/
+	public List<PageData> listMySqlAll(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("NpinformationsubjectMapper.listMySqlAll", pd);
+	}
+	
     /*
     *列表(全部)
     */

@@ -278,7 +278,8 @@
 			</tr>	
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">说明:</td>
-				<td><input type="text" name="REMARKS" id="REMARKS" value="${pd.REMARKS}" maxlength="32" placeholder="这里输入说明" title="说明"/></td>
+				<td>	<textarea name="REMARKS" id="REMARKS" maxlength="1000"  placeholder="这里输入说明">${pd.REMARKS}</textarea>
+				<%-- <input type="text" name="REMARKS" id="REMARKS" value="${pd.REMARKS}" maxlength="32" placeholder="这里输入说明" title="说明"/> --%></td>
 			</tr>
 			<tr>
 					<td style="width:70px;text-align: right;padding-top: 13px;">台面分类:</td>

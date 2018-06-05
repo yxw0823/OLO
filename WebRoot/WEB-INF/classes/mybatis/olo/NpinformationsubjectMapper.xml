@@ -77,7 +77,9 @@
 			<if test=" RELEASE_TIME !=null and   RELEASE_TIME  !='' ">
 			"RELEASE_TIME",	
 			</if>
-			
+			<if test=" TYPE !=null and   TYPE  !='' ">
+			"TYPE",	
+			</if>
 			"SUBJECT_ID"
 		) values (
 					<if test=" TITLE !=null and   TITLE  !='' ">
@@ -146,6 +148,9 @@
 				    <if test=" RELEASE_TIME !=null and   RELEASE_TIME  !='' ">
 				    	#{RELEASE_TIME,jdbcType=TIMESTAMP},	
 				    </if>  
+				    	<if test=" TYPE !=null and   TYPE  !='' ">
+						#{TYPE},	
+					</if>
 			#{SUBJECT_ID}
 		)
 	</insert>
@@ -166,6 +171,9 @@
 			<if test="TITLE != null">
 				   	"TITLE" = #{TITLE},	
 				
+			</if>
+			<if test=" TYPE !=null and   TYPE  !='' ">
+						   	"TYPE" = #{TYPE},	
 			</if>
 			<if test="AUTHOR != null">
 				   	"AUTHOR" = #{AUTHOR},	
@@ -260,7 +268,8 @@
 	<!-- 通过SUBJECT_ID获取数据 -->
 	<select id="findById" parameterType="pd" resultMap="resultjcm">
 		select 
-			"TITLE",	
+			"TITLE",
+			TYPE,	
 			"AUTHOR",	
 			"URL",	
 			"BACKGROUND_IMG",	
@@ -294,6 +303,7 @@
 	<select id="datalistPage" parameterType="page" resultMap="resultjcm">
 		select
 				a."TITLE",	
+				a.TYPE,
 				a."AUTHOR",	
 				a."URL",	
 				a."BACKGROUND_IMG",	
@@ -313,10 +323,47 @@
 				a."SUBJECT_ID"
 		from 
 				"NP_INFORMATION_SUBJECT" a
+				where 1=1 
+				<if test="pd.TYPE !=null and  pd.TYPE !=''">
+				  and 	a.TYPE = #{pd.TYPE}
+				</if>
+				<if test="pd.TITLE !=null and  pd.TITLE !=''">
+				 	 and 	a.TITLE = CONCAT('%', #{pd.TITLE}, '%')
+				</if>
 	</select>
 	
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultMap="resultjcm">
+		select
+				a.TITLE,
+				a.TYPE,
+	a.AUTHOR,
+	a.URL,
+	a.BACKGROUND_IMG,
+	a.CONTENT,
+	a.SEO_KEYWORD,
+	a.SEO_DESC,
+	a.IS_SHOW,
+	a.DELFLAG,
+	a.CREATE_USER_ID,
+	a.CREATE_DATE,
+	a.UPDATE_USER_ID,
+	a.UPDATE_DATE,
+	a.TEMP1,
+	a.TEMP2,
+	a.TEMP3,
+	a.TEMP4,
+	a.TEMP5,
+	a.MOBILE_CONTENT,
+	a.MOBILE_SORT,
+	a.MOBILE_TITLE_IMG,
+	a.RELEASE_TIME,
+	a.SUBJECT_ID
+		from 
+				NP_INFORMATION_SUBJECT a
+	</select>
+	<!-- 列表(全部) -->
+	<select id="listMySqlAll" parameterType="pd" resultMap="resultjcm">
 		select
 				a.TITLE,
 	a.AUTHOR,
@@ -344,7 +391,6 @@
 		from 
 				NP_INFORMATION_SUBJECT a
 	</select>
-	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
 		delete from "NP_INFORMATION_SUBJECT"
@@ -358,6 +404,7 @@
 	<select id="listAllById" parameterType="pd" resultMap="resultjcm">
 		select
 				a.TITLE,
+				a.TYPE,
 				a.AUTHOR,
 				a.URL,
 				a.BACKGROUND_IMG,

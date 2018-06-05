@@ -10,6 +10,7 @@
 	<head>
 	<base href="<%=basePath%>"><!-- jsp文件头和头部 -->
 	<%@ include file="../../system/admin/top.jsp"%> 
+	<link rel="stylesheet" href="static/css/colorbox.css" />
 	</head>
 <body>
 		
@@ -23,25 +24,16 @@
 	<div class="row-fluid">
 	
 			<!-- 检索  -->
-			<form action="npinformationsubject/list.do" method="post" name="Form" id="Form">
+			<form action="npinformationsubject/list.do?TYPE=1" method="post" name="Form" id="Form">
 			<table>
 				<tr>
 					<td>
 						<span class="input-icon">
-							<input autocomplete="off" id="nav-search-input" type="text" name="field1" value="" placeholder="这里输入关键词" />
+							<input autocomplete="off" id="nav-search-input" type="text" name="TITLE" value="${pd.TITLE }" placeholder="这里输入关键词" />
 							<i id="nav-search-icon" class="icon-search"></i>
 						</span>
 					</td>
-					<td><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart" value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期"/></td>
-					<td><input class="span10 date-picker" name="lastLoginEnd" id="lastLoginEnd" value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期"/></td>
-					<td style="vertical-align:top;"> 
-					 	<select class="chzn-select" name="field2" id="field2" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
-							<option value=""></option>
-							<option value="">全部</option>
-							<option value="">1</option>
-							<option value="">2</option>
-					  	</select>
-					</td>
+			
 					<td style="vertical-align:top;"><button class="btn btn-mini btn-light" onclick="search();"  title="检索"><i id="nav-search-icon" class="icon-search"></i></button></td>
 					<c:if test="${QX.cha == 1 }">
 					<td style="vertical-align:top;"><a class="btn btn-mini btn-light" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="icon-download-alt"></i></a></td>
@@ -59,28 +51,9 @@
 						<label><input type="checkbox" id="zcheckbox" /><span class="lbl"></span></label>
 						</th>
 						<th class="center">序号</th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
-						<th class="center"></th>
+						<th class="center">封面</th>
+						<th class="center">标题</th>
+						<th class="center">创建时间</th>
 						<th class="center">操作</th>
 					</tr>
 				</thead>
@@ -97,28 +70,10 @@
 									<label><input type='checkbox' name='ids' value="${var.SUBJECT_ID}" /><span class="lbl"></span></label>
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
+										<td><a href="${var.TEMP2}" title="图片" class="bwGal"><img src="${var.TEMP2}" alt="" width="100"></a></td>
 										<td>${var.TITLE}</td>
-										<td>${var.AUTHOR}</td>
-										<td>${var.URL}</td>
-										<td>${var.BACKGROUND_IMG}</td>
-										<td>${var.CONTENT}</td>
-										<td>${var.SEO_KEYWORD}</td>
-										<td>${var.SEO_DESC}</td>
-										<td>${var.IS_SHOW}</td>
-										<td>${var.DELFLAG}</td>
-										<td>${var.CREATE_USER_ID}</td>
+										
 										<td>${var.CREATE_DATE}</td>
-										<td>${var.UPDATE_USER_ID}</td>
-										<td>${var.UPDATE_DATE}</td>
-										<td>${var.TEMP1}</td>
-										<td>${var.TEMP2}</td>
-										<td>${var.TEMP3}</td>
-										<td>${var.TEMP4}</td>
-										<td>${var.TEMP5}</td>
-										<td>${var.MOBILE_CONTENT}</td>
-										<td>${var.MOBILE_SORT}</td>
-										<td>${var.MOBILE_TITLE_IMG}</td>
-										<td>${var.RELEASE_TIME}</td>
 								<td style="width: 30px;" class="center">
 									<div class='hidden-phone visible-desktop btn-group'>
 									
@@ -191,17 +146,32 @@
 			<i class="icon-double-angle-up icon-only"></i>
 		</a>
 		
-		<!-- 引入 -->
-		<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
-		<script src="static/js/bootstrap.min.js"></script>
-		<script src="static/js/ace-elements.min.js"></script>
-		<script src="static/js/ace.min.js"></script>
 		
-		<script type="text/javascript" src="static/js/chosen.jquery.min.js"></script><!-- 下拉框 -->
-		<script type="text/javascript" src="static/js/bootstrap-datepicker.min.js"></script><!-- 日期框 -->
-		<script type="text/javascript" src="static/js/bootbox.min.js"></script><!-- 确认窗口 -->
-		<!-- 引入 -->
-		<script type="text/javascript" src="static/js/jquery.tips.js"></script><!--提示框-->
+	<!-- 引入 -->
+	<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
+	<script src="static/js/bootstrap.min.js"></script>
+	<script src="static/js/ace-elements.min.js"></script>
+	<script src="static/js/ace.min.js"></script>
+	<script type="text/javascript" src="static/js/chosen.jquery.min.js"></script>
+	<!-- 下拉框 -->
+	<script type="text/javascript"
+		src="static/js/bootstrap-datepicker.min.js"></script>
+	<!-- 日期框 -->
+	<!-- 编辑框-->
+	<script type="text/javascript" charset="utf-8">window.UEDITOR_HOME_URL = "<%=path%>/plugins/ueditor/";</script>
+	<script type="text/javascript" charset="utf-8"
+		src="plugins/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8"
+		src="plugins/ueditor/ueditor.all.js"></script>
+	<script type="text/javascript" src="static/js/bootbox.min.js"></script>
+	<!-- 确认窗口 -->
+	<!-- 圖片上傳 -->
+	<script type="text/javascript" src="plugins/webuploader/webuploader.js"></script>
+	<script type="text/javascript"
+		src="plugins/webuploader/product_upload.js"></script>
+	<script type="text/javascript"
+		src="plugins/myjs/bootstrap-typeahead.js"></script>
+	<script type="text/javascript" src="static/js/jquery.colorbox-min.js"></script>
 		<script type="text/javascript">
 		
 		$(top.hangge());
@@ -218,9 +188,9 @@
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>npinformationsubject/goAdd.do';
-			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.URL = '<%=basePath%>npinformationsubject/goAdd.do?TYPE=1';
+			 diag.Width = 850;
+			 diag.Height = 655;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -240,7 +210,7 @@
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>npinformationsubject/delete.do?SUBJECT_ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>npinformationsubject/delete.do?TYPE=1&SUBJECT_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
@@ -254,9 +224,9 @@
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>npinformationsubject/goEdit.do?SUBJECT_ID='+Id;
-			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.URL = '<%=basePath%>npinformationsubject/goEdit.do?TYPE=1&SUBJECT_ID='+Id;
+			 diag.Width =850;
+			 diag.Height = 655;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 nextPage(${page.currentPage});
@@ -330,7 +300,7 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>npinformationsubject/deleteAll.do?tm='+new Date().getTime(),
+								url: '<%=basePath%>npinformationsubject/deleteAll.do?TYPE=1&tm='+new Date().getTime(),
 						    	data: {DATA_IDS:str},
 								dataType:'json',
 								//beforeSend: validateData,

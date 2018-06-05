@@ -20,18 +20,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
+import com.fh.entity.system.User;
 import com.fh.util.AppUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.Const;
+import com.fh.util.DateUtil;
+import com.fh.util.FileUpload;
+import com.fh.util.HttpConnectionUtil;
 import com.fh.util.PageData;
+import com.fh.util.PathUtil;
+import com.fh.util.StringUtils;
 import com.fh.util.Tools;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.fh.util.Jurisdiction;
 import com.fh.service.olo.npinformationsubject.NpinformationsubjectService;
+import com.fh.service.system.dictionaries.DictionariesService;
 
 /** 
  * 类名称：NpinformationsubjectController
@@ -45,17 +58,57 @@ public class NpinformationsubjectController extends BaseController {
 	String menuUrl = "npinformationsubject/list.do"; //菜单地址(权限用)
 	@Resource(name="npinformationsubjectService")
 	private NpinformationsubjectService npinformationsubjectService;
-	
+	@Resource(name="dictionariesService")
+    private DictionariesService dictionariesService;
 	/**
 	 * 新增
 	 */
 	@RequestMapping(value="/save")
-	public ModelAndView save() throws Exception{
+	public ModelAndView save(@RequestParam Map<String, String> map,
+            @RequestParam(required = false, value = "file") MultipartFile file) throws Exception{
 		logBefore(logger, "新增Npinformationsubject");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
-		pd = this.getPageData();
+		pd.putAll(map);
+		
+		String  ffile = DateUtil.getDays(), fileName = "";
+		String filePath ="";//文件上传路径
+		if (null != file && !file.isEmpty()) {
+			filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+			fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
+		}else{
+			//System.out.println("上传失败");
+			throw   new Exception("上传失败");
+		}
+		
+		//上传到远程服务器
+		PageData findBmPd  = new PageData();
+		findBmPd.put("BIANMA", "PATH"); //图片上传路径
+		PageData bmData=dictionariesService.findBmCount(findBmPd);
+		PageData findBmREMOTEPd  = new PageData();
+		findBmREMOTEPd.put("BIANMA", "REMOTE_PATH"); //图片上传路径
+        PageData bmREMOTEData=dictionariesService.findBmCount(findBmREMOTEPd);
+        
+        
+		String upPath=bmData.getString("NAME");
+		if(!StringUtils.isEmpty(upPath)){
+		    List<String> list = new ArrayList<String>();
+	        list.add(filePath+ "/" + fileName);
+		    String str = HttpConnectionUtil.uploadFile(upPath,list);
+		    JSONObject jsonObject = JSONObject.fromObject(str);
+		    JSONArray jArray= jsonObject.optJSONArray("filePaths");
+		    for(int i=0;i<jArray.size();i++){
+		          String imgPath = (String)jArray.get(i);
+		          pd.put("TEMP2", bmREMOTEData.getString("NAME")+"/"+imgPath);  
+		    }
+		  
+		}
+		Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+        User user = (User) session.getAttribute(Const.SESSION_USER);
+        pd.put("CREATE_DATE",java.sql.Timestamp.valueOf(DateUtil.getTime()));
+        pd.put("CREATE_USER_ID", user.getUSER_ID());
 		pd.put("SUBJECT_ID", this.get32UUID());	//主键
 		npinformationsubjectService.save(pd);
 		mv.addObject("msg","success");
@@ -86,12 +139,50 @@ public class NpinformationsubjectController extends BaseController {
 	 * 修改
 	 */
 	@RequestMapping(value="/edit")
-	public ModelAndView edit() throws Exception{
+	public ModelAndView edit(@RequestParam Map<String, String> map,
+            @RequestParam(required = false, value = "file") MultipartFile file) throws Exception{
 		logBefore(logger, "修改Npinformationsubject");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
-		pd = this.getPageData();
+		pd.putAll(map);
+		
+		String  ffile = DateUtil.getDays(), fileName = "";
+		String filePath ="";//文件上传路径
+		if (null != file && !file.isEmpty()) {
+			filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+			fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
+			
+			//上传到远程服务器
+			PageData findBmPd  = new PageData();
+			findBmPd.put("BIANMA", "PATH"); //图片上传路径
+			PageData bmData=dictionariesService.findBmCount(findBmPd);
+			PageData findBmREMOTEPd  = new PageData();
+			findBmREMOTEPd.put("BIANMA", "REMOTE_PATH"); //图片上传路径
+	        PageData bmREMOTEData=dictionariesService.findBmCount(findBmREMOTEPd);
+	        
+	        
+			String upPath=bmData.getString("NAME");
+			if(!StringUtils.isEmpty(upPath)){
+			    List<String> list = new ArrayList<String>();
+		        list.add(filePath+ "/" + fileName);
+			    String str = HttpConnectionUtil.uploadFile(upPath,list);
+			    JSONObject jsonObject = JSONObject.fromObject(str);
+			    JSONArray jArray= jsonObject.optJSONArray("filePaths");
+			    for(int i=0;i<jArray.size();i++){
+			          String imgPath = (String)jArray.get(i);
+			          pd.put("TEMP2", bmREMOTEData.getString("NAME")+"/"+imgPath);  
+			    }
+			  
+			}
+		}
+		
+		
+		Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+        User user = (User) session.getAttribute(Const.SESSION_USER);
+        pd.put("UPDATE_DATE", java.sql.Timestamp.valueOf(DateUtil.getTime()));
+        pd.put("UPDATE_USER_ID", user.getUSER_ID());
 		npinformationsubjectService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

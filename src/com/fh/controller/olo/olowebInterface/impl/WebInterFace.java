@@ -288,7 +288,7 @@ public class WebInterFace extends BaseController implements IwebInterface {
     }
 
     /**
-     * 获取验证码
+     * 登录
      */
     @RequestMapping(value = "/login")
     @Override
@@ -353,6 +353,13 @@ public class WebInterFace extends BaseController implements IwebInterface {
                             map.put("result", "01");
                             map.put("token", token);
                             map.put("LOGINID", pdOloUser.getString("LOGINID"));
+                            map.put("JZ", pdOloUser.getString("JZ"));
+                            map.put("JXSPOST", pdOloUser.getString("JXSPOST"));
+                            map.put("ROLE", pdOloUser.getString("ROLE"));
+                            map.put("SUBCOMPANYID1", pdOloUser.getString("SUBCOMPANYID1"));
+                            map.put("ISINVESTOR", pdOloUser.getString("ISINVESTOR"));
+                            map.put("SUBCOMPANYNAME", pdOloUser.getString("SUBCOMPANYNAME"));
+                            map.put("LASTNAME", pdOloUser.getString("LASTNAME"));
                             // map.put("user", CacheManager.getCacheInfo(key));
                             return AppUtil.returnObject(pd, map);
                         }
