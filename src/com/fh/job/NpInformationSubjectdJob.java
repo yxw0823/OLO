@@ -57,7 +57,7 @@ public class NpInformationSubjectdJob {
          logger.info("》》》》》》》》》》》》》》》》》》》》》》》》新闻同步   本次同步成功"+list.size()+"条新闻！      同步结束");
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            //e.printStackTrace();
+           e.printStackTrace();
         }
         
     }

@@ -50,10 +50,10 @@ public class AppUtil  {
 		}
 		
 		if(falseCount>0){
-			logger.error(method+"接口，请求协议中缺少 "+falseCount+"个 参数");
+			/*logger.error(method+"接口，请求协议中缺少 "+falseCount+"个 参数");
 			for(int j=1;j<=falseCount;j++){
 				logger.error("   第"+j+"个："+ tempArray[j-1]);
-			}
+			}*/
 		} else {
 			result = true;
 		}
