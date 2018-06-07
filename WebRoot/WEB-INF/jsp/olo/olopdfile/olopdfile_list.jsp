@@ -59,6 +59,7 @@
 						<label><input type="checkbox" id="zcheckbox" /><span class="lbl"></span></label>
 						</th>
 						<th class="center">序号</th>
+						<th class="center">封面</th>
 						<th class="center">文件名称</th>
 						<th class="center">文件类型</th>
 						<th class="center">排序</th>
@@ -80,6 +81,7 @@
 									<label><input type='checkbox' name='ids' value="${var.FILE_ID}" /><span class="lbl"></span></label>
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
+										<td><a href="${var.SPREAD3}" title="图片" class="bwGal"><img src="${var.SPREAD3}" alt="" width="100"></a></td>
 										<td>${var.SPREAD1}</td>
 										<td>
 											<c:if test="${var.FILETYPE == '0' }"><span class="label label-success arrowed">图片</span></c:if>

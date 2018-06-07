@@ -201,6 +201,25 @@ public class NpinformationsubjectController extends BaseController {
 		try{
 			pd = this.getPageData();
 			page.setPd(pd);
+			 if(!StringUtils.isEmpty(pd.get("TYPE")) && "1".equals(pd.get("TYPE"))){
+                 pd.put("TYPE", "CPGGLE_CPGG");
+             }
+			 
+			 if(!StringUtils.isEmpty(pd.get("TYPE")) && "0".equals(pd.get("TYPE"))){
+                 pd.put("TYPE", "CPGGLE_CPGG");
+             }
+			 if(StringUtils.isEmpty(page.getSort())|| page.getSort().size() ==0){
+                 Map<String, String> map1 = new HashMap<String, String>();
+                 map1.put("name", "SORT ,CREATE_DATE");
+                 map1.put("sortStr", "desc");  
+                 List< Map<String, String> > list = new ArrayList<Map<String,String>>();
+                 list.add(map1);
+                 page.addListSort(list);
+           }
+		 //查询出相关分类
+            PageData SPXQLM = new PageData();
+            SPXQLM.put("P_BM", Const.CPGGLE);
+            pd.put("CPGGLE", dictionariesService.dictlist(SPXQLM));    
 			List<PageData>	varList = npinformationsubjectService.list(page);	//列出Npinformationsubject列表
 			mv.setViewName("olo/npinformationsubject/npinformationsubject_list");
 			mv.addObject("varList", varList);
@@ -222,6 +241,10 @@ public class NpinformationsubjectController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
+			  //查询出相关分类
+            PageData SPXQLM = new PageData();
+            SPXQLM.put("P_BM", Const.CPGGLE);
+            pd.put("CPGGLE", dictionariesService.dictlist(SPXQLM));
 			mv.setViewName("olo/npinformationsubject/npinformationsubject_edit");
 			mv.addObject("msg", "save");
 			mv.addObject("pd", pd);
@@ -242,6 +265,10 @@ public class NpinformationsubjectController extends BaseController {
 		pd = this.getPageData();
 		try {
 			pd = npinformationsubjectService.findById(pd);	//根据ID读取
+			  //查询出相关分类
+            PageData SPXQLM = new PageData();
+            SPXQLM.put("P_BM", Const.CPGGLE);
+            pd.put("CPGGLE", dictionariesService.dictlist(SPXQLM));
 			mv.setViewName("olo/npinformationsubject/npinformationsubject_edit");
 			mv.addObject("msg", "edit");
 			mv.addObject("pd", pd);

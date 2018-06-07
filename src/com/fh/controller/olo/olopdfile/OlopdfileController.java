@@ -35,6 +35,7 @@ import com.fh.util.DateUtil;
 import com.fh.util.FileUpload;
 import com.fh.util.FileUtil;
 import com.fh.util.HttpConnectionUtil;
+import com.fh.util.ImgUploudUtil;
 import com.fh.util.PageData;
 import com.fh.util.PathUtil;
 import com.fh.util.PolyvUtil;
@@ -68,7 +69,7 @@ public class OlopdfileController extends BaseController {
      */
     @RequestMapping(value = "/save")
     public ModelAndView save(@RequestParam Map<String, String> map,
-            @RequestParam(required = false, value = "file") MultipartFile file) throws Exception {
+            @RequestParam(required = false, value = "file") MultipartFile file, @RequestParam(required = false, value = "imgFile") MultipartFile[] imgFile) throws Exception {
         logBefore(logger, "新增Olopdfile");
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
             return null;
@@ -80,15 +81,17 @@ public class OlopdfileController extends BaseController {
         String ffile = DateUtil.getDays(), fileName = "";
         String filePath = "";// 文件上传路径
         String fileNameUUid = this.get32UUID();
+     // 上传到远程服务器
+        PageData findBmPd = new PageData();
+        findBmPd.put("BIANMA", "PATH"); // 图片上传路径
+        PageData bmData = dictionariesService.findBmCount(findBmPd);
+        String upPath = bmData.getString("NAME");
+        
         // 校验权限
         if (null != file && !file.isEmpty()) {
             filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile; // 文件上传路径
             fileName = FileUpload.fileUp(file, filePath, fileNameUUid); // 执行上传
-            // 上传到远程服务器
-            PageData findBmPd = new PageData();
-            findBmPd.put("BIANMA", "PATH"); // 图片上传路径
-            PageData bmData = dictionariesService.findBmCount(findBmPd);
-            String upPath = bmData.getString("NAME");
+            
             if (!StringUtils.isEmpty(upPath)) {
                 List<String> list = new ArrayList<String>();
                 list.add(filePath + "/" + fileName);
@@ -113,7 +116,17 @@ public class OlopdfileController extends BaseController {
         }
         FileUtil.delFile(filePath + "/" + fileName);
         pd.put("FILE_ID", this.get32UUID()); // 主键
-
+        // 查询出上传图片路径
+        PageData uploudImgPd = new PageData();
+        uploudImgPd.put("BIANMA", Const.UPLOUADIMGPATH);
+        uploudImgPd = dictionariesService.findBmCount(uploudImgPd);
+        String basePath=uploudImgPd.getString("NAME");
+        List<String> imgUrlList = ImgUploudUtil.uploud(imgFile, upPath, basePath);
+        if (!StringUtils.isEmpty(imgUrlList) && imgUrlList.size() > 0)
+		{
+			// 只保存第一张
+			pd.put("SPREAD3", imgUrlList.get(0));
+		}
         // shiro管理的session
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
@@ -154,7 +167,7 @@ public class OlopdfileController extends BaseController {
      */
     @RequestMapping(value = "/edit")
     public ModelAndView edit(@RequestParam Map<String, String> map,
-            @RequestParam(required = false, value = "file") MultipartFile file) throws Exception {
+            @RequestParam(required = false, value = "file") MultipartFile file, @RequestParam(required = false, value = "imgFile") MultipartFile[] imgFile) throws Exception {
         logBefore(logger, "修改Olopdfile");
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
             return null;
@@ -167,15 +180,16 @@ public class OlopdfileController extends BaseController {
         String ffile = DateUtil.getDays(), fileName = "";
         String filePath = "";// 文件上传路径
         String fileNameUUid = this.get32UUID();
+        // 上传到远程服务器
+        PageData findBmPd = new PageData();
+        findBmPd.put("BIANMA", "PATH"); // 图片上传路径
+        PageData bmData = dictionariesService.findBmCount(findBmPd);
+        String upPath = bmData.getString("NAME");
         // 校验权限
         if (null != file && !file.isEmpty()) {
             filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile; // 文件上传路径
             fileName = FileUpload.fileUp(file, filePath, fileNameUUid); // 执行上传
-            // 上传到远程服务器
-            PageData findBmPd = new PageData();
-            findBmPd.put("BIANMA", "PATH"); // 图片上传路径
-            PageData bmData = dictionariesService.findBmCount(findBmPd);
-            String upPath = bmData.getString("NAME");
+           
             if (!StringUtils.isEmpty(upPath)) {
                 List<String> list = new ArrayList<String>();
                 list.add(filePath + "/" + fileName);
@@ -201,6 +215,17 @@ public class OlopdfileController extends BaseController {
         }
 
         FileUtil.delFile(filePath + "/" + fileName);
+        // 查询出上传图片路径
+        PageData uploudImgPd = new PageData();
+        uploudImgPd.put("BIANMA", Const.UPLOUADIMGPATH);
+        uploudImgPd = dictionariesService.findBmCount(uploudImgPd);
+        String basePath=uploudImgPd.getString("NAME");
+        List<String> imgUrlList = ImgUploudUtil.uploud(imgFile, upPath, basePath);
+        if (!StringUtils.isEmpty(imgUrlList) && imgUrlList.size() > 0)
+		{
+			// 只保存第一张
+			pd.put("SPREAD3", imgUrlList.get(0));
+		}
         // shiro管理的session
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();

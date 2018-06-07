@@ -41,6 +41,7 @@ public class Const {
 	public static final String SPMBTMMJML = "WJML";     //数据字典中对应文件库中的目录
 	public static final String SPMBTMFLML = "FLML";     //数据字典中对应文件库中的目录
 	public static final String SPMBTMSPXQLM = "SPXQLM";     //数据字典中对应商品中的目录
+	public static final String CPGGLE = "CPGGLE";     //数据字典中对应产品公共目录
 	public static ApplicationContext WEB_APP_CONTEXT = null; //该值会在web容器启动时由WebAppContextListener初始化
 	
 	/**

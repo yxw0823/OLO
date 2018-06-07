@@ -80,6 +80,10 @@
 			<if test=" TYPE !=null and   TYPE  !='' ">
 			"TYPE",	
 			</if>
+			<if test=" SORT !=null and   SORT  !='' ">
+			"SORT",	
+			</if>
+			
 			"SUBJECT_ID"
 		) values (
 					<if test=" TITLE !=null and   TITLE  !='' ">
@@ -150,6 +154,9 @@
 				    </if>  
 				    	<if test=" TYPE !=null and   TYPE  !='' ">
 						#{TYPE},	
+					</if>
+					<if test=" SORT !=null and   SORT  !='' ">
+					#{SORT},
 					</if>
 			#{SUBJECT_ID}
 		)
@@ -259,6 +266,9 @@
 				   	"RELEASE_TIME" = #{RELEASE_TIME},	
 				
 			</if>
+			<if test=" SORT !=null and   SORT  !='' ">
+					"SORT" = #{SORT},
+			</if>
 			"SUBJECT_ID" = #{SUBJECT_ID}
 			where 
 				"SUBJECT_ID" = #{SUBJECT_ID}
@@ -268,6 +278,7 @@
 	<!-- 通过SUBJECT_ID获取数据 -->
 	<select id="findById" parameterType="pd" resultMap="resultjcm">
 		select 
+			SD."NAME" TYPENAME,
 			"TITLE",
 			TYPE,	
 			"AUTHOR",	
@@ -290,10 +301,12 @@
 			"MOBILE_CONTENT",	
 			"MOBILE_SORT",	
 			"MOBILE_TITLE_IMG",	
-			"RELEASE_TIME",	
+			"RELEASE_TIME",
+			"SORT",	
 			"SUBJECT_ID"
 		from 
-			"NP_INFORMATION_SUBJECT"
+			"NP_INFORMATION_SUBJECT"  NIS
+				LEFT JOIN SYS_DICTIONARIES sd ON SD.P_BM = NIS."TYPE"
 		where 
 			"SUBJECT_ID" = #{SUBJECT_ID}
 	</select>
@@ -302,6 +315,7 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultMap="resultjcm">
 		select
+			   SD."NAME" TYPENAME,
 				a."TITLE",	
 				a.TYPE,
 				a."AUTHOR",	
@@ -319,22 +333,29 @@
 				a."TEMP4",	
 				a."TEMP5",	
 				a."MOBILE_SORT",	
-				a."MOBILE_TITLE_IMG",	
+				a."MOBILE_TITLE_IMG",
+				a."SORT",	
 				a."SUBJECT_ID"
 		from 
 				"NP_INFORMATION_SUBJECT" a
+				LEFT JOIN SYS_DICTIONARIES sd ON SD.P_BM = a."TYPE"
 				where 1=1 
 				<if test="pd.TYPE !=null and  pd.TYPE !=''">
 				  and 	a.TYPE = #{pd.TYPE}
 				</if>
 				<if test="pd.TITLE !=null and  pd.TITLE !=''">
-				 	 and 	a.TITLE = CONCAT('%', #{pd.TITLE}, '%')
+				 	 and 	a.TITLE like  CONCAT(CONCAT('%',#{pd.TITLE}),'%')
 				</if>
+				<if test=" pd.TYPE ==null">
+				   and 	a.TYPE !='0'
+				</if>
+				
 	</select>
 	
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultMap="resultjcm">
 		select
+		   SD."NAME" TYPENAME,
 				a.TITLE,
 				a.TYPE,
 	a.AUTHOR,
@@ -358,9 +379,11 @@
 	a.MOBILE_SORT,
 	a.MOBILE_TITLE_IMG,
 	a.RELEASE_TIME,
+	a."SORT",
 	a.SUBJECT_ID
 		from 
 				NP_INFORMATION_SUBJECT a
+				LEFT JOIN SYS_DICTIONARIES sd ON SD.P_BM = a."TYPE"
 	</select>
 	<!-- 列表(全部) -->
 	<select id="listMySqlAll" parameterType="pd" resultMap="resultjcm">
@@ -387,6 +410,7 @@
 	a.MOBILE_SORT,
 	a.MOBILE_TITLE_IMG,
 	a.RELEASE_TIME,
+	a."SORT",
 	a.SUBJECT_ID
 		from 
 				NP_INFORMATION_SUBJECT a
@@ -426,6 +450,7 @@
 				a.MOBILE_SORT,
 				a.MOBILE_TITLE_IMG,
 				a.RELEASE_TIME,
+				a."SORT",
 				a.SUBJECT_ID
 		from 
 				NP_INFORMATION_SUBJECT a

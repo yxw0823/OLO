@@ -298,11 +298,17 @@ var attribute = {
 		 var ret = this.doExchange(temparr);  
 		//  console.log("共有：" + ret.length + "种组合！<br/>");
 		  $("#"+tablInerHtmlId).html("");
+		var templateCopy = "";
+		var mycars=new Array()
 	    for (var i = 0; i < ret.length; i++) { 
-	    	
-	    	this.analysis(ret[i],tablInerHtmlId);
-	    	
+	    	//templateCopy +=this.analysis(ret[i],tablInerHtmlId);
+	    	mycars[i]=this.analysis(ret[i],tablInerHtmlId)
 	    }  
+		mycars =mycars.sort(this.compare("index"))
+		for(var i =0 ;i<mycars.length;i++){
+			templateCopy +=mycars[i].template;
+		}
+	    $("#"+tablInerHtmlId).append(templateCopy);
 
 },
 sumAscll:function(a){
@@ -357,7 +363,32 @@ analysis:function (str,tablInerHtmlId){
 	templateCopy =templateCopy.replaceAll('\\$\\{PRODUCT_CODE\\}', obj.PRODUCT_CODE);
 	templateCopy =templateCopy.replaceAll('\\$\\{STORE\\}', obj.STORE);
 	templateCopy =templateCopy.replaceAll('\\$\\{SkuPlzhValuecs\\}', obj.SPREAD2);
-	$("#"+tablInerHtmlId).append(templateCopy);
+	var px=obj.SPREAD3;
+	if(obj.SPREAD3 ==null || obj.SPREAD3 ==''){
+		px =0;
+	}
+	var jsonObj= {};
+	jsonObj.template=templateCopy;
+	jsonObj.index=px;
+	return jsonObj;
+	//$("#"+tablInerHtmlId).append(templateCopy);
+},
+compare : function (prop) {
+    return function (obj1, obj2) {
+        var val1 = obj1[prop];
+        var val2 = obj2[prop];
+        if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
+            val1 = Number(val1);
+            val2 = Number(val2);
+        }
+        if (val1 < val2) {
+            return -1;
+        } else if (val1 > val2) {
+            return 1;
+        } else {
+            return 0;
+        }            
+    } 
 },
 doExchange:function (doubleArrays) {  
     var len = doubleArrays.length;  

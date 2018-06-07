@@ -1425,7 +1425,7 @@ public class WebInterFace extends BaseController implements IwebInterface {
                     }
                     if(StringUtils.isEmpty(page.getSort())|| page.getSort().size() ==0){
                         Map<String, String> map1 = new HashMap<String, String>();
-                        map1.put("name", "CREATE_DATE");
+                        map1.put("name", "SORT ,CREATE_DATE");
                         map1.put("sortStr", "desc");  
                         List< Map<String, String> > list = new ArrayList<Map<String,String>>();
                         list.add(map1);
@@ -1434,6 +1434,10 @@ public class WebInterFace extends BaseController implements IwebInterface {
                     
                     if(StringUtils.isEmpty(pd.get("SEALED"))){
                         pd.put("SEALED", "0");
+                    }
+                    
+                    if(!StringUtils.isEmpty(pd.get("TYPE")) && "1".equals(pd.get("TYPE"))){
+                        pd.put("TYPE", "CPGGLE_CPGG");
                     }
                     // 查询出标签
                     map.put("result", "01");

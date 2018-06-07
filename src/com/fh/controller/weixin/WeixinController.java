@@ -157,6 +157,11 @@ public class WeixinController extends BaseController{
         		 */
         		if("subscribe".equals(msg.getEvent())){
         			returnMSg(msg,null,"关注");
+        			logger.info("事件KEY值，qrscene_为前缀，后面为二维码的参数值"+msg.getEventKey());
+        		}
+        		if("SCAN".equals(msg.getEvent())){
+        			logger.info("事件KEY值，qrscene_为前缀，后面为二维码的参数值"+msg.getEventKey());
+        			msg.getEventKey();
         		}
         	}
         	

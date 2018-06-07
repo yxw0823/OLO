@@ -55,7 +55,19 @@
 				<td style="width:70px;text-align: right;padding-top: 13px;">文件名称:</td>
 				<td><input type="text" name="SPREAD1" id="SPREAD1" value="${pd.SPREAD1}" maxlength="50" placeholder="这里输入文件名称" title="排序"/></td>
 			</tr>
-			
+			<tr>
+				<td style="width:70px;text-align: right;padding-top: 13px;">封面图片:</td>
+				<td>
+					<div id="tpFIle" style="<c:if test="${pd != null && pd.SPREAD3 != '' && pd.SPREAD3 != null }">display: none</c:if>">
+							<input type="file" id="tp" name="imgFile" onchange="fileType(this)"/>
+					</div>
+					<div id="tpImge" style="<c:if test="${pd == null || pd.SPREAD3 == '' || pd.SPREAD3 == null }">display: none</c:if>">
+						<a href="${pd.SPREAD3}" target="_blank"><img src="${pd.SPREAD3}" width="210"/></a>
+						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('tpImge','tpFIle');" />
+						<input type="hidden" name="SPREAD3" id="SPREAD3" value="${pd.SPREAD3 }"/>
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">文件目录:</td>
 				<td>
@@ -137,7 +149,19 @@
 			
 			//日期框
 			$('.date-picker').datepicker();
-			
+			//上传
+			$('#tp').ace_file_input({
+				no_file:'请选择图片 ...',
+				btn_choose:'选择',
+				btn_change:'更改',
+				droppable:false,
+				onchange:null,
+				thumbnail:false, //| true | large
+				whitelist:'gif|png|jpg|jpeg',
+				//blacklist:'gif|png|jpg|jpeg'
+				//onchange:''
+				//
+			});
 		});
 		var filetype ='${pd.FILETYPE}';
 		if(filetype ==  '3'){
@@ -159,6 +183,15 @@
 			
 			
 		})
+		
+			//删除图片
+		function delP(tpImge,tpFile){
+			 if(confirm("确定要删除图片？")){
+				 $("#"+tpImge).hide();
+				 $("#"+tpFile).show();
+				 $("#IMG_PATH").val("");
+			} 
+		}
 		</script>
 </body>
 </html>
