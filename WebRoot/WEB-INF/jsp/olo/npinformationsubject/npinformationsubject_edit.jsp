@@ -43,7 +43,6 @@
 <body>
 	<form action="npinformationsubject/${msg }.do" name="Form" id="Form" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="SUBJECT_ID" id="SUBJECT_ID" value="${pd.SUBJECT_ID}"/>
-			<input type="hidden" name="TYPE" id="SUBJECT_ID" value="1"/>
 		<div id="zhongxin">
 		<table id="table_report" class="table table-striped table-bordered table-hover">
 			<tr>
@@ -63,7 +62,21 @@
 					</div>
 				</td>
 			</tr>
-	
+			<tr>
+				<td style="width:70px;text-align: right;padding-top: 13px;">分类:</td>
+				<td>
+					<select name="TYPE">
+						<c:forEach  items="${pd.CPGGLE}" var="var" varStatus="vs">
+							<option value="${var.P_BM }" <c:if test="${var.P_BM == pd.TYPE }">selected</c:if> >${var.NAME }</option>
+						</c:forEach>
+					</select>
+
+				</td>
+			</tr>
+			<tr>
+				<td style="width:70px;text-align: right;padding-top: 13px;">排序:</td>
+				<td><input type="number" name="SORT" id="SORT" value="${pd.SORT}"   placeholder="这里输入排序号" title=""/></td>
+			</tr>
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">详情:</td>
 				<td><script id="editor" name="CONTENT" type="text/plain" style="width:700px;height:300px;">${pd.CONTENT}</script></td>

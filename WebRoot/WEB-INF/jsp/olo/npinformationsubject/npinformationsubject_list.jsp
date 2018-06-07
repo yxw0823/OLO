@@ -11,6 +11,13 @@
 	<base href="<%=basePath%>"><!-- jsp文件头和头部 -->
 	<%@ include file="../../system/admin/top.jsp"%> 
 	<link rel="stylesheet" href="static/css/colorbox.css" />
+			<!--查看图片插件 -->
+	<link rel="stylesheet" media="screen" type="text/css" href="plugins/zoomimage/css/zoomimage.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="plugins/zoomimage/css/custom.css" />
+    <script type="text/javascript" src="plugins/zoomimage/js/eye.js"></script>
+    <script type="text/javascript" src="plugins/zoomimage/js/utils.js"></script>
+    <script type="text/javascript" src="plugins/zoomimage/js/zoomimage.js"></script>
+    <script type="text/javascript" src="plugins/zoomimage/js/layout.js"></script>
 	</head>
 <body>
 		
@@ -24,7 +31,7 @@
 	<div class="row-fluid">
 	
 			<!-- 检索  -->
-			<form action="npinformationsubject/list.do?TYPE=1" method="post" name="Form" id="Form">
+			<form action="npinformationsubject/list.do" method="post" name="Form" id="Form">
 			<table>
 				<tr>
 					<td>
@@ -33,7 +40,16 @@
 							<i id="nav-search-icon" class="icon-search"></i>
 						</span>
 					</td>
-			
+					<td>
+						<span class="input-icon">
+						<select name="TYPE">
+							<option value=""  >---请选择---</option>
+							<c:forEach  items="${pd.CPGGLE}" var="var" varStatus="vs">
+							<option value="${var.P_BM }" <c:if test="${var.P_BM == pd.TYPE }">selected</c:if> >${var.NAME }</option>
+						</c:forEach>
+						</select>
+						</span>
+					</td>
 					<td style="vertical-align:top;"><button class="btn btn-mini btn-light" onclick="search();"  title="检索"><i id="nav-search-icon" class="icon-search"></i></button></td>
 					<c:if test="${QX.cha == 1 }">
 					<td style="vertical-align:top;"><a class="btn btn-mini btn-light" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="icon-download-alt"></i></a></td>
@@ -53,6 +69,8 @@
 						<th class="center">序号</th>
 						<th class="center">封面</th>
 						<th class="center">标题</th>
+						<th class="center">类型</th>
+						<th class="center">排序</th>
 						<th class="center">创建时间</th>
 						<th class="center">操作</th>
 					</tr>
@@ -72,7 +90,8 @@
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
 										<td><a href="${var.TEMP2}" title="图片" class="bwGal"><img src="${var.TEMP2}" alt="" width="100"></a></td>
 										<td>${var.TITLE}</td>
-										
+										<td>${var.TYPENAME}</td>
+										<td>${var.SORT}</td>
 										<td>${var.CREATE_DATE}</td>
 								<td style="width: 30px;" class="center">
 									<div class='hidden-phone visible-desktop btn-group'>
