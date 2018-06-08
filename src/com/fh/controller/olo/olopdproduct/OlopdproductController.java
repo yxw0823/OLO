@@ -122,7 +122,7 @@ public class OlopdproductController extends BaseController {
         String IMG_BOTTOM = pd.getString("IMG_BOTTOM");// 底部图片
         String IMG_LIST = pd.getString("IMG_LIST");// 底部图片
         if (!StringUtils.isEmpty(IMG_LIST)) {
-            String[] listImgs = IMAGE_URL.split(",");
+            String[] listImgs = IMG_LIST.split(",");
             tempList.add(listImgs[listImgs.length - 1] + "," + OloProductImageLoaction.A.getName() + "," + 0);
             pd.put("IMAGE_URL_LIST", listImgs[listImgs.length - 1]);
         }
@@ -488,7 +488,7 @@ public class OlopdproductController extends BaseController {
         String IMG_BOTTOM = pd.getString("IMG_BOTTOM");// 底部图片
         String IMG_LIST = pd.getString("IMG_LIST");// 底部图片
         if (!StringUtils.isEmpty(IMG_LIST)) {
-            String[] listImgs = IMAGE_URL.split(",");
+            String[] listImgs = IMG_LIST.split(",");
             tempList.add(listImgs[listImgs.length - 1] + "," + OloProductImageLoaction.A.getName() + "," + 0);
             pd.put("IMAGE_URL_LIST", listImgs[listImgs.length - 1]);
         }
