@@ -342,7 +342,7 @@
 				
 			</if> -->
 		
-		ORDER BY a.SPREAD3 +1  desc
+		ORDER BY  a.STORE ,a.SPREAD3 +1  desc
 	</select>
 
 	<!-- 批量删除 -->
