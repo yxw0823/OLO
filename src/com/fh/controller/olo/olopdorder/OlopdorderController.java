@@ -29,6 +29,7 @@ import com.fh.util.AppUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.Const;
 import com.fh.util.PageData;
+import com.fh.util.StringUtils;
 import com.fh.util.Tools;
 import com.fh.util.Jurisdiction;
 import com.fh.service.olo.olopdorder.OlopdorderService;
@@ -110,6 +111,14 @@ public class OlopdorderController extends BaseController {
 		try{
 			pd = this.getPageData();
 			page.setPd(pd);
+			 if(StringUtils.isEmpty(page.getSort())|| page.getSort().size() ==0){
+	                Map<String, String> map1 = new HashMap<String, String>();
+	                map1.put("name", "CREATE_TIME");
+	                map1.put("sortStr", "desc");  
+	                List< Map<String, String> > list = new ArrayList<Map<String,String>>();
+	                list.add(map1);
+	                page.addListSort(list);
+	          }
 			List<PageData>	varList = olopdorderService.list(page);	//列出Olopdorder列表
 			mv.setViewName("olo/olopdorder/olopdorder_list");
 			mv.addObject("varList", varList);
@@ -205,35 +214,22 @@ public class OlopdorderController extends BaseController {
 		try{
 			Map<String,Object> dataMap = new HashMap<String,Object>();
 			List<String> titles = new ArrayList<String>();
+			
+			titles.add("订单号");	//1
 			titles.add("状态");	//1
-			titles.add("封存商品 默认 0  不封存 1 封存");	//2
 			titles.add("创建时间");	//3
-			titles.add("下单人员ID");	//4
-			titles.add("创建人ID");	//5
-			titles.add("更新时间");	//6
-			titles.add("更新人ID");	//7
-			titles.add("Spread1");	//8
-			titles.add("Spread2");	//9
-			titles.add("Spread3");	//10
-			titles.add("Spread4");	//11
-			titles.add("Spread5");	//12
+			titles.add("下单人员");	//4
+			titles.add("价格");	//5
 			dataMap.put("titles", titles);
 			List<PageData> varOList = olopdorderService.listAll(pd);
 			List<PageData> varList = new ArrayList<PageData>();
 			for(int i=0;i<varOList.size();i++){
 				PageData vpd = new PageData();
-				vpd.put("var1", varOList.get(i).getString("STATE"));	//1
-				vpd.put("var2", varOList.get(i).getString("SEALED"));	//2
+				vpd.put("var1", varOList.get(i).getString("ORDER_ID"));	//2
+				vpd.put("var2", varOList.get(i).getString("STATUS"));	//1
 				vpd.put("var3", varOList.get(i).getString("CREATE_TIME"));	//3
 				vpd.put("var4", varOList.get(i).getString("USER_ID"));	//4
-				vpd.put("var5", varOList.get(i).getString("CREATION_PEOPLE_ID"));	//5
-				vpd.put("var6", varOList.get(i).getString("UPDATE_TIME"));	//6
-				vpd.put("var7", varOList.get(i).getString("UPDATE_PEOPLE_ID"));	//7
-				vpd.put("var8", varOList.get(i).getString("SPREAD1"));	//8
-				vpd.put("var9", varOList.get(i).getString("SPREAD2"));	//9
-				vpd.put("var10", varOList.get(i).getString("SPREAD3"));	//10
-				vpd.put("var11", varOList.get(i).getString("SPREAD4"));	//11
-				vpd.put("var12", varOList.get(i).getString("SPREAD5"));	//12
+				vpd.put("var5", varOList.get(i).getString("PRICE"));	//4
 				varList.add(vpd);
 			}
 			dataMap.put("varList", varList);

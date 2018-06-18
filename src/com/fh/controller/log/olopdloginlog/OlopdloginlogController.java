@@ -1,4 +1,4 @@
-package com.fh.controller.olo.olopdshoppingcart;
+package com.fh.controller.log.olopdloginlog;
 
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -32,33 +32,33 @@ import com.fh.util.PageData;
 import com.fh.util.StringUtils;
 import com.fh.util.Tools;
 import com.fh.util.Jurisdiction;
-import com.fh.service.olo.olopdshoppingcart.OlopdshoppingcartService;
+import com.fh.service.log.olopdloginlog.OlopdloginlogService;
 
 /** 
- * 类名称：OlopdshoppingcartController
+ * 类名称：OlopdloginlogController
  * 创建人：FH 
- * 创建时间：2018-03-21
+ * 创建时间：2018-06-18
  */
 @Controller
-@RequestMapping(value="/olopdshoppingcart")
-public class OlopdshoppingcartController extends BaseController {
+@RequestMapping(value="/olopdloginlog")
+public class OlopdloginlogController extends BaseController {
 	
-	String menuUrl = "olopdshoppingcart/list.do"; //菜单地址(权限用)
-	@Resource(name="olopdshoppingcartService")
-	private OlopdshoppingcartService olopdshoppingcartService;
+	String menuUrl = "olopdloginlog/list.do"; //菜单地址(权限用)
+	@Resource(name="olopdloginlogService")
+	private OlopdloginlogService olopdloginlogService;
 	
 	/**
 	 * 新增
 	 */
 	@RequestMapping(value="/save")
 	public ModelAndView save() throws Exception{
-		logBefore(logger, "新增Olopdshoppingcart");
+		logBefore(logger, "新增Olopdloginlog");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("CART_ID", this.get32UUID());	//主键
-		olopdshoppingcartService.save(pd);
+		pd.put("ID", this.get32UUID());	//主键
+		olopdloginlogService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -69,12 +69,12 @@ public class OlopdshoppingcartController extends BaseController {
 	 */
 	@RequestMapping(value="/delete")
 	public void delete(PrintWriter out){
-		logBefore(logger, "删除Olopdshoppingcart");
+		logBefore(logger, "删除Olopdloginlog");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
-			olopdshoppingcartService.delete(pd);
+			olopdloginlogService.delete(pd);
 			out.write("success");
 			out.close();
 		} catch(Exception e){
@@ -88,12 +88,12 @@ public class OlopdshoppingcartController extends BaseController {
 	 */
 	@RequestMapping(value="/edit")
 	public ModelAndView edit() throws Exception{
-		logBefore(logger, "修改Olopdshoppingcart");
+		logBefore(logger, "修改Olopdloginlog");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		olopdshoppingcartService.edit(pd);
+		olopdloginlogService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -104,23 +104,23 @@ public class OlopdshoppingcartController extends BaseController {
 	 */
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page){
-		logBefore(logger, "列表Olopdshoppingcart");
+		logBefore(logger, "列表Olopdloginlog");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
-		 if(StringUtils.isEmpty(page.getSort())|| page.getSort().size() ==0){
-                Map<String, String> map1 = new HashMap<String, String>();
-                map1.put("name", "CREATE_TIME");
-                map1.put("sortStr", "desc");  
-                List< Map<String, String> > list = new ArrayList<Map<String,String>>();
-                list.add(map1);
-                page.addListSort(list);
-          }
 			page.setPd(pd);
-			List<PageData>	varList = olopdshoppingcartService.list(page);	//列出Olopdshoppingcart列表
-			mv.setViewName("olo/olopdshoppingcart/olopdshoppingcart_list");
+			 if(StringUtils.isEmpty(page.getSort())|| page.getSort().size() ==0){
+	                Map<String, String> map1 = new HashMap<String, String>();
+	                map1.put("name", "LOGIN_TIME");
+	                map1.put("sortStr", "desc");  
+	                List< Map<String, String> > list = new ArrayList<Map<String,String>>();
+	                list.add(map1);
+	                page.addListSort(list);
+	          }
+			List<PageData>	varList = olopdloginlogService.list(page);	//列出Olopdloginlog列表
+			mv.setViewName("log/olopdloginlog/olopdloginlog_list");
 			mv.addObject("varList", varList);
 			mv.addObject("pd", pd);
 			mv.addObject(Const.SESSION_QX,this.getHC());	//按钮权限
@@ -135,12 +135,12 @@ public class OlopdshoppingcartController extends BaseController {
 	 */
 	@RequestMapping(value="/goAdd")
 	public ModelAndView goAdd(){
-		logBefore(logger, "去新增Olopdshoppingcart页面");
+		logBefore(logger, "去新增Olopdloginlog页面");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
-			mv.setViewName("olo/olopdshoppingcart/olopdshoppingcart_edit");
+			mv.setViewName("log/olopdloginlog/olopdloginlog_edit");
 			mv.addObject("msg", "save");
 			mv.addObject("pd", pd);
 		} catch (Exception e) {
@@ -154,13 +154,13 @@ public class OlopdshoppingcartController extends BaseController {
 	 */
 	@RequestMapping(value="/goEdit")
 	public ModelAndView goEdit(){
-		logBefore(logger, "去修改Olopdshoppingcart页面");
+		logBefore(logger, "去修改Olopdloginlog页面");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
-			pd = olopdshoppingcartService.findById(pd);	//根据ID读取
-			mv.setViewName("olo/olopdshoppingcart/olopdshoppingcart_edit");
+			pd = olopdloginlogService.findById(pd);	//根据ID读取
+			mv.setViewName("log/olopdloginlog/olopdloginlog_edit");
 			mv.addObject("msg", "edit");
 			mv.addObject("pd", pd);
 		} catch (Exception e) {
@@ -175,7 +175,7 @@ public class OlopdshoppingcartController extends BaseController {
 	@RequestMapping(value="/deleteAll")
 	@ResponseBody
 	public Object deleteAll() {
-		logBefore(logger, "批量删除Olopdshoppingcart");
+		logBefore(logger, "批量删除Olopdloginlog");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "dell")){return null;} //校验权限
 		PageData pd = new PageData();		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -185,7 +185,7 @@ public class OlopdshoppingcartController extends BaseController {
 			String DATA_IDS = pd.getString("DATA_IDS");
 			if(null != DATA_IDS && !"".equals(DATA_IDS)){
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");
-				olopdshoppingcartService.deleteAll(ArrayDATA_IDS);
+				olopdloginlogService.deleteAll(ArrayDATA_IDS);
 				pd.put("msg", "ok");
 			}else{
 				pd.put("msg", "no");
@@ -206,7 +206,7 @@ public class OlopdshoppingcartController extends BaseController {
 	 */
 	@RequestMapping(value="/excel")
 	public ModelAndView exportExcel(){
-		logBefore(logger, "导出Olopdshoppingcart到excel");
+		logBefore(logger, "导出Olopdloginlog到excel");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
 		ModelAndView mv = new ModelAndView();
 		PageData pd = new PageData();
@@ -214,32 +214,22 @@ public class OlopdshoppingcartController extends BaseController {
 		try{
 			Map<String,Object> dataMap = new HashMap<String,Object>();
 			List<String> titles = new ArrayList<String>();
-			titles.add("购买人");	//1
-			titles.add("商品编码");	//3
-			titles.add("商品名称");	//4
-			titles.add("数量");	//5
-			titles.add("价格");	//6
-			titles.add("Spread1");	//11
-			titles.add("创建时间");	//7
-			titles.add("创建人");	//8
-			titles.add("更新时间");	//9
-			titles.add("更新人");	//10
+			titles.add("登陆人");	//1
+			titles.add("登陆状态 ");	//2
+			titles.add("登陆IP");	//3
+			titles.add("登陆响应");	//4
+			titles.add("登陆时间");	//5
+			
 			dataMap.put("titles", titles);
-			List<PageData> varOList = olopdshoppingcartService.listAll(pd);
+			List<PageData> varOList = olopdloginlogService.listAll(pd);
 			List<PageData> varList = new ArrayList<PageData>();
 			for(int i=0;i<varOList.size();i++){
 				PageData vpd = new PageData();
 				vpd.put("var1", varOList.get(i).getString("USER_ID"));	//1
-				vpd.put("var2", varOList.get(i).getString("CODE"));	//3
-				vpd.put("var3", varOList.get(i).getString("TITLE"));	//4
-				vpd.put("var4", varOList.get(i).getString("NUMBER"));	//5
-				vpd.put("var5", varOList.get(i).getString("PRICE"));	//6
-				vpd.put("var6", varOList.get(i).getString("SPREAD1"));	//11
-				vpd.put("var7", varOList.get(i).getString("CREATE_TIME"));	//7
-				vpd.put("var8", varOList.get(i).getString("CREATION_PEOPLE_ID"));	//8
-				vpd.put("var9", varOList.get(i).getString("UPDATE_TIME"));	//9
-				vpd.put("var10", varOList.get(i).getString("UPDATE_PEOPLE_ID"));	//10
-				
+				vpd.put("var2", varOList.get(i).getString("ISSUCCEED"));	//2
+				vpd.put("var3", varOList.get(i).getString("IP"));	//3
+				vpd.put("var4", varOList.get(i).getString("MSG"));	//4
+				vpd.put("var5", varOList.get(i).getString("LOGIN_TIME"));	//5
 				varList.add(vpd);
 			}
 			dataMap.put("varList", varList);

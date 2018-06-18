@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ import com.fh.controller.olo.olowebInterface.e.WeblInterFaceQueryType;
 import com.fh.controller.olo.util.OlopdmenuUtils;
 import com.fh.ecology.ConFirmAutoCreate;
 import com.fh.entity.Page;
+import com.fh.service.log.olopdloginlog.OlopdloginlogService;
 import com.fh.service.olo.npinformationsubject.NpinformationsubjectService;
 import com.fh.service.olo.olopdabrelation.OlopdabrelationService;
 import com.fh.service.olo.olopdabsku.OlopdabskuService;
@@ -108,7 +110,8 @@ public class WebInterFace extends BaseController implements IwebInterface {
     
     @Resource(name="olopdfileService")
     private OlopdfileService olopdfileService; //下载中心
-
+    @Resource(name="olopdloginlogService")
+	private OlopdloginlogService olopdloginlogService;
     /**
      * 验证码保存
      */
@@ -317,6 +320,14 @@ public class WebInterFace extends BaseController implements IwebInterface {
                     }
                     String webCode = pd.getString("code");
                     String token = pd.getString("token");
+                    String LOGINID =pd.getString("LOGINID");
+                    HttpServletRequest request = this.getRequest();
+            		String ip = "";
+            		if (request.getHeader("x-forwarded-for") == null) {  
+            			ip = request.getRemoteAddr();  
+            	    }else{
+            	    	ip = request.getHeader("x-forwarded-for");  
+            	    }
                     String code = "";
                     try {
                         code = CacheManager.getCacheInfoString(token);
@@ -346,6 +357,9 @@ public class WebInterFace extends BaseController implements IwebInterface {
                         if (StringUtils.isEmpty(pdOloUser)) {
                             map.put("result", "99");
                             map.put("msg", "用户名密码不正确");
+                            //登陆
+                            //写入日记
+                            olopdloginlogService.save(LOGINID,"0",ip,JSONObject.fromObject(map).toString());
                             return AppUtil.returnObject(pd, map);
                         }
                         if (!StringUtils.isEmpty(pdOloUser)) {
@@ -360,6 +374,7 @@ public class WebInterFace extends BaseController implements IwebInterface {
                             map.put("ISINVESTOR", pdOloUser.getString("ISINVESTOR"));
                             map.put("SUBCOMPANYNAME", pdOloUser.getString("SUBCOMPANYNAME"));
                             map.put("LASTNAME", pdOloUser.getString("LASTNAME"));
+                            olopdloginlogService.save(LOGINID,"1",ip,JSONObject.fromObject(map).toString());
                             // map.put("user", CacheManager.getCacheInfo(key));
                             return AppUtil.returnObject(pd, map);
                         }

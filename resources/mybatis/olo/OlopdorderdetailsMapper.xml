@@ -261,8 +261,22 @@
 				<if test="pd.CODE !=null">
 					 AND a.CODE = #{pd.CODE}
 				</if>
-					<if test="pd.SKU_ID!=null">
+			    <if test="pd.SKU_ID!=null">
 					 AND a.SKU_ID = #{pd.SKU_ID}
+				</if>
+				<if test="pd.ORDER_ID!=null">
+					 AND a.ORDER_ID = #{pd.ORDER_ID}
+				</if>
+				<if test="pd.lastLoginStart != null and  pd.lastLoginStart != ''">
+					and a.CREATE_TIME >= to_date(#{pd.lastLoginStart}, 'yyyy-MM-dd')
+				</if>
+				<if test="pd.lastLoginEnd != null and  pd.lastLoginEnd != ''">
+					and a.CREATE_TIME &lt;=to_date(#{pd.lastLoginEnd}, 'yyyy-MM-dd')
+				</if>
+				<if test="pd.key != null and pd.key !=''">
+						and (a.CODE like CONCAT(CONCAT('%',#{pd.key}),'%')
+						or a.TITLE like CONCAT(CONCAT('%',#{pd.key}),'%')
+						or a.USER_ID like CONCAT(CONCAT('%',#{pd.key}),'%'))
 				</if>
 	</select>
 	
@@ -323,6 +337,28 @@
 				#{item.ORDER_ID}
 				</foreach>
 				</if>
+				<if test="lastLoginStart != null and  lastLoginStart != ''">
+					and a.CREATE_TIME >= to_date(#{lastLoginStart}, 'yyyy-MM-dd')
+				</if>
+				<if test="lastLoginEnd != null and  lastLoginEnd != ''">
+					and a.CREATE_TIME &lt;=to_date(#{lastLoginEnd}, 'yyyy-MM-dd')
+				</if>
+				<if test="ORDER_ID!=null">
+					 AND a.ORDER_ID = #{ORDER_ID}
+				</if>
+				<if test="key != null and key !=''">
+						and (a.CODE like CONCAT(CONCAT('%',#{key}),'%')
+						or a.TITLE like CONCAT(CONCAT('%',#{key}),'%')
+						or a.USER_ID like CONCAT(CONCAT('%',#{key}),'%'))
+				</if>
+			  <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.CREATE_TIME desc
+			</otherwise>
+        </choose>
 				
 	</select>
 	

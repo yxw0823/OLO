@@ -14,6 +14,7 @@
 				"ORDY_BY" = #{ORDY_BY},
 				"BIANMA"  = #{BIANMA},
 				"PATH"  = #{PATH,jdbcType=VARCHAR},
+				"FAILURE_TIME"  = #{FAILURE_TIME,jdbcType=TIMESTAMP},
 				"P_BM"	  = #{P_BM}
 			where 
 				"ZD_ID" = #{ZD_ID}
@@ -29,6 +30,7 @@
 			"PARENT_ID",
 			"JB",
 			"PATH",
+			to_char(FAILURE_TIME,'yyyy-mm-dd ') FAILURE_TIME,
 			"P_BM"
 		from 
 			"SYS_DICTIONARIES"
@@ -46,6 +48,7 @@
 			"PARENT_ID",
 			"JB",
 			"PATH",
+			"FAILURE_TIME",
 			"P_BM"
 		) values (
 			#{ZD_ID},
@@ -55,6 +58,7 @@
 			#{PARENT_ID},
 			#{JB},
 			#{PATH,jdbcType=VARCHAR},
+			#{FAILURE_TIME,jdbcType=TIMESTAMP},
 			#{P_BM}
 		)
 	</insert>
@@ -68,6 +72,7 @@
 				z1."PARENT_ID",
 				z1."JB",
 				z1."PATH",
+				to_char(z1."FAILURE_TIME",'yyyy-mm-dd ') FAILURE_TIME,
 				z1."P_BM",
 				z2."NAME" PNAME
 		from "SYS_DICTIONARIES" z1
@@ -101,6 +106,7 @@
 			"PARENT_ID",
 			"JB",
 			"PATH",
+			to_char(FAILURE_TIME,'yyyy-mm-dd ') FAILURE_TIME ,
 			"P_BM"
 		from 
 			"SYS_DICTIONARIES"
@@ -120,6 +126,7 @@
 			"PARENT_ID",
 			"JB",
 			"PATH",
+			to_char(FAILURE_TIME,'yyyy-mm-dd ') FAILURE_TIME,
 			"P_BM"
 		from 
 			"SYS_DICTIONARIES"

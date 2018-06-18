@@ -93,7 +93,10 @@ public class DictionariesController extends BaseController {
 		
 		String PARENT_ID = pd.getString("PARENT_ID");
 		pdp.put("ZD_ID", PARENT_ID);
-		
+		 if (!StringUtils.isEmpty(pd.getString("FAILURE_TIME"))) {
+             pd.put("FAILURE_TIME", java.sql.Timestamp
+                     .valueOf(DateUtil.getTime(DateUtil.fomatDate(pd.getString("FAILURE_TIME")))));
+         } 
 		if(null == pd.getString("ZD_ID") || "".equals(pd.getString("ZD_ID"))){
 			if(null != PARENT_ID && "0".equals(PARENT_ID)){
 				pd.put("JB", 1);
