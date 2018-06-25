@@ -9,22 +9,39 @@
 <html lang="en">
 	<head>
 		<base href="<%=basePath%>">
+	<meta charset="utf-8" />
+<title></title>
+<meta name="description" content="overview & stats" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="static/css/bootstrap.min.css" rel="stylesheet" />
+<link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="static/css/font-awesome.min.css" />
+<!-- 下拉框 -->
+<link rel="stylesheet" href="static/css/chosen.css" />
+<link rel="stylesheet" href="static/css/ace.min.css" />
+<link rel="stylesheet" href="static/css/ace-responsive.min.css" />
+<link rel="stylesheet" href="static/css/ace-skins.min.css" />
+
+<link rel="stylesheet" href="static/css/datepicker.css" />
+<!-- 日期框 -->
+<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="plugins/webuploader/webuploader.css" />
+<link rel="stylesheet" type="text/css"
+	href="plugins/webuploader/style.css" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="css/font-awesome-ie7.min.css" />
+		<![endif]-->
+<!-- page specific plugin styles -->
+
+<link rel="stylesheet" href="static/css/colorbox.css" />
+<!-- ace styles -->
+<link rel="stylesheet" href="static/css/ace.min.css" />
+<link rel="stylesheet" href="static/css/ace-responsive.min.css" />
+<link rel="stylesheet" href="static/css/ace-skins.min.css" />
 		
-		<meta charset="utf-8" />
-		<title></title>
-		
-		<meta name="description" content="overview & stats" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="static/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="static/css/font-awesome.min.css" />
-		<link rel="stylesheet" href="static/css/ace.min.css" />
-		<link rel="stylesheet" href="static/css/ace-responsive.min.css" />
-		<link rel="stylesheet" href="static/css/ace-skins.min.css" />
-		
-		<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
-		<!--提示框-->
-		<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 </head>
 
 <script type="text/javascript">
@@ -136,6 +153,9 @@
 				<td><input type="text" name="BIANMA" id="BIANMA" placeholder="这里输入编码" value="${pd.BIANMA }" title="编码"/></td>
 			</tr>
 			<tr class="info">
+				<td><input  class="date-picker"  data-date-format="yyyy-mm-dd hh:ii:ss" readonly="readonly"   type="text" name="FAILURE_TIME" id="FAILURE_TIME" placeholder="这里输入失效时间" value="${pd.FAILURE_TIME }" title="失效时间"/></td>
+			</tr>
+			<tr class="info">
 				<td><input type="number" name="ORDY_BY" id="ORDY_BY" placeholder="这里输入序号" value="${pd.ORDY_BY}" title="序号"/></td>
 			</tr>
 			<tr>
@@ -149,7 +169,16 @@
 		<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><img src="static/images/jzx.gif" style="width: 50px;" /><br/><h4 class="lighter block green"></h4></div>
 	</form>
 </body>
+	<!-- 引入 -->
+		<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
+		<script src="static/js/bootstrap.min.js"></script>
+		<script src="static/js/ace-elements.min.js"></script>
+		<script src="static/js/ace.min.js"></script>
+		<!-- 日期框 -->
+		<script type="text/javascript"
+		src="static/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
+$('.date-picker').datepicker();
 	var msg = '${msg}';
 	if(msg == 'no'){
 		$("#BIANMA").attr("readonly",true);

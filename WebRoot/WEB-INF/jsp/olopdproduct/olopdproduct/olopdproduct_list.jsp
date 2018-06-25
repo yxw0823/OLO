@@ -105,7 +105,6 @@
 										<td>${var.PRICE}</td>
 										<td>${var.COMPANY}</td>
 										<td>${var.COLOUR}</td>
-										
 										<td>${var.CATEGORY}</td>
 										<td>${var.EFFECTIVE_TIME}</td>
 										<td>

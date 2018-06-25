@@ -23,18 +23,25 @@
 	<div class="row-fluid">
 	
 			<!-- 检索  -->
-			<form action="olopdorderdetails/list.do" method="post" name="Form" id="Form">
-		     <table>
+			<form action="olopdloginlog/list.do" method="post" name="Form" id="Form">
+			<table>
 				<tr>
 					<td>
 						<span class="input-icon">
-							<input autocomplete="off" id="nav-search-input" type="text" name="key" value="${pd.key}" placeholder="这里输入关键词" />
-							<input autocomplete="off" id="nav-search-input" type="hidden" name="ORDER_ID" value="${pd.ORDER_ID}" />
+							<input autocomplete="off" id="nav-search-input" type="text" name="key" value="${pd.key }" placeholder="这里输入关键词" />
 							<i id="nav-search-icon" class="icon-search"></i>
 						</span>
 					</td>
 					<td><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart" value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期"/></td>
 					<td><input class="span10 date-picker" name="lastLoginEnd" id="lastLoginEnd" value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期"/></td>
+					<td style="vertical-align:top;"> 
+					 	<select class="chzn-select" name="ISSUCCEED" id="ISSUCCEED" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
+							<option value=""></option>
+							<option value="">全部</option>
+							<option  value="0" <c:if test="${pd.ISSUCCEED == '0'}"> selected="selected"</c:if>>失败</option>
+							<option value="1" <c:if test="${pd.ISSUCCEED == '1'}"> selected="selected"</c:if>>成功</option>
+					  	</select>
+					</td>
 					<td style="vertical-align:top;"><button class="btn btn-mini btn-light" onclick="search();"  title="检索"><i id="nav-search-icon" class="icon-search"></i></button></td>
 					<c:if test="${QX.cha == 1 }">
 					<td style="vertical-align:top;"><a class="btn btn-mini btn-light" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="icon-download-alt"></i></a></td>
@@ -52,24 +59,12 @@
 						<label><input type="checkbox" id="zcheckbox" /><span class="lbl"></span></label>
 						</th>
 						<th class="center">序号</th>
-						<th class="center">订单号</th>
-						<th class="center">购买人</th>
-					<!-- 	<th class="center">物品ID</th> -->
-						<th class="center">商品编码</th>
-						<th class="center">商品名称</th>
-						<th class="center">数量</th>
-						<th class="center">价格</th>
-						<th class="center">单位</th>
-						<th class="center">创建时间</th>
-						<!-- <th class="center">创建人ID</th>
-						<th class="center">更新时间</th>
-						<th class="center">更新人ID</th> -->
-						
-					<!-- 	<th class="center">Spread2</th>
-						<th class="center">Spread3</th>
-						<th class="center">Spread4</th>
-						<th class="center">Spread5</th>
-						<th class="center">操作</th> -->
+						<th class="center">登陆人</th>
+						<th class="center">登陆状态 </th>
+						<th class="center">登陆IP</th>
+						<th class="center">登陆响应</th>
+						<th class="center">登陆时间</th>
+					<!-- 	<th class="center">操作</th> -->
 					</tr>
 				</thead>
 										
@@ -85,23 +80,14 @@
 									<label><input type='checkbox' name='ids' value="${var.ID}" /><span class="lbl"></span></label>
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
-										<td>${var.ORDER_ID}</td>
 										<td>${var.USER_ID}</td>
-									<%-- 	<td>${var.SKU_ID}</td> --%>
-										<td>${var.CODE}</td>
-										<td>${var.TITLE}</td>
-										<td>${var.NUMBER}</td>
-										<td>${var.PRICE}</td>
-										<td>${var.SPREAD1}</td>
-										<td>${var.CREATE_TIME}</td>
-										<%--< td>${var.CREATION_PEOPLE_ID}</td>
-										<td>${var.UPDATE_TIME}</td>
-										<td>${var.UPDATE_PEOPLE_ID}</td> --%>
-										
-										<%-- <td>${var.SPREAD2}</td>
-										<td>${var.SPREAD3}</td>
-										<td>${var.SPREAD4}</td>
-										<td>${var.SPREAD5}</td> --%>
+										<td>
+											<c:if test="${var.ISSUCCEED == '0' }"><span class="label label-success arrowed">失败</span></c:if>
+											<c:if test="${var.ISSUCCEED == '1' }"><span class="label label-important arrowed-in">成功</span></c:if>
+										</td>
+										<td>${var.IP}</td>
+										<td>${var.MSG}</td>
+										<td>${var.LOGIN_TIME}</td>
 								<%-- <td style="width: 30px;" class="center">
 									<div class='hidden-phone visible-desktop btn-group'>
 									
@@ -201,7 +187,7 @@
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>olopdorderdetails/goAdd.do';
+			 diag.URL = '<%=basePath%>olopdloginlog/goAdd.do';
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -223,7 +209,7 @@
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>olopdorderdetails/delete.do?ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>olopdloginlog/delete.do?ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
@@ -237,7 +223,7 @@
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>olopdorderdetails/goEdit.do?ID='+Id;
+			 diag.URL = '<%=basePath%>olopdloginlog/goEdit.do?ID='+Id;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -313,7 +299,7 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>olopdorderdetails/deleteAll.do?tm='+new Date().getTime(),
+								url: '<%=basePath%>olopdloginlog/deleteAll.do?tm='+new Date().getTime(),
 						    	data: {DATA_IDS:str},
 								dataType:'json',
 								//beforeSend: validateData,
@@ -332,7 +318,7 @@
 		
 		//导出excel
 		function toExcel(){
-			window.location.href='<%=basePath%>olopdorderdetails/excel.do?'+$("#Form").serialize();
+			window.location.href='<%=basePath%>olopdloginlog/excel.do?'+$("#Form").serialize();
 		}
 		</script>
 		
