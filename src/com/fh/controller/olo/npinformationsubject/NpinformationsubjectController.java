@@ -205,9 +205,6 @@ public class NpinformationsubjectController extends BaseController {
                  pd.put("TYPE", "CPGGLE_CPGG");
              }
 			 
-			 if(!StringUtils.isEmpty(pd.get("TYPE")) && "0".equals(pd.get("TYPE"))){
-                 pd.put("TYPE", "CPGGLE_CPGG");
-             }
 			 if(StringUtils.isEmpty(page.getSort())|| page.getSort().size() ==0){
                  Map<String, String> map1 = new HashMap<String, String>();
                  map1.put("name", "SORT ,CREATE_DATE");

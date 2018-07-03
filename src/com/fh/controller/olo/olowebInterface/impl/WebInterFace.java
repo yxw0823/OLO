@@ -1323,8 +1323,8 @@ public class WebInterFace extends BaseController implements IwebInterface {
                     }
                     // 查询出标签
                     PageData RXPd = new PageData();
-                    RXPd.put("P_BM", Const.SPMBTMFLML);
-                    pd.put("FLML", dictionariesService.dictlist(RXPd));
+                    RXPd.put("P_BM", Const.CPGGLE);
+                    pd.put("CPGGLE", dictionariesService.dictlist(RXPd));
                    
                     map.put("result", "01");
                     map.put("data", pd);
@@ -1498,7 +1498,7 @@ public class WebInterFace extends BaseController implements IwebInterface {
                         pd.put("SEALED", "0");
                     }
                     
-                    if(!StringUtils.isEmpty(pd.get("TYPE")) && "1".equals(pd.get("TYPE"))){
+                    if(!StringUtils.isEmpty(pd.get("TYPE")) && "1".equals(pd.getString("TYPE"))){
                         pd.put("TYPE", "CPGGLE_CPGG");
                     }
                     // 查询出标签

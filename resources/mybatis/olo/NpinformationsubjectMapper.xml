@@ -342,13 +342,14 @@
 				where 1=1 
 				<if test="pd.TYPE !=null and  pd.TYPE !=''">
 				  and 	a.TYPE = #{pd.TYPE}
+				 	 <if test=" pd.TYPE =='0'">
+				  		 and 	a.IS_SHOW ='1'
+					</if>
 				</if>
 				<if test="pd.TITLE !=null and  pd.TITLE !=''">
 				 	 and 	a.TITLE like  CONCAT(CONCAT('%',#{pd.TITLE}),'%')
 				</if>
-				<if test=" pd.TYPE ==null">
-				   and 	a.TYPE !='0'
-				</if>
+				
 				
 	</select>
 	
@@ -459,7 +460,7 @@
 		SUBJECT_ID in		
 				<foreach collection="list" item="item" index="index" open="("
 			separator="," close=")">
-			#{item.SUBJECT_ID,jdbcType=VARCHAR}
+			'${item.SUBJECT_ID}'
 		</foreach>
 	</select>
 </mapper>

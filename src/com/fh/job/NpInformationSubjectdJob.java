@@ -50,6 +50,7 @@ public class NpInformationSubjectdJob {
           }
           logger.info("》》》》》》》》》》》》》》》》》》》》》》》》新闻同步    去掉已经落地到本地的新闻还剩  "+list.size()+"条新闻！");
           for(PageData pd : list){
+        	  pd.put("TYPE", "0");
               npinformationsubjectService.save(pd); 
           }
              
