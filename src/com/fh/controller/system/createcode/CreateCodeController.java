@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,7 +21,7 @@ import com.fh.util.FileZip;
 import com.fh.util.Freemarker;
 import com.fh.util.PageData;
 import com.fh.util.PathUtil;
-import com.fh.util.StringUtils;
+import com.fh.util.StringUtil;
 
 /** 
  * 类名称：FreemarkerController
@@ -72,7 +73,12 @@ public class CreateCodeController extends BaseController {
 		for(int i=0; i< listpd.size(); i++){
 		    List<String> lists = new  ArrayList<String>();
 		    PageData commentsPd = listpd.get(i);
-		    pk = commentsPd.getString("PK");
+		    if(StringUtils.isEmpty(pk)){
+		    	  pk = commentsPd.getString("PK");
+		    }
+		    if("PRI".equals(pk)){
+		    	 pk = commentsPd.getString("COLUMN_NAME");
+		    }
 		    if(pk.equals(commentsPd.getString("COLUMN_NAME"))){
 		        continue;
 		    }
@@ -104,21 +110,22 @@ public class CreateCodeController extends BaseController {
 		
 		String filePath = "admin/ftl/code/";						//存放路径
 		String ftlPath = "createCode";								//ftl路径
-		
+		filePath = "../src/com/fh/";
 		/*生成controller*/
+
 		Freemarker.printFile("controllerTemplate.ftl", root, "controller/"+packageName+"/"+objectName.toLowerCase()+"/"+objectName+"Controller.java", filePath, ftlPath);
-		
 		/*生成service*/
 		Freemarker.printFile("serviceTemplate.ftl", root, "service/"+packageName+"/"+objectName.toLowerCase()+"/"+objectName+"Service.java", filePath, ftlPath);
-
+		filePath = "../resources/";
 		/*生成mybatis xml*/
-		Freemarker.printFile("mapperMysqlTemplate.ftl", root, "mybatis_mysql/"+packageName+"/"+objectName+"Mapper.xml", filePath, ftlPath);
-		Freemarker.printFile("mapperOracleTemplate.ftl", root, "mybatis_oracle/"+packageName+"/"+objectName+"Mapper.xml", filePath, ftlPath);
+		Freemarker.printFile("mapperOracleTemplate.ftl", root, "mybatis/"+packageName+"/"+objectName+"Mapper.xml", filePath, ftlPath);
+		//Freemarker.printFile("mapperMysqlTemplatemapperOracleTemplate.ftl", root, "mybatis_oracle/"+packageName+"/"+objectName+"Mapper.xml", filePath, ftlPath);
 		
 		/*生成SQL脚本*/
-		Freemarker.printFile("mysql_SQL_Template.ftl", root, "mysql数据库脚本/"+tabletop+objectName.toUpperCase()+".sql", filePath, ftlPath);
+		/*Freemarker.printFile("mysql_SQL_Template.ftl", root, "mysql数据库脚本/"+tabletop+objectName.toUpperCase()+".sql", filePath, ftlPath);
 		Freemarker.printFile("oracle_SQL_Template.ftl", root, "oracle数据库脚本/"+tabletop+objectName.toUpperCase()+".sql", filePath, ftlPath);
-		
+		*/
+		filePath = "WEB-INF/";
 		/*生成jsp页面*/
 		Freemarker.printFile("jsp_list_Template.ftl", root, "jsp/"+packageName+"/"+objectName.toLowerCase()+"/"+objectName.toLowerCase()+"_list.jsp", filePath, ftlPath);
 		Freemarker.printFile("jsp_edit_Template.ftl", root, "jsp/"+packageName+"/"+objectName.toLowerCase()+"/"+objectName.toLowerCase()+"_edit.jsp", filePath, ftlPath);
@@ -128,11 +135,13 @@ public class CreateCodeController extends BaseController {
 		
 		//this.print("oracle_SQL_Template.ftl", root);  控制台打印
 		
+		//获取项目路径
+		//String projectPath = pd.getString("projectPath"); //项目路径
 		/*生成的全部代码压缩成zip文件*/
-		FileZip.zip(PathUtil.getClasspath()+"admin/ftl/code", PathUtil.getClasspath()+"admin/ftl/code.zip");
+		//FileZip.zip(PathUtil.getClasspath()+"admin/ftl/code", PathUtil.getClasspath()+"admin/ftl/code.zip");
 		
 		/*下载代码*/
-		FileDownload.fileDownload(response, PathUtil.getClasspath()+"admin/ftl/code.zip", "code.zip");
+	//	FileDownload.fileDownload(response, PathUtil.getClasspath()+"admin/ftl/code.zip", "code.zip");
 		
 	}
 	

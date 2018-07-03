@@ -209,9 +209,6 @@
 				 
 			 LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = a.ORDER_ID
 				where 1 =1 
-				<if test="pd.key !=null">
-					 AND a.ORDER_ID = #{pd.key}
-				</if>
 				<if test="pd.ORDER_ID !=null">
 					 AND a.ORDER_ID = #{pd.ORDER_ID}
 				</if>
@@ -226,6 +223,17 @@
 				</if>
 				<if test="pd.DEALER !=null">
 					 AND VOSFC.DEALER = #{pd.DEALER}
+				</if>
+				<if test="pd.lastLoginStart != null and  pd.lastLoginStart != ''">
+					and a.CREATE_TIME >= to_date(#{pd.lastLoginStart}, 'yyyy-MM-dd')
+				</if>
+				<if test="pd.lastLoginEnd != null and  pd.lastLoginEnd != ''">
+					and a.CREATE_TIME &lt;=to_date(#{pd.lastLoginEnd}, 'yyyy-MM-dd')
+				</if>
+				<if test="pd.key != null and pd.key !=''">
+						and (vosfc.STATUS like CONCAT(CONCAT('%',#{pd.key}),'%')
+						or a.ORDER_ID like CONCAT(CONCAT('%',#{pd.key}),'%')
+						or a.USER_ID like CONCAT(CONCAT('%',#{pd.key}),'%'))
 				</if>
 	</select>
 	
@@ -251,6 +259,27 @@
 		from 
 				"OLO_PD_ORDER" a
 			 	LEFT JOIN ecology.view_order_status_for_cjt  vosfc on VOSFC.ORDER_NUM = a.ORDER_ID
+			 	
+			 	where 1=1
+			 		<if test="lastLoginStart != null and  lastLoginStart != ''">
+					and a.CREATE_TIME >= to_date(#{lastLoginStart}, 'yyyy-MM-dd')
+				</if>
+				<if test="lastLoginEnd != null and  lastLoginEnd != ''">
+					and a.CREATE_TIME &lt;=to_date(#{lastLoginEnd}, 'yyyy-MM-dd')
+				</if>
+				<if test="key != null and key !=''">
+						and (vosfc.STATUS like CONCAT(CONCAT('%',#{key}),'%')
+						or a.ORDER_ID like CONCAT(CONCAT('%',#{key}),'%')
+						or a.USER_ID like CONCAT(CONCAT('%',#{key}),'%'))
+				</if>
+		<choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.CREATE_TIME desc
+			</otherwise>
+        </choose>
 	</select>
 	
 	<!-- 批量删除 -->

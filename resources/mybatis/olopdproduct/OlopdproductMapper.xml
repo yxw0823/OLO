@@ -434,6 +434,18 @@
 		<if test="GOODS_ID!=null and GOODS_ID!=''">
 			and "GOODS_ID" = #{GOODS_ID}
 		</if>
+		<if test="classify!=null">
+			and
+			GOODS_ID IN (
+			SELECT GOODS_ID from (SELECT GOODS_ID,wm_concat(T_ID) T_ID from
+			OLO_PD_MENU_PRODUCT GROUP BY GOODS_ID) opmp
+			WHERE
+			opmp.T_ID  LIKE     CONCAT(CONCAT('%','${classify}'),'%') 
+			<!-- <foreach item="item" index="index" collection="classify" separator="OR">
+				opmp.T_ID  LIKE     CONCAT(CONCAT('%','${item}'),'%')  
+			</foreach> -->
+			)
+		</if>
 	</select>
 	<!-- 通过GOODS_ID获取数据 -->
 	<select id="findImgsById" parameterType="pd" resultMap="resultjcm">
@@ -594,7 +606,7 @@
 		from
 		"OLO_PD_PRODUCT" a
 		LEFT JOIN OLO_PD_MENU_PRODUCT opmp ON opmp.GOODS_ID = a.GOODS_ID
-		LEFT JOIN  SYS_DICTIONARIES  sysDic on sysDic.ZD_ID =  a.LABEL
+		LEFT JOIN  SYS_DICTIONARIES  sysDic on sysDic.ZD_ID =  a.LABEL  and (sysDic.FAILURE_TIME is not null and  sysDic.FAILURE_TIME &gt;= SYSDATE)
 		where 1=1
 
 		<if test="key!=null and key!=''">

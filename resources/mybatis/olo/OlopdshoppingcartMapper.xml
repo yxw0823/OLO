@@ -264,6 +264,17 @@
 				<if test="pd.CODE != null">
 					and a.CODE =#{pd.CODE}
 				</if>
+				<if test="pd.lastLoginStart != null and  pd.lastLoginStart != ''">
+					and a.CREATE_TIME >= to_date(#{pd.lastLoginStart}, 'yyyy-MM-dd')
+				</if>
+				<if test="pd.lastLoginEnd != null and  pd.lastLoginEnd != ''">
+					and a.CREATE_TIME &lt;=to_date(#{pd.lastLoginEnd}, 'yyyy-MM-dd')
+				</if>
+				<if test="pd.key != null and pd.key !=''">
+						and (a.CODE like CONCAT(CONCAT('%',#{pd.key}),'%')
+						or a.TITLE like CONCAT(CONCAT('%',#{pd.key}),'%')
+						or a.USER_ID like CONCAT(CONCAT('%',#{pd.key}),'%'))
+				</if>
 	</select>
 	
 	<!-- 列表(全部) -->
@@ -321,7 +332,25 @@
 				                 #{item}
 						</foreach>
 				</if>
-			
+				<if test="lastLoginStart != null and  lastLoginStart != ''">
+					and a.CREATE_TIME >= to_date(#{lastLoginStart}, 'yyyy-MM-dd')
+				</if>
+				<if test="lastLoginEnd != null and  lastLoginEnd != ''">
+					and a.CREATE_TIME &lt;=to_date(#{lastLoginEnd}, 'yyyy-MM-dd')
+				</if>
+				<if test="key != null and key !=''">
+						and (a.CODE like CONCAT(CONCAT('%',#{key}),'%')
+						or a.TITLE like CONCAT(CONCAT('%',#{key}),'%')
+						or a.USER_ID like CONCAT(CONCAT('%',#{key}),'%'))
+				</if>
+			  <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.CREATE_TIME desc
+			</otherwise>
+        </choose>
 	</select>
 	
 	<!-- 批量删除 -->

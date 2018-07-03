@@ -34,8 +34,8 @@
 		 diag.Drag=true;
 		 diag.Title ="新增";
 		 diag.URL = '<%=basePath%>dictionaries/toAdd.do?PARENT_ID='+PARENT_ID;
-		 diag.Width = 223;
-		 diag.Height = 175;
+		 diag.Width = 403;
+		 diag.Height = 435;
 		 diag.CancelEvent = function(){ //关闭事件
 			 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 				var num = '${page.currentPage}';
@@ -58,8 +58,8 @@
 		 diag.Drag=true;
 		 diag.Title ="编辑";
 		 diag.URL = '<%=basePath%>dictionaries/toEdit.do?ZD_ID='+ZD_ID;
-		 diag.Width = 273;
-		 diag.Height = 235;
+		 diag.Width = 403;
+		 diag.Height = 435;
 		 diag.CancelEvent = function(){ //关闭事件
 			 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 				 nextPage(${page.currentPage});
@@ -128,6 +128,7 @@
 			<th class="center"  style="width: 50px;">序号</th>
 			<th class='center'>名称</th>
 			<th class='center'>编码</th>
+			<th class='center'>失效时间</th>
 			<th class='center'>级别</th>
 			<th class='center'>操作</th>
 		</tr>
@@ -139,6 +140,7 @@
 				<td class="center">${var.ORDY_BY }</td>
 				<td class='center'><a href="<%=basePath%>/dictionaries.do?PARENT_ID=${var.ZD_ID }" title="查看下级"><i class="icon-arrow-right  icon-on-right"></i>&nbsp;${var.NAME }</a></td>
 				<td class='center'>${var.P_BM }</td>
+				<td class='center'>${var.FAILURE_TIME }</td>
 				<td class='center' style="width:35px;"><b class="green">${var.JB }</b></td>
 				<td style="width: 68px;">
 				<a class='btn btn-mini btn-info' title="编辑" onclick="edit('${var.ZD_ID }')" ><i class='icon-edit'></i></a>

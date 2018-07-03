@@ -205,43 +205,33 @@ public class OlopdorderdetailsController extends BaseController {
 		try{
 			Map<String,Object> dataMap = new HashMap<String,Object>();
 			List<String> titles = new ArrayList<String>();
-			titles.add("订单ID");	//1
-			titles.add("人员ID");	//2
-			titles.add("物品ID");	//3
-			titles.add("商品编码");	//4
-			titles.add("商品名称");	//5
-			titles.add("数量");	//6
-			titles.add("价格");	//7
-			titles.add("创建时间");	//8
-			titles.add("创建人ID");	//9
-			titles.add("更新时间");	//10
-			titles.add("更新人ID");	//11
-			titles.add("Spread1");	//12
-			titles.add("Spread2");	//13
-			titles.add("Spread3");	//14
-			titles.add("Spread4");	//15
-			titles.add("Spread5");	//16
+			titles.add("订单号");	//1
+			titles.add("购买人");	//1
+			titles.add("商品编码");	//3
+			titles.add("商品名称");	//4
+			titles.add("数量");	//5
+			titles.add("价格");	//6
+			titles.add("单位");	//11
+			titles.add("创建时间");	//7
+			titles.add("创建人");	//8
+			titles.add("更新时间");	//9
+			titles.add("更新人");	//10
 			dataMap.put("titles", titles);
 			List<PageData> varOList = olopdorderdetailsService.listAll(pd);
 			List<PageData> varList = new ArrayList<PageData>();
 			for(int i=0;i<varOList.size();i++){
 				PageData vpd = new PageData();
 				vpd.put("var1", varOList.get(i).getString("ORDER_ID"));	//1
-				vpd.put("var2", varOList.get(i).getString("USER_ID"));	//2
-				vpd.put("var3", varOList.get(i).getString("SKU_ID"));	//3
-				vpd.put("var4", varOList.get(i).getString("CODE"));	//4
-				vpd.put("var5", varOList.get(i).getString("TITLE"));	//5
-				vpd.put("var6", varOList.get(i).getString("NUMBER"));	//6
-				vpd.put("var7", varOList.get(i).getString("PRICE"));	//7
-				vpd.put("var8", varOList.get(i).getString("CREATE_TIME"));	//8
-				vpd.put("var9", varOList.get(i).getString("CREATION_PEOPLE_ID"));	//9
-				vpd.put("var10", varOList.get(i).getString("UPDATE_TIME"));	//10
-				vpd.put("var11", varOList.get(i).getString("UPDATE_PEOPLE_ID"));	//11
-				vpd.put("var12", varOList.get(i).getString("SPREAD1"));	//12
-				vpd.put("var13", varOList.get(i).getString("SPREAD2"));	//13
-				vpd.put("var14", varOList.get(i).getString("SPREAD3"));	//14
-				vpd.put("var15", varOList.get(i).getString("SPREAD4"));	//15
-				vpd.put("var16", varOList.get(i).getString("SPREAD5"));	//16
+				vpd.put("var2", varOList.get(i).getString("USER_ID"));	//1
+				vpd.put("var3", varOList.get(i).getString("CODE"));	//3
+				vpd.put("var4", varOList.get(i).getString("TITLE"));	//4
+				vpd.put("var5", varOList.get(i).getString("NUMBER"));	//5
+				vpd.put("var6", varOList.get(i).getString("PRICE"));	//6
+				vpd.put("var7", varOList.get(i).getString("SPREAD1"));	//11
+				vpd.put("var8", varOList.get(i).getString("CREATE_TIME"));	//7
+				vpd.put("var9", varOList.get(i).getString("CREATION_PEOPLE_ID"));	//8
+				vpd.put("var10", varOList.get(i).getString("UPDATE_TIME"));	//9
+				vpd.put("var11", varOList.get(i).getString("UPDATE_PEOPLE_ID"));	//10
 				varList.add(vpd);
 			}
 			dataMap.put("varList", varList);
