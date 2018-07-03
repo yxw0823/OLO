@@ -165,7 +165,9 @@
 				a."SKU_ID"
 		from 
 				"OLO_PD_AB_SKU" a
-				 where a.SKU_ID in  (SELECT SKU_ID from OLO_PD_SKU  where GOODS_ID =#{GOODS_ID})
+				LEFT JOIN  OLO_PD_SKU b on a.SKU_ID = b.SKU_ID
+				 where b.GOODS_ID=#{GOODS_ID}
+		ORDER BY b.SPREAD3 +1  asc
 	</select>
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
