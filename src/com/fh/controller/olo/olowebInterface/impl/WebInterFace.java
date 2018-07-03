@@ -1281,6 +1281,53 @@ public class WebInterFace extends BaseController implements IwebInterface {
         return AppUtil.returnObject(pd, map);
     }
     /**
+     * 获取下载中心目录
+     */
+    @RequestMapping(value = "/getNewsClassify")
+    @ResponseBody
+    public java.lang.Object getNewsClassify() {
+        // TODO Auto-generated method stub
+
+        logBefore(logger, "获取公告分类目录");
+        Map<String, Object> map = new HashMap<String, Object>();
+        PageData pd = new PageData();
+        pd = this.getPageData();
+        String callback = pd.getString("callback");
+        String _ = pd.getString("_");
+        pd.remove("callback");
+        pd.remove("_");
+        String requestSign = pd.getString("sing");
+        pd.remove("sing");
+        TreeMap treemap = new TreeMap(pd);
+        JSONObject json = JSONObject.fromObject(treemap);
+        String result = "00";
+        if (MD5Util.checkTimeSign(requestSign, json.toString(), Const.KEY, "UTF-8") || true) {
+                try {
+                    if (!StringUtils.isEmpty(callback)) {
+                        pd.put("callback", callback);
+                    }
+                    // 查询出标签
+                    PageData RXPd = new PageData();
+                    RXPd.put("P_BM", Const.SPMBTMFLML);
+                    pd.put("FLML", dictionariesService.dictlist(RXPd));
+                   
+                    map.put("result", "01");
+                    map.put("data", pd);
+                    return AppUtil.returnObject(pd, map);
+                } catch (Exception e) {
+                    logger.error(e.toString(), e);
+                } finally {
+                    // map.put("result", result);
+                    logAfter(logger);
+                }
+            } else {
+                map.put("result", "99");
+                map.put("msg", "缺少必须的提交参数");
+                return AppUtil.returnObject(pd, map);
+            }
+        return AppUtil.returnObject(pd, map);
+    }
+    /**
      * 获取下载中心目录附件
      */
     @RequestMapping(value = "/getDownloadFilePageList")

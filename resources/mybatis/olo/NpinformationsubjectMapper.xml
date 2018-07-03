@@ -386,7 +386,7 @@
 				LEFT JOIN SYS_DICTIONARIES sd ON SD.P_BM = a."TYPE"
 	</select>
 	<!-- 列表(全部) -->
-	<select id="listMySqlAll" parameterType="pd" resultMap="resultjcm">
+	<select id="listMySqlAll" parameterType="pd" resultType="pd">
 		select
 				a.TITLE,
 	a.AUTHOR,
@@ -410,7 +410,6 @@
 	a.MOBILE_SORT,
 	a.MOBILE_TITLE_IMG,
 	a.RELEASE_TIME,
-	a."SORT",
 	a.SUBJECT_ID
 		from 
 				NP_INFORMATION_SUBJECT a
@@ -460,7 +459,7 @@
 		SUBJECT_ID in		
 				<foreach collection="list" item="item" index="index" open="("
 			separator="," close=")">
-			#{item.SUBJECT_ID}
+			#{item.SUBJECT_ID,jdbcType=VARCHAR}
 		</foreach>
 	</select>
 </mapper>

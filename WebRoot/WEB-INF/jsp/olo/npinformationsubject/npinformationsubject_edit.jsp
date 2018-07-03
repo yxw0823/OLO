@@ -62,6 +62,7 @@
 					</div>
 				</td>
 			</tr>
+			
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">分类:</td>
 				<td>
@@ -72,6 +73,10 @@
 					</select>
 
 				</td>
+			</tr>
+			<tr>
+				<td style="width:70px;text-align: right;padding-top: 13px;">详情跳转地址:</td>
+				<td><input type="text" name="URL" id="URL" value="${pd.URL}"  placeholder="这里输入详情跳转地址" title=""/></td>
 			</tr>
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">排序:</td>

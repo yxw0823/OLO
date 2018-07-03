@@ -231,6 +231,11 @@ public interface IwebInterface {
      */
     public void getNews(Page page,HttpServletResponse response);
     /**
+     * 获取新闻分类
+     * @return
+     */
+    public java.lang.Object getNewsClassify() ;
+    /**
      * 
        
      * getGoodsFile(获取详情目录附件)    
