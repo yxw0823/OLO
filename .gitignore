@@ -61,3 +61,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+bin/WebRoot/WEB-INF/jsp/olopdppval/olopdppval/olopdppvalOther_edit.jsp
+*.xml
+*.ftl
+target/classes/ftl/createCode/mysql_SQL_Template.ftl

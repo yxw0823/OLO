@@ -341,8 +341,7 @@
 				and   	"SEALED" = #{SEALED}	
 				
 			</if> -->
-		
-		ORDER BY a.SPREAD3 +1  asc
+		ORDER BY  a.STORE ,a.SPREAD3 +1  desc
 	</select>
 
 	<!-- 批量删除 -->
