@@ -342,7 +342,7 @@
 				where 1=1 
 				<if test="pd.TYPE !=null and  pd.TYPE !=''">
 				  and 	a.TYPE = #{pd.TYPE}
-				 	 <if test=" pd.TYPE =='0'">
+				 	 <if test=' pd.TYPE =="0" '>
 				  		 and 	a.IS_SHOW ='1'
 					</if>
 				</if>
